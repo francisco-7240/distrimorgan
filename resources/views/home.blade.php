@@ -139,7 +139,7 @@
                     class="relative md:col-span-6 md:row-span-2 h-[420px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/sierras.jpg') }}"
+                        src="{{ asset('storage\img\sierra-circular-dientes-mesa.jpg') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Sierras industriales">
 
@@ -163,7 +163,7 @@
                     class="relative md:col-span-3 h-[205px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/molinos.jpg') }}"
+                        src="{{ asset('storage\img\molino.jpg') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Molinos">
 
@@ -187,7 +187,7 @@
                     class="relative md:col-span-3 h-[205px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/empacadoras.jpg') }}"
+                        src="{{ asset('storage\img\empacadoras.webp') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Empacadoras">
 
@@ -211,7 +211,7 @@
                     class="relative md:col-span-3 h-[205px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/hornos.jpg') }}"
+                        src="{{ asset('storage\img\hornos.webp') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Hornos">
 
@@ -235,7 +235,7 @@
                     class="relative md:col-span-3 h-[205px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/balanzas.jpg') }}"
+                        src="{{ asset('storage\img\balanzas.png') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Balanzas">
 
@@ -259,7 +259,7 @@
                     class="relative md:col-span-3 h-[170px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/pos.jpg') }}"
+                        src="{{ asset('storage\img\pos.png') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="POS">
 
@@ -467,7 +467,7 @@
                             <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
 
                                 <img
-                                    src="{{ asset('storage/industrias/icons/icon-supermercado.png') }}"
+                                    src="{{ asset('storage\industrias\icons\icon-supermercado.png') }}"
                                     class="w-24 h-24 mx-auto mb-8"
                                     alt="Supermercados">
 
@@ -489,7 +489,7 @@
                             <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
 
                                 <img
-                                    src="{{ asset('storage/industrias/icons/icon-supermercado.png') }}"
+                                    src="{{ asset('storage\industrias\icons\icon-supermercado.png') }}"
                                     class="w-24 h-24 mx-auto mb-8"
                                     alt="Supermercados">
 
