@@ -11,11 +11,11 @@ Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 // Página principal pública
 Route::get('/marcas', [HomeController::class, 'index'])->name('marcas');
 // Página principal pública
-Route::get('/productos', [HomeController::class, 'index'])->name('productos');
+Route::get('/productos', [HomeController::class, 'productos'])->name('productos');
 // Página principal pública
-Route::get('/servicios', [HomeController::class, 'index'])->name('servicios');
+Route::get('/servicios', [HomeController::class, 'servicios'])->name('servicios');
 // Página principal pública
-Route::get('/contacto', [HomeController::class, 'index'])->name('contacto');
+Route::get('/contacto', [HomeController::class, 'contacto'])->name('contacto');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
