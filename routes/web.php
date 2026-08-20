@@ -6,8 +6,8 @@ use App\Http\Controllers\HomeController;
 
 // Página principal pública
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Página principal pública
-Route::get('/categorias/blog', [HomeController::class, 'index'])->name('categorias.blog');
+// Página Nosotros
+Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 // Página principal pública
 Route::get('/marcas', [HomeController::class, 'index'])->name('marcas');
 // Página principal pública
