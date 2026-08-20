@@ -10,7 +10,7 @@
                 <div class="flex justify-center">
                     <a href="{{ route('home') }}" aria-label="Ir al inicio">
                         <img src="{{ asset('storage/logo/logo_distrimorgan.png') }}"
-                             alt="Logo opanoticias"
+                             alt="Logo ditrimorgan"
                              class="h-16 w-auto">
                     </a>
                 </div>
@@ -50,8 +50,8 @@
                         Inicio
                     </x-nav-link>
 
-                    <x-nav-link :href="route('categorias.blog')" :active="request()->routeIs('categorias.blog')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
-                        Categorías
+                    <x-nav-link :href="route('nosotros')" :active="request()->routeIs('nosotros')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
+                        Nosotros
                     </x-nav-link>
 
                     <x-nav-link :href="route('marcas')" :active="request()->routeIs('marcas')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
