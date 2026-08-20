@@ -27,4 +27,32 @@ class HomeController extends Controller
             'nosotros',
         ));
     }
+
+    public function productos()
+    {
+        // EJ
+        $productos = "hola";
+
+        return view('productos', compact(
+            'productos',
+        ));
+    }
+    public function contacto()
+    {
+        // EJ
+        $contacto = "hola";
+
+        return view('contacto', compact(
+            'contacto',
+        ));
+    }
+    public function servicios()
+    {
+        // EJ
+        $servicios = "hola";
+
+        return view('servicios', compact(
+            'servicios',
+        ));
+    }
 }
