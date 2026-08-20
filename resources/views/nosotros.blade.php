@@ -76,7 +76,7 @@
                     </p>
                     
                     <!-- Botón -->
-                    <div class="mt-10">
+                    <div class="mt-10 ">
                         <a
                             href="#"
                             class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:rounded-full hover:text-white"
@@ -111,51 +111,42 @@
 
             </section>
                 <!-- Contenedor Principal (Fondo gris claro) -->
-<section class="bg-[#F8FAFC] py-16 px-4">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-        <!-- Tarjeta: Misión -->
-        <div class="flex items-center gap-6 p-8 bg-white border border-gray-200 rounded-[20px] shadow-sm">
-            <!-- Círculo del Ícono -->
-            <div class="flex-shrink-0 flex items-center justify-center w-20 h-20 bg-[#D1A13B] rounded-full">
-                <!-- Ícono de Diana (SVG) -->
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://w3.org">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 5l-3 3"></path>
-                </svg>
+            <!-- Misión -->
+            <div class="flex items-start gap-6 border border-gray-300 rounded-2xl p-8">
+                <div class="flex-shrink-0 w-20 h-20 aspect-square rounded-full bg-primary flex items-center justify-center">
+                    <i class='bx bx-target-lock text-white text-4xl'></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-dark text-3xl mb-2">Misión</h3>
+                    <p class="text-dark text-sm">
+                        En Distri Morgan trabajamos para ofrecer maquinaria industrial,
+                        herramientas especializadas, repuestos y servicio técnico
+                    </p>
+                </div>
             </div>
-            <!-- Textos -->
-            <div class="flex flex-col justify-center">
-                <h3 class="text-2xl font-black text-black mb-1">Misión</h3>
-                <p class="text-xs text-gray-600 leading-relaxed max-w-sm">
-                    En Distri Morgan trabajamos para ofrecer maquinaria industrial, herramientas especializadas, repuestos y servicio técnico.
-                </p>
+
+            <!-- Visión -->
+            <div class="flex items-start gap-6 border border-gray-300 rounded-2xl p-8">
+                <div class="flex-shrink-0 w-20 h-20 aspect-square rounded-full bg-primary flex items-center justify-center">
+                    <i class='bx bx-show text-white text-4xl'></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-dark text-3xl mb-2">Visión</h3>
+                    <p class="text-dark text-sm">
+                        En Distri Morgan trabajamos para ofrecer maquinaria industrial,
+                        herramientas especializadas, repuestos y servicio técnico certificado
+                    </p>
+                </div>
             </div>
+
         </div>
-
-        <!-- Tarjeta: Visión -->
-        <div class="flex items-center gap-6 p-8 bg-white border border-gray-200 rounded-[20px] shadow-sm">
-            <!-- Círculo del Ícono -->
-            <div class="flex-shrink-0 flex items-center justify-center w-20 h-20 bg-[#D1A13B] rounded-full">
-                <!-- Ícono de Ojo (SVG) -->
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://w3.org">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-            </div>
-            <!-- Textos -->
-            <div class="flex flex-col justify-center">
-                <h3 class="text-2xl font-black text-black mb-1">Visión</h3>
-                <p class="text-xs text-gray-600 leading-relaxed max-w-sm">
-                    En Distri Morgan trabajamos para ofrecer maquinaria industrial, herramientas especializadas, repuestos y servicio técnico certificado.
-                </p>
-            </div>
-        </div>
-
     </div>
 </section>
+            
                  
         </main>
 
