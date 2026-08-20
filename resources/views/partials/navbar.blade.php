@@ -7,11 +7,11 @@
             <div class="flex h-24 items-center justify-between gap-4">
 
                 <!-- Logo -->
-                <div class="flex justify-center">
+                <div class="flex justify-start pl-10">
                     <a href="{{ route('home') }}" aria-label="Ir al inicio">
                         <img src="{{ asset('storage/logo/logo_distrimorgan.png') }}"
                              alt="Logo ditrimorgan"
-                             class="h-16 w-auto">
+                             class="h-20 w-auto mt-6 ">
                     </a>
                 </div>
 
@@ -27,11 +27,10 @@
                 </div>
 
                 <!-- Redes -->
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-4 px-10">
                     <a href="{{ config('app.redfacebook') }}" aria-label="Red social de facebook" class="text-dark hover:text-primary"><i class='bx bxl-facebook-circle text-sm md:text-3xl'></i></a>
                     <a href="{{ config('app.redinstagram') }}" aria-label="Red social de instagram" class="text-dark hover:text-primary"><i class='bx bxl-instagram text-sm md:text-3xl'></i></a>
                 </div>
-            </div>
         </div>
     </div>
 
