@@ -18,4 +18,13 @@ class HomeController extends Controller
             'home',
         ));
     }
+    public function nosotros()
+    {
+        // EJ
+        $nosotros = "hola";
+
+        return view('nosotros', compact(
+            'nosotros',
+        ));
+    }
 }
