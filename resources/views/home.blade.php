@@ -16,7 +16,7 @@
         <div class="absolute inset-0 bg-black/60"></div>
 
         <!-- Contenido -->
-        <div class="relative z-10 flex items-center min-h-screen">
+        <div class="relative z-10 flex min-h-screen items-start pt-28 pb-28 md:pt-44 lg:pt-48">
             <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full">
 
                 <div class="max-w-2xl">
@@ -24,7 +24,6 @@
                     <!-- Texto superior -->
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-16 h-1 bg-primary"></div>
-
                         <span class="uppercase tracking-[4px] text-white text-sm">
                             Distribuidora Industrial Premium
                         </span>
@@ -32,23 +31,10 @@
 
                     <!-- Título -->
                     <h1 class="font-black uppercase leading-none">
-
-                        <span class="block text-white text-5xl md:text-7xl">
-                            Soluciones
-                        </span>
-
-                        <span class="block text-primary text-5xl md:text-7xl">
-                            Industriales
-                        </span>
-
-                        <span class="block text-white text-5xl md:text-7xl">
-                            Para Potenciar
-                        </span>
-
-                        <span class="block text-white text-5xl md:text-7xl">
-                            Tu Negocio
-                        </span>
-
+                        <span class="block text-white text-5xl md:text-7xl">Soluciones</span>
+                        <span class="block text-primary text-5xl md:text-7xl">Industriales</span>
+                        <span class="block text-white text-5xl md:text-7xl">Para Potenciar</span>
+                        <span class="block text-white text-5xl md:text-7xl">Tu Negocio</span>
                     </h1>
 
                     <!-- Descripción -->
@@ -59,27 +45,11 @@
 
                     <!-- Botón -->
                     <div class="mt-10">
-                        <a
-                            href="#"
-                            class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:rounded-full hover:text-white"
-                        >
+                        <a href="#" class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:text-white">
                             Solicitar cotización
-
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M9 5l7 7-7 7"
-                                />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
-
                         </a>
                     </div>
 
@@ -283,7 +253,7 @@
                     class="relative md:col-span-3 h-[170px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/acero.jpg') }}"
+                        src="{{ asset('storage/img/acero.webp') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Acero inoxidable">
 
@@ -307,7 +277,7 @@
                     class="relative md:col-span-6 h-[170px] overflow-hidden group">
 
                     <img
-                        src="{{ asset('storage/img/categorias/servicio.jpg') }}"
+                        src="{{ asset('storage/img/img-servicios.jpg') }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         alt="Servicio técnico">
 
@@ -1437,6 +1407,17 @@
 
     });
     </script>
+
+    <!-- WhatsApp -->
+    <a
+        href="https://wa.me/573001234567?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar por WhatsApp"
+        class="fixed bottom-6 right-6 z-[60] flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]"
+    >
+        <i class="bx bxl-whatsapp text-4xl" aria-hidden="true"></i>
+    </a>
 
     <!-- Footer -->
     @include('partials.footer')
