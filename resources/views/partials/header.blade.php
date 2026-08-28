@@ -4,7 +4,7 @@
 <meta name="robots" content="index, follow">
 <meta name="keywords" content="herramientas, huila, neiva, colombia, industrial, premium, calidad, servicios, distribuidora, negocios, tecnologia, maquinaria, profesionales">
 <link rel="canonical" href="{{ url()->current() }}">
-<meta name="theme-color" content="#C9A03A">
+<meta name="theme-color" content="#c9a03a">
 
 <link rel="icon" href="{{ asset('favicon.ico?v=2') }}" sizes="any">
 <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">

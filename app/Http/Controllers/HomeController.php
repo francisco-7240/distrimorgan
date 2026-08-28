@@ -18,41 +18,24 @@ class HomeController extends Controller
             'home',
         ));
     }
+
     public function nosotros()
     {
-        // EJ
-        $nosotros = "hola";
-
-        return view('nosotros', compact(
-            'nosotros',
-        ));
+        return view('nosotros');
     }
 
     public function productos()
     {
-        // EJ
-        $productos = "hola";
-
-        return view('productos', compact(
-            'productos',
-        ));
+        return view('productos');
     }
-    public function contacto()
-    {
-        // EJ
-        $contacto = "hola";
 
-        return view('contacto', compact(
-            'contacto',
-        ));
-    }
     public function servicios()
     {
-        // EJ
-        $servicios = "hola";
+        return view('servicios');
+    }
 
-        return view('servicios', compact(
-            'servicios',
-        ));
+    public function contacto()
+    {
+        return view('contacto');
     }
 }
