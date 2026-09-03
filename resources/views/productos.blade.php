@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+
+@include('partials.navbar')
 <head>
     @include('partials.header')
     <title>Distribuidora Morgan</title>
@@ -8,6 +8,50 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-white">
         @include('partials.navbar')
+
+        <section class="relative w-full min-h-screen bg-cover bg-center" style="background-image: url('{{ asset('storage/img/img-banner-principal.jpg') }}')">
+                <!-- Capa oscura -->
+                <div class="absolute inset-0 bg-black/60"></div>
+
+                <!-- Contenido -->
+                <div class="relative z-10 flex items-center min-h-screen">
+                    <div class="max-w-1xl mx-auto text-center px-6 lg:px-10 w-full">
+
+                        <div class="max-w-1xl ">
+
+                            <!-- Título -->
+                            <h1 class="font-black uppercase leading-none">
+
+                                <span class="block text-white text-5xl md:text-7xl">
+                                    Nuestro catálogo
+                                </span>
+
+                                <span class="block text-primary text-5xl md:text-7xl">
+                                    De Productos
+                                </span>
+
+                            </h1>
+
+                            <!-- Descripción -->
+                            <p class="mt-8 text-gray-200 text-lg max-w-xl text-center mx-auto">
+                                Encuentra maquinaria industrial, herramientas, repuestos y
+                                accesorios para potenciar tu empresa.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Indicador de scroll -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
+                    <a href="#section-category" class="flex flex-col items-center text-white transition duration-300 hover:scale-110">
+                        <div class="w-5 h-10 border border-white rounded-full flex justify-center pt-2">
+                            <div class="w-1 h-2 bg-primary rounded-full animate-bounce"></div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
 
         @php
             $categorias = ['Molinos', 'Sierras', 'Empacadoras', 'Hornos', 'Balanzas', 'POS', 'Acero inoxidable', 'Servicio'];
@@ -115,5 +159,4 @@
         @include('partials.footer')
     </div>
 </body>
-</html>
 

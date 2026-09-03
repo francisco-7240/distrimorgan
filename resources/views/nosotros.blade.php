@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+
+@include('partials.navbar')
 <head>
     @include('partials.header')
     <title>Distribuidora Morgan</title>
@@ -26,19 +26,19 @@
                             <h1 class="font-black uppercase leading-none">
 
                                 <span class="block text-white text-5xl md:text-7xl">
-                                    Nuestro catálogo
+                                    CONOCE
                                 </span>
 
                                 <span class="block text-primary text-5xl md:text-7xl">
-                                    De Productos
+                                    DISTRI MORGAN
                                 </span>
 
                             </h1>
 
                             <!-- Descripción -->
                             <p class="mt-8 text-gray-200 text-lg max-w-xl text-center mx-auto">
-                                Encuentra maquinaria industrial, herramientas, repuestos y
-                                accesorios para potenciar tu empresa.
+                                Más de XX años ofreciendo soluciones industriales para empresas
+                                que buscan productividad, precision y respaldo tecnico.
                             </p>
                         </div>
 
@@ -54,6 +54,7 @@
                     </a>
                 </div>
             </section>
+            <!-- Nuestra empresa -->
             <section class="py-16 bg-gray-100">
                 <div class="max-w-6xl mx-auto px-4 py-12 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
     
@@ -72,7 +73,7 @@
                     </h1>
                     
                     <p class="mt-6 text-sm md:text-base text-gray-600 leading-relaxed font-normal">
-                        En Distri Morgan trabajamos para ofrecer maquinaria industrial, herramientas especializadas, repuestos y servicio técnico certificado para diferentes sectores productivos.
+                        Distribuimos maquinaria industrial (sierras, molinos, empacadoras al vacio, embutidoras, balanzas, plataformas y basculas tipo gancho, estibadora, colgantes y de mesa, equipos para sistema POS.. y consumibles (papel, cuchillas, cintas, bolsas al vacio)... Demas utensilios como cuchillos profesionales, tablas para picar, guantes y ganchos en acero inoxidable... Estamos en el mercado comercial e industrial con nuestras marcas aliadas JAVAR TRAMONTINA, DIBAL, SALVADOR, DIGITAL POS, SAT, JALTECH KRAMER, METTLER
                     </p>
                     
                     <!-- Botón -->
@@ -154,4 +155,3 @@
 
     @include('partials.footer')
 </body>
-</html>

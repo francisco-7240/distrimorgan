@@ -1,7 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "./fonts.css";
 
+@theme {
+    --font-sans: "Caros Soft", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "Moki Mono", ui-monospace, monospace;
+    --font-artegra: "Artegra Sans", sans-serif;
+    --font-poppins: "Poppins", sans-serif;
+}
+.fuentes{
+    font-family: sans-serif;
+}
 :root {
   --color-primary: #C9A03A;
   --color-secondary: #000000;

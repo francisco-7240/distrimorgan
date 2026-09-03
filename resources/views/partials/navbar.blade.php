@@ -7,11 +7,11 @@
             <div class="flex h-24 items-center justify-between gap-4">
 
                 <!-- Logo -->
-                <div class="flex justify-start pl-10">
+                <div class="flex justify-center">
                     <a href="{{ route('home') }}" aria-label="Ir al inicio">
                         <img src="{{ asset('storage/logo/logo_distrimorgan.png') }}"
-                             alt="Logo ditrimorgan"
-                             class="h-20 w-auto mt-6 ">
+                             alt="Logo opanoticias"
+                             class="h-16 w-auto">
                     </a>
                 </div>
 
@@ -27,10 +27,42 @@
                 </div>
 
                 <!-- Redes -->
-                <div class="flex items-center gap-4 px-10">
-                    <a href="{{ config('app.redfacebook') }}" aria-label="Red social de facebook" class="text-dark hover:text-primary"><i class='bx bxl-facebook-circle text-sm md:text-3xl'></i></a>
-                    <a href="{{ config('app.redinstagram') }}" aria-label="Red social de instagram" class="text-dark hover:text-primary"><i class='bx bxl-instagram text-sm md:text-3xl'></i></a>
+                <div class="flex items-center gap-2" >
+                    <a
+                        target="_blank"
+                        aria-label="Red Facebook"
+                        href="{{ config('app.redfacebook') }}"
+                        class="w-8 h-8 rounded-full bg-black flex items-center justify-center
+                        text-white text-2xl hover:bg-primary transition">
+
+                        <i class='bx bxl-facebook'></i>
+
+                    </a>
+
+                    <!-- Instagram -->
+                    <a
+                        target="_blank"
+                        aria-label="Red Instagram"
+                        href="{{ config('app.redinstagram') }}"
+                        class="w-8 h-8 rounded-full bg-black flex items-center justify-center
+                        text-white text-2xl hover:bg-primary transition">
+
+                        <i class='bx bxl-instagram'></i>
+
+                    </a>
+                    <!-- Youtube -->
+                    <a
+                        target="_blank"
+                        aria-label="Red Youtube"
+                        href="{{ config('app.redyoutube') }}"
+                        class="w-8 h-8 rounded-full bg-black flex items-center justify-center
+                        text-white text-2xl hover:bg-primary transition">
+
+                        <i class='bx bxl-youtube'></i>
+
+                    </a>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -41,20 +73,16 @@
             : 'bg-primary text-dark relative rounded-xl w-[800px] justify-self-center -top-4'"
         class="border-b transition-all duration-300">
         <div class="container mx-auto px-2">
-            <div class="flex h-14 items-center justify-between">
+            <div class="flex h-14 items-center justify-center">
 
-                <ul class="flex items-center gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
+                <ul class="fuentes flex items-center gap-10 overflow-x-auto whitespace-nowrap scrollbar-hide ">
 
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="fuentes inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition ">
                         Inicio
                     </x-nav-link>
 
                     <x-nav-link :href="route('nosotros')" :active="request()->routeIs('nosotros')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
                         Nosotros
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('marcas')" :active="request()->routeIs('marcas')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
-                        Marcas
                     </x-nav-link>
 
                     <x-nav-link :href="route('productos')" :active="request()->routeIs('productos')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
@@ -206,16 +234,6 @@
                 <a href="{{ route('home') }}"
                    class="px-6 py-3 hover:bg-primary hover:text-white">
                     Inicio
-                </a>
-
-                <a href="#section-category"
-                   class="px-6 py-3 hover:bg-primary hover:text-white">
-                    Categorías
-                </a>
-
-                <a href="#section-brands"
-                   class="px-6 py-3 hover:bg-primary hover:text-white">
-                    Marcas
                 </a>
 
                 <a href="#section-products"

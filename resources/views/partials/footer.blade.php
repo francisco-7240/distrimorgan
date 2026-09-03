@@ -56,6 +56,15 @@
                                 <i class='bx bxl-instagram'></i>
 
                             </a>
+                            <!-- Youtube -->
+                            <a
+                                href="{{ config('app.redyoutube') }}"
+                                class="w-8 h-8 rounded-full bg-white flex items-center justify-center
+                                text-dark text-2xl hover:bg-primary transition">
+
+                                <i class='bx bxl-youtube'></i>
+
+                            </a>
 
                         </div>
 
@@ -75,42 +84,35 @@
                     <ul class="space-y-4 text-gray-200">
 
                         <li>
-                            <a href="#"
+                            <a href="{{ route('home') }}"
                                class="hover:text-primary transition">
                                 Inicio
                             </a>
                         </li>
 
                         <li>
-                            <a href="#section-category"
+                            <a href="{{ route('nosotros') }}"
                                class="hover:text-primary transition">
-                                Categorías
+                                Nosotros
                             </a>
                         </li>
 
                         <li>
-                            <a href="#section-brands"
-                               class="hover:text-primary transition">
-                                Marcas
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#section-products"
+                            <a href="{{ route('productos') }}"
                                class="hover:text-primary transition">
                                 Productos
                             </a>
                         </li>
 
                         <li>
-                            <a href="#section-services"
+                            <a href="{{ route('servicios') }}"
                                class="hover:text-primary transition">
                                 Servicios
                             </a>
                         </li>
 
                         <li>
-                            <a href="#contacto"
+                            <a href="{{ route('contacto') }}"
                                class="hover:text-primary transition">
                                 Contacto
                             </a>
@@ -149,7 +151,7 @@
                             <i class='bx bx-phone text-primary text-3xl'></i>
 
                             <span class="text-gray-200 text-lg">
-                                +57 300 123 4567
+                                +57 302 6400248
                             </span>
 
                         </div>

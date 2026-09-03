@@ -1191,7 +1191,7 @@
                                 </p>
 
                                 <p class="font-semibold text-lg">
-                                    +57 300 123 4567
+                                    +57 302 6400248
                                 </p>
 
                             </div>
@@ -1410,7 +1410,7 @@
 
     <!-- WhatsApp -->
     <a
-        href="https://wa.me/573001234567?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
+        href="https://wa.me/573026400248?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
