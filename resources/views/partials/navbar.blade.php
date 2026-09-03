@@ -73,7 +73,8 @@
             : 'bg-primary text-dark relative rounded-xl w-[800px] justify-self-center -top-4'"
         class="border-b transition-all duration-300">
         <div class="container mx-auto px-2">
-            <div class="flex h-14 items-center justify-center">
+            <div class=" fuentes flex h-14 items-center justify-center">
+                
 
                 <ul class="fuentes flex items-center gap-10 overflow-x-auto whitespace-nowrap scrollbar-hide ">
 
