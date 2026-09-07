@@ -12,7 +12,7 @@
         <!-- Page Content -->
         <main>
             @yield('content')
-            <section class="relative w-full min-h-screen bg-cover bg-center" style="background-image: url('{{ asset('storage/img/img-banner-principal.jpg') }}')">
+            <section class="HOLA relative w-full min-h-screen bg-cover bg-center" style="background-image: url('{{ asset('storage/img/img-banner-principal.jpg') }}')">
                 <!-- Capa oscura -->
                 <div class="absolute inset-0 bg-black/60"></div>
 
