@@ -1,5 +1,4 @@
 
-@include('partials.navbar')
 <head>
     @include('partials.header')
     <title>Distribuidora Morgan</title>
@@ -53,22 +52,6 @@
             </section>
             
 
-        @php
-            $categorias = ['Molinos', 'Sierras', 'Empacadoras', 'Hornos', 'Balanzas', 'POS', 'Acero inoxidable', 'Servicio'];
-            $marcas = ['Dibal', 'Epelsa', 'Haifish', 'Javar', 'Salvador', 'Tramontina'];
-            $productos = [
-                ['nombre' => 'Sierra para hueso profesional', 'categoria' => 'Sierras', 'imagen' => asset('storage/img/DELANTAL MONOBLOC POLIURETANO ROJO.png')],
-                ['nombre' => 'Molino industrial de carne', 'categoria' => 'Molinos', 'imagen' => asset('storage/img/molino.jpg')],
-                ['nombre' => 'Empacadora al vacío', 'categoria' => 'Empacadoras', 'imagen' => asset('storage/img/kit-e2-24-piezas-Pesa patron 1,500w.png')],
-                ['nombre' => 'Horno industrial', 'categoria' => 'Hornos', 'imagen' => asset('storage/img/hornos.webp')],
-                ['nombre' => 'Balanza comercial', 'categoria' => 'Balanzas', 'imagen' => asset('storage/img/balanzas.png')],
-                ['nombre' => 'Sierra circular de mesa', 'categoria' => 'Sierras', 'imagen' => asset('storage/img/sierra-circular-dientes-mesa.jpg')],
-                ['nombre' => 'Equipo en acero inoxidable', 'categoria' => 'Acero inoxidable', 'imagen' => asset('storage/img/acero.webp')],
-                ['nombre' => 'Terminal POS comercial', 'categoria' => 'POS', 'imagen' => asset('storage/img/pos.png')],
-                ['nombre' => 'Sierra para hueso profesional', 'categoria' => 'Sierras', 'imagen' => asset('storage/img/sierra-circular-dientes-mesa.jpg')],
-            ];
-        @endphp
-
         <main class="px-5 pb-24 pt-36 sm:px-8 lg:px-12">
             <div class="mx-auto max-w-7xl">
                 <div class="mb-10 border-b border-gray-200 pb-6">
@@ -78,7 +61,7 @@
                             <h1 class="text-3xl font-bold uppercase text-black sm:text-4xl">Productos</h1>
                             <p class="mt-2 max-w-xl text-sm text-gray-600">Equipos profesionales para potenciar tu negocio.</p>
                         </div>
-                        <p class="text-sm font-medium text-gray-500">{{ count($productos) }} productos disponibles</p>
+                        <p class="text-sm font-medium text-gray-500">{{ $productos->total() }} productos disponibles</p>
                     </div>
                 </div>
 
@@ -88,7 +71,7 @@
                             <label for="buscar-producto" class="sr-only">Buscar producto o marca</label>
                             <div class="flex items-center rounded-md border border-black bg-white px-3 focus-within:ring-2 focus-within:ring-primary">
                                 <i class="bx bx-search text-xl text-primary" aria-hidden="true"></i>
-                                <input id="buscar-producto" name="buscar" type="search" placeholder="Buscar producto o marca" class="w-full border-0 bg-transparent px-3 py-2 text-sm text-black outline-none placeholder:text-gray-500 focus:ring-0">
+                                <input id="buscar-producto" name="buscar" value="{{ request('buscar') }}" type="search" placeholder="Buscar producto o marca" class="w-full border-0 bg-transparent px-3 py-2 text-sm text-black outline-none placeholder:text-gray-500 focus:ring-0">
                             </div>
                         </form>
 
@@ -97,7 +80,7 @@
                                 <h2 class="rounded-md bg-primary px-4 py-2 text-base font-bold text-black">Categorías</h2>
                                 <ul class="mt-4 space-y-2 px-1 text-sm font-semibold uppercase text-black">
                                     @foreach ($categorias as $categoria)
-                                        <li><a href="#" class="transition hover:text-primary">{{ $categoria }}</a></li>
+                                        <li><a href="{{ route('productos', array_merge(request()->query(), ['categoria' => $categoria->id, 'marca' => null, 'page' => null])) }}" class="transition hover:text-primary">{{ $categoria->nombre }}</a></li>
                                     @endforeach
                                 </ul>
                             </section>
@@ -115,7 +98,7 @@
                                 <h2 class="rounded-md bg-primary px-4 py-2 text-base font-bold text-black">Marcas</h2>
                                 <div class="mt-4 grid grid-cols-2 gap-2">
                                     @foreach ($marcas as $marca)
-                                        <a href="#" class="rounded border border-gray-300 px-2 py-2 text-center text-xs font-bold uppercase text-black transition hover:border-primary hover:bg-primary">{{ $marca }}</a>
+                                        <a href="{{ route('productos', array_merge(request()->query(), ['marca' => $marca->id, 'categoria' => null, 'page' => null])) }}" class="rounded border border-gray-300 px-2 py-2 text-center text-xs font-bold uppercase text-black transition hover:border-primary hover:bg-primary">{{ $marca->nombre }}</a>
                                     @endforeach
                                 </div>
                             </section>
@@ -127,30 +110,46 @@
                             <h2 id="listado-productos" class="text-lg font-bold uppercase text-black">Nuestro catálogo</h2>
                             <label class="flex items-center gap-2 text-sm text-gray-600">
                                 <span class="hidden sm:inline">Ordenar por</span>
-                                <select class="rounded border border-gray-300 bg-white px-2 py-2 text-sm text-black focus:border-primary focus:ring-primary">
+                                <select name="orden" form="filtros-productos" onchange="this.form.submit()" class="rounded border border-gray-300 bg-white px-2 py-2 text-sm text-black focus:border-primary focus:ring-primary">
                                     <option>Destacados</option>
-                                    <option>Más recientes</option>
-                                    <option>Nombre A-Z</option>
+                                    <option value="recientes" @selected(request('orden') === 'recientes')>Más recientes</option>
+                                    <option value="nombre" @selected(request('orden') === 'nombre')>Nombre A-Z</option>
                                 </select>
                             </label>
                         </div>
 
+                        <form id="filtros-productos" action="{{ route('productos') }}" method="GET">
+                            <input type="hidden" name="buscar" value="{{ request('buscar') }}">
+                            <input type="hidden" name="categoria" value="{{ request('categoria') }}">
+                            <input type="hidden" name="marca" value="{{ request('marca') }}">
+                        </form>
+
                         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                             @foreach ($productos as $producto)
+                                @php
+                                    $imagen = $producto->imagenes->where('es_portada', true)->first()
+                                        ?? $producto->imagenes->first();
+                                    $varianteDisponible = $producto->productoColores->firstWhere('stock', '>', 0)
+                                        ?? $producto->productoColores->first();
+                                @endphp
                                 <article class="group overflow-hidden border border-gray-200 bg-[#f1f1f1] transition hover:-translate-y-1 hover:shadow-lg">
                                     <div class="flex aspect-[1.08] items-center justify-center bg-white p-3">
-                                        <img src="{{ $producto['imagen'] }}" alt="{{ $producto['nombre'] }}" class="h-full w-full object-contain transition duration-300 group-hover:scale-105" loading="lazy">
+                                        <img src="{{ $imagen ? asset('storage/productos/' . $imagen->imagen) : asset('storage/productos/producto-default.png') }}" alt="{{ $producto->nombre }}" class="h-full w-full object-contain transition duration-300 group-hover:scale-105" loading="lazy">
                                     </div>
                                     <div class="p-5">
-                                        <p class="text-[11px] font-bold uppercase tracking-wide text-gray-500">{{ $producto['categoria'] }}</p>
-                                        <h3 class="mt-1 min-h-[40px] text-sm font-bold uppercase leading-5 text-black">{{ $producto['nombre'] }}</h3>
-                                        <a href="{{ route('contacto') }}" class="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-bold text-black transition hover:bg-black hover:text-white">
-                                            Solicitar cotización <i class="bx bx-right-arrow-alt text-base" aria-hidden="true"></i>
-                                        </a>
+                                        <p class="text-[11px] font-bold uppercase tracking-wide text-gray-500">{{ $producto->categoria?->nombre ?? 'Sin categoría' }}</p>
+                                        <h3 class="mt-1 min-h-[40px] text-sm font-bold uppercase leading-5 text-black">{{ $producto->nombre }}</h3>
+                                        @if ($varianteDisponible)
+                                            <x-agregar-cotizacion :producto-color-id="$varianteDisponible->id" texto="Agregar a cotización" class="mt-4 rounded-md px-4 py-2 text-xs" />
+                                        @else
+                                            <span class="mt-4 inline-flex text-xs font-semibold text-gray-500">Sin variantes disponibles</span>
+                                        @endif
                                     </div>
                                 </article>
                             @endforeach
                         </div>
+
+                        <div class="mt-8">{{ $productos->links() }}</div>
                     </section>
                 </div>
             </div>

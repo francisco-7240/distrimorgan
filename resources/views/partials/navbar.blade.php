@@ -269,7 +269,19 @@
         </div>
 
     </div>
+    <x-carrito-icono />
 </header>
+
+<!-- WhatsApp -->
+    <a
+        href="https://wa.me/573026400248?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar por WhatsApp"
+        class="fixed bottom-6 right-6 z-[60] flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]"
+    >
+        <i class="bx bxl-whatsapp text-4xl" aria-hidden="true"></i>
+    </a>
 
 <script>
 function navbarHandler() {

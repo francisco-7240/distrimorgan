@@ -715,6 +715,8 @@
                 @foreach ($productos as $producto)
                 @php
                     $imagenPortada = $producto->imagenes->where('es_portada', true)->first();
+                    $varianteDisponible = $producto->productoColores->firstWhere('stock', '>', 0)
+                        ?? $producto->productoColores->first();
                 @endphp
                 <div class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
                     <!-- Imagen -->
@@ -765,8 +767,16 @@
 
                         </div>
 
-                        <!-- Agregar al carrito -->
-                        <button class="bg-primary px-5 py-3 rounded-xl font-bold text-sm hover:bg-dark hover:text-white transition">Agregar</button>
+                        <!-- Agregar a la cotización -->
+                        @if ($varianteDisponible)
+                            <x-agregar-cotizacion
+                                :producto-color-id="$varianteDisponible->id"
+                                texto="Agregar"
+                                class="rounded-xl px-5 py-3 text-sm"
+                            />
+                        @else
+                            <span class="text-xs font-semibold text-gray-500">Sin variantes</span>
+                        @endif
 
                     </div>
 
@@ -1373,16 +1383,7 @@
     });
     </script>
 
-    <!-- WhatsApp -->
-    <a
-        href="https://wa.me/573026400248?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contactar por WhatsApp"
-        class="fixed bottom-6 right-6 z-[60] flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]"
-    >
-        <i class="bx bxl-whatsapp text-4xl" aria-hidden="true"></i>
-    </a>
+    
 
     <!-- Footer -->
     @include('partials.footer')

@@ -1,5 +1,13 @@
-{{-- Ajusta el layout al que uses en tu proyecto --}}
-<x-app-layout>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    @include('partials.header')
+    <title>Mi cotización | Distribuidora Morgan</title>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    @include('partials.navbar')
+
+    <main class="min-h-screen px-4 pb-16 pt-32 sm:px-8">
     <div @class(['mx-auto', 'max-w-5xl', 'px-4', 'py-10', 'sm:px-8'])>
 
         <div @class(['mb-8', 'flex', 'items-center', 'justify-between'])>
@@ -114,4 +122,8 @@
             </div>
         @endif
     </div>
-</x-app-layout>
+    </main>
+
+    @include('partials.footer')
+</body>
+</html>
