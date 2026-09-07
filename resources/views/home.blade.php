@@ -535,18 +535,7 @@
                 <!-- Flecha izquierda -->
                 <div class="marcas-prev absolute top-1/2 -translate-y-1/2 -left-8 z-20 cursor-pointer">
 
-                    <svg class="w-10 h-10 text-dark hover:text-white transition"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15 19l-7-7 7-7" />
-
-                    </svg>
+                    <svg class="w-10 h-10 text-dark hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
 
                 </div>
 
@@ -555,24 +544,15 @@
 
                     <div class="swiper-wrapper">
 
-                        @for ($i = 1; $i <= 10; $i++)
+                        @foreach($marcas as $index => $marca)
 
-                            <div class="swiper-slide flex" data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">
+                            <div class="swiper-slide flex" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
 
-                                <a href="#"
-                                class="bg-white/90 border-2 border-white rounded-3xl
-                                        h-[90px] w-full
-                                        flex items-center justify-center
-                                        text-4xl font-black text-dark
-                                        hover:bg-dark hover:text-white transition">
-
-                                    MARCA {{ $i }}
-
-                                </a>
+                                <a href="{{ $marca->slug }}" class="bg-white/90 border-2 border-white rounded-3xl h-[90px] w-full flex items-center justify-center text-4xl font-black text-dark hover:bg-dark hover:text-white transition">{{ $marca->nombre }}</a>
 
                             </div>
 
-                        @endfor
+                        @endforeach
 
                     </div>
 
@@ -719,25 +699,11 @@
                         Todos
                     </button>
 
-                    <button class="border px-4 py-2 rounded-lg text-sm font-bold">
-                        Sierras
-                    </button>
-
-                    <button class="border px-4 py-2 rounded-lg text-sm font-bold">
-                        Molinos
-                    </button>
-
-                    <button class="border px-4 py-2 rounded-lg text-sm font-bold">
-                        Empacadoras
-                    </button>
-
-                    <button class="border px-4 py-2 rounded-lg text-sm font-bold">
-                        Hornos
-                    </button>
-
-                    <button class="border px-4 py-2 rounded-lg text-sm font-bold">
-                        Balanzas
-                    </button>
+                    @foreach ($categorias as $categoria)
+                        <button class="border px-4 py-2 rounded-lg text-sm font-bold">
+                            {{ $categoria->nombre }}
+                        </button>
+                    @endforeach
 
                 </div>
 
@@ -746,67 +712,66 @@
             <!-- productos -->
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                <div
-                    class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl transition"
-                    data-aos="fade-up"
-                    data-aos-delay="100">
-
+                @foreach ($productos as $producto)
+                @php
+                    $imagenPortada = $producto->imagenes->where('es_portada', true)->first();
+                @endphp
+                <div class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
                     <!-- Imagen -->
                     <div class="flex justify-center mb-5">
-
                     <!-- Categoría -->
-                        <p class="text-sm text-dark bg-primary hover:text-white hover:bg-dark rounded-xl absolute top-2 left-2 py-2 px-4">
-                            Sierras Industriales
-                        </p>
-                        <img
-                            src="{{ asset('storage/products/producto.png') }}"
-                            class="h-56 object-contain"
-                            alt="Producto">
+                        <p class="text-sm text-dark bg-primary hover:text-white hover:bg-dark rounded-xl absolute top-2 left-2 py-2 px-4">{{ $producto->categoria->nombre }}</p>
+                        @if ($imagenPortada)
+                            <img src="{{ asset('storage/productos/' . $imagenPortada->imagen) }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
+                        @else
+                            <img src="{{ asset('storage/productos/producto-default.png') }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
+                        @endif
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <!-- Marca -->
+                        <span class="text-xs uppercase text-gray-500 font-semibold">{{ $producto->marca->nombre }}</span>
+                        <!-- Colores -->
+                         @if ($producto->productoColores->count())
+                            <div class="flex flex-col items-start gap-1">
+                                <span class="text-xs font-semibold">Colores:</span>
 
+                                <div class="flex gap-1">
+                                    @foreach ($producto->productoColores as $productoColor)
+                                        <span
+                                            class="w-4 h-4 rounded-full border"
+                                            style="background-color: {{ $productoColor->color->codigo_hex }}"
+                                            title="{{ $productoColor->color->nombre }}"
+                                        ></span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
-                    <!-- Marca -->
-                    <span class="text-xs uppercase text-gray-500 font-semibold">
-                        Torrey
-                    </span>
-
-                    <!-- Nombre -->
-                    <h3 class="font-black uppercase text-dark mt-1">
-                        Sierra para hueso profesional
-                    </h3>
+                    <!-- Nombre del producto -->
+                    <h3 class="font-black uppercase text-dark mt-1">{{ $producto->nombre }}</h3>
 
                     <!-- Cantidad -->
                     <div class="flex items-center justify-between mt-6">
 
                         <div class="flex border rounded-lg overflow-hidden">
 
-                            <button
-                                class="w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition">
-                                -
-                            </button>
+                            <button class="w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition"> -</button>
 
-                            <div class="w-12 flex items-center justify-center font-bold">
-                                1
-                            </div>
+                            <div class="w-12 flex items-center justify-center font-bold"> 1</div>
 
-                            <button
-                                class="w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition">
-                                +
-                            </button>
+                            <button class="w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition"> +</button>
 
                         </div>
 
-                        <!-- Agregar -->
-                        <button
-                            class="bg-primary px-5 py-3 rounded-xl font-bold text-sm hover:bg-dark hover:text-white transition">
-
-                            Agregar
-
-                        </button>
+                        <!-- Agregar al carrito -->
+                        <button class="bg-primary px-5 py-3 rounded-xl font-bold text-sm hover:bg-dark hover:text-white transition">Agregar</button>
 
                     </div>
 
                 </div>
+                @endforeach
 
             </div>
 
