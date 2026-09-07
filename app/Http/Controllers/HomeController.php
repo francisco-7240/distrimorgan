@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Marca;
+<<<<<<< HEAD
 use Illuminate\Http\Request;
+=======
+use App\Models\ProductoColor;
+use Illuminate\Support\Facades\Http;
+>>>>>>> 9522df4b9e2002d52ad25287104500bf999a7517
 
 
 class HomeController extends Controller
@@ -20,12 +25,15 @@ class HomeController extends Controller
             'productoColores.imagenes',
             'imagenes',
         ])->get();
-        // Obtener categorías
-        $categorias = Categoria::where('estado', 1)->whereNull('categoria_padre_id')->orderBy('id')->limit(10)->get();
+        // Obtener 8 categorías principales en orden aleatorio
+        $categorias = Categoria::where('estado', 1)->whereNull('categoria_padre_id')->inRandomOrder()->limit(8)->get();
         // Obtener marcas
         $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get();
+        // Contadores
+        $marcasDisponibles = Marca::where('estado', 1)->count();
+        $productosEnStock = ProductoColor::where('stock', '>', 0)->sum('stock');
 
-        return view('home', compact('productos', 'categorias', 'marcas'));
+        return view('home', compact('productos', 'categorias', 'marcas', 'marcasDisponibles', 'productosEnStock'));
     }
 
     public function nosotros()

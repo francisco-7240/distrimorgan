@@ -68,7 +68,7 @@
         </div>
     </section>
 
-    <!-- Seccion categorias -->
+    <!-- Seccion categorias y equipos -->
     <section class="relative py-24 overflow-hidden bg-gray-100" style="background-image: url('{{ asset('storage/img/img-figura-sierras.png') }}'); background-repeat: no-repeat; background-position: center;" id="section-category">
 
         <!-- categorias -->
@@ -77,19 +77,13 @@
             <!-- Encabezado -->
             <div class="text-center mb-16">
 
-                <p class="uppercase tracking-[4px] text-sm text-dark mb-3">
-                    Nuestro portafolio
-                </p>
+                <p class="uppercase tracking-[4px] text-sm text-dark mb-3">Nuestro portafolio</p>
 
                 <h2 class="font-black uppercase leading-none">
 
-                    <span class="block text-dark text-5xl">
-                        Categorías de
-                    </span>
+                    <span class="block text-dark text-5xl">Categorías de</span>
 
-                    <span class="block text-primary text-5xl mt-2">
-                        Productos
-                    </span>
+                    <span class="block text-primary text-5xl mt-2">Productos</span>
 
                 </h2>
 
@@ -100,200 +94,106 @@
 
             </div>
 
-
             <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
 
-                <!-- Sierras -->
-                <a href="#" data-aos="fade-right"
-                    class="relative md:col-span-6 md:row-span-2 h-[420px] overflow-hidden group">
+                @foreach ($categorias as $index => $categoria)
 
-                    <img
-                        src="{{ asset('storage\img\sierra-circular-dientes-mesa.jpg') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Sierras industriales">
+                    @php
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                        switch ($index) {
 
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-white font-black uppercase text-4xl">
-                            Sierras Industriales
-                        </h3>
+                            // Primera categoría - bloque grande
+                            case 0:
+                                $gridClass = 'md:col-span-6 md:row-span-2';
+                                $heightClass = 'h-[420px]';
+                                $aos = 'fade-right';
+                                $titleClass = 'text-4xl';
+                                $positionClass = 'bottom-6 left-6';
+                                $descriptionClass = 'text-sm mt-2';
+                                break;
 
-                        <p class="text-white text-sm mt-2">
-                            Corte de precisión para carne, hueso y más.
-                        </p>
-                    </div>
+                            // Categorías 2, 3, 4 y 5
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                                $gridClass = 'md:col-span-3';
+                                $heightClass = 'h-[205px]';
+                                $aos = 'fade-left';
+                                $titleClass = '';
+                                $positionClass = 'bottom-4 left-4';
+                                $descriptionClass = 'text-xs';
+                                break;
 
-                </a>
+                            // Categorías 6 y 7
+                            case 5:
+                            case 6:
+                                $gridClass = 'md:col-span-3';
+                                $heightClass = 'h-[170px]';
+                                $aos = 'fade-right';
+                                $titleClass = '';
+                                $positionClass = 'bottom-4 left-4';
+                                $descriptionClass = 'text-xs';
+                                break;
 
+                            // Octava categoría - bloque grande inferior
+                            case 7:
+                                $gridClass = 'md:col-span-6';
+                                $heightClass = 'h-[170px]';
+                                $aos = 'fade-right';
+                                $titleClass = 'text-3xl';
+                                $positionClass = 'bottom-6 left-6';
+                                $descriptionClass = 'text-sm';
+                                break;
 
-                <!-- Molinos --> 
-                <a href="#" data-aos="fade-left"
-                    class="relative md:col-span-3 h-[205px] overflow-hidden group">
-
-                    <img
-                        src="{{ asset('storage\img\molino.jpg') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Molinos">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase">
-                            Molinos de carne
-                        </h3>
-
-                        <p class="text-white text-xs">
-                            Procesamiento industrial
-                        </p>
-                    </div>
-
-                </a>
-
-
-                <!-- Empacadoras -->
-                <a href="#" data-aos="fade-left"
-                    class="relative md:col-span-3 h-[205px] overflow-hidden group">
-
-                    <img
-                        src="{{ asset('storage\img\empacadoras.webp') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Empacadoras">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase">
-                            Empacadoras al vacío
-                        </h3>
-
-                        <p class="text-white text-xs">
-                            Conservación profesional
-                        </p>
-                    </div>
-
-                </a>
+                            default:
+                                $gridClass = 'md:col-span-3';
+                                $heightClass = 'h-[170px]';
+                                $aos = 'fade-right';
+                                $titleClass = '';
+                                $positionClass = 'bottom-4 left-4';
+                                $descriptionClass = 'text-xs';
+                                break;
+                        }
+                    @endphp
 
 
-                <!-- Hornos -->
-                <a href="#" data-aos="fade-left"
-                    class="relative md:col-span-3 h-[205px] overflow-hidden group">
+                    <a href="#" data-aos="{{ $aos }}" class="relative {{ $gridClass }} {{ $heightClass }} overflow-hidden group">
 
-                    <img
-                        src="{{ asset('storage\img\hornos.webp') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Hornos">
+                        <!-- Imagen -->
+                        @if ($categoria->imagen)
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                            <img src="{{ asset('storage/categorias/' . $categoria->imagen) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $categoria->nombre }}">
 
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase">
-                            Hornos industriales
-                        </h3>
+                        @else
 
-                        <p class="text-white text-xs">
-                            Cocción perfecta
-                        </p>
-                    </div>
+                            <!-- Imagen por defecto -->
+                            <img src="{{ asset('storage/categorias/categoria-default.jpg') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $categoria->nombre }}">
 
-                </a>
+                        @endif
 
 
-                <!-- Balanzas -->
-                <a href="#" data-aos="fade-left"
-                    class="relative md:col-span-3 h-[205px] overflow-hidden group">
-
-                    <img
-                        src="{{ asset('storage\img\balanzas.png') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Balanzas">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase">
-                            Balanzas y básculas
-                        </h3>
-
-                        <p class="text-white text-xs">
-                            Precisión comercial
-                        </p>
-                    </div>
-
-                </a>
+                        <!-- Degradado -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
 
 
-                <!-- Hardware POS -->
-                <a href="#" data-aos="fade-right"
-                    class="relative md:col-span-3 h-[170px] overflow-hidden group">
+                        <!-- Información -->
+                        <div class="absolute {{ $positionClass }}">
 
-                    <img
-                        src="{{ asset('storage\img\pos.png') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="POS">
+                            <h3 class="text-white font-black uppercase {{ $titleClass }}">{{ $categoria->nombre }}</h3>
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                            @if ($categoria->descripcion)
 
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase">
-                            Hardware POS
-                        </h3>
+                                <p class="text-white {{ $descriptionClass }}">{{ $categoria->descripcion }}</p>
 
-                        <p class="text-white text-xs">
-                            Terminales y periféricos
-                        </p>
-                    </div>
+                            @endif
 
-                </a>
+                        </div>
 
+                    </a>
 
-                <!-- Acero -->
-                <a href="#" data-aos="fade-right"
-                    class="relative md:col-span-3 h-[170px] overflow-hidden group">
-
-                    <img
-                        src="{{ asset('storage/img/acero.webp') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Acero inoxidable">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase">
-                            Acero inoxidable
-                        </h3>
-
-                        <p class="text-white text-xs">
-                            Mesones y estanterías
-                        </p>
-                    </div>
-
-                </a>
-
-
-                <!-- Servicio técnico -->
-                <a href="#" data-aos="fade-right"
-                    class="relative md:col-span-6 h-[170px] overflow-hidden group">
-
-                    <img
-                        src="{{ asset('storage/img/img-servicios.jpg') }}"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                        alt="Servicio técnico">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-
-                    <div class="absolute bottom-4 left-4">
-                        <h3 class="text-white font-black uppercase text-3xl">
-                            Servicio técnico
-                        </h3>
-
-                        <p class="text-white text-sm">
-                            Mantenimiento preventivo y correctivo
-                        </p>
-                    </div>
-
-                </a>
+                @endforeach
 
             </div>
 
@@ -516,13 +416,9 @@
 
                 <h2 class="font-black uppercase leading-none text-5xl">
 
-                    <span class="block text-dark">
-                        Marcas Líderes
-                    </span>
+                    <span class="block text-dark">Marcas Líderes</span>
 
-                    <span class="block text-white">
-                        Del Mercado
-                    </span>
+                    <span class="block text-white">Del Mercado</span>
 
                 </h2>
 
@@ -562,18 +458,7 @@
                 <!-- Flecha derecha -->
                 <div class="marcas-next absolute top-1/2 -translate-y-1/2 -right-8 z-20 cursor-pointer">
 
-                    <svg class="w-10 h-10 text-dark hover:text-white transition"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24">
-
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 5l7 7-7 7" />
-
-                    </svg>
+                    <svg class="w-10 h-10 text-dark hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
 
                 </div>
 
@@ -584,49 +469,23 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 text-center">
 
                 <div>
-
-                    <div class="text-6xl font-black text-dark contador" data-target="50">0</div>
-
-                    <p class="mt-3 uppercase tracking-[4px] text-dark">
-                        Marcas Disponibles
-                    </p>
-
+                    <div class="text-6xl font-black text-dark contador" data-target="{{ $marcasDisponibles }}" data-suffix="+">{{ $marcasDisponibles }}+</div>
+                    <p class="mt-3 uppercase tracking-[4px] text-dark">Marcas Disponibles</p>
                 </div>
 
                 <div>
-
-                    <div class="text-6xl font-black text-dark contador" data-target="100" data-suffix="%">
-                        0%
-                    </div>
-
-                    <p class="mt-3 uppercase tracking-[4px] text-dark">
-                        Productos Originales
-                    </p>
-
+                    <div class="text-6xl font-black text-dark contador" data-target="100" data-suffix="%">0%</div>
+                    <p class="mt-3 uppercase tracking-[4px] text-dark">Productos Originales</p>
                 </div>
 
                 <div>
-
-                    <div class="text-6xl font-black text-dark contador" data-target="24">
-                        24
-                    </div>
-
-                    <p class="mt-3 uppercase tracking-[4px] text-dark">
-                        Meses de Garantía
-                    </p>
-
+                    <div class="text-6xl font-black text-dark contador" data-target="24">24</div>
+                    <p class="mt-3 uppercase tracking-[4px] text-dark">Meses de Garantía</p>
                 </div>
 
                 <div>
-
-                    <div class="text-6xl font-black text-dark contador" data-target="5000" data-suffix="+">
-                        5000+
-                    </div>
-
-                    <p class="mt-3 uppercase tracking-[4px] text-dark">
-                        Productos en Stock
-                    </p>
-
+                    <div class="text-6xl font-black text-dark contador" data-target="{{ $productosEnStock }}" data-suffix="+">{{ $productosEnStock }}+</div>
+                    <p class="mt-3 uppercase tracking-[4px] text-dark">Productos en Stock</p>
                 </div>
 
             </div>
