@@ -137,29 +137,17 @@
 
                         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                             @foreach ($productos as $producto)
-                                <article class="group overflow-hidden border border-gray-200 bg-white transition hover:-translate-y-1 hover:shadow-lg">
-                                    <div class="flex aspect-square items-center justify-center bg-white p-6">
+                                <article class="group overflow-hidden border border-gray-200 bg-[#f1f1f1] transition hover:-translate-y-1 hover:shadow-lg">
+                                    <div class="flex aspect-[1.08] items-center justify-center bg-white p-3">
                                         <img src="{{ $producto['imagen'] }}" alt="{{ $producto['nombre'] }}" class="h-full w-full object-contain transition duration-300 group-hover:scale-105" loading="lazy">
                                     </div>
-                                    <div class="px-5 pb-5">
-                                        <h3 class="min-h-[40px] text-center text-sm font-bold leading-5 text-black">
-                                            <a href="{{ route('productos.show', $producto['id']) }}" class="transition hover:text-primary">
-                                                {{ $producto['nombre'] }}
-                                            </a>
-                                        </h3>
-                                        <hr class="my-4 border-dashed border-gray-300">
-                                        <div class="space-y-1 text-sm">
-                                            <p class="font-bold text-primary">
-                                                CÓDIGO: <span class="font-normal text-gray-700">{{ $producto['codigo'] }}</span>
-                                            </p>
-                                            <p class="font-bold text-primary">
-                                                UNIDAD: <span class="font-normal text-gray-700">{{ $producto['unidad'] }}</span>
-                                            </p>
-                                        </div>
+                                    <div class="p-5">
+                                        <p class="text-[11px] font-bold uppercase tracking-wide text-gray-500">{{ $producto['categoria'] }}</p>
+                                        <h3 class="mt-1 min-h-[40px] text-sm font-bold uppercase leading-5 text-black">{{ $producto['nombre'] }}</h3>
+                                        <a href="{{ route('contacto') }}" class="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-bold text-black transition hover:bg-black hover:text-white">
+                                            Solicitar cotización <i class="bx bx-right-arrow-alt text-base" aria-hidden="true"></i>
+                                        </a>
                                     </div>
-                                </article>
-                            @endforeach
-                        </div>
                                 </article>
                             @endforeach
                         </div>
