@@ -57,9 +57,9 @@
             $categorias = ['Molinos', 'Sierras', 'Empacadoras', 'Hornos', 'Balanzas', 'POS', 'Acero inoxidable', 'Servicio'];
             $marcas = ['Dibal', 'Epelsa', 'Haifish', 'Javar', 'Salvador', 'Tramontina'];
             $productos = [
-                ['nombre' => 'Sierra para hueso profesional', 'categoria' => 'Sierras', 'imagen' => asset('storage/img/sierra-circular-dientes-mesa.jpg')],
+                ['nombre' => 'Sierra para hueso profesional', 'categoria' => 'Sierras', 'imagen' => asset('storage/img/DELANTAL MONOBLOC POLIURETANO ROJO.png')],
                 ['nombre' => 'Molino industrial de carne', 'categoria' => 'Molinos', 'imagen' => asset('storage/img/molino.jpg')],
-                ['nombre' => 'Empacadora al vacío', 'categoria' => 'Empacadoras', 'imagen' => asset('storage/img/empacadoras.webp')],
+                ['nombre' => 'Empacadora al vacío', 'categoria' => 'Empacadoras', 'imagen' => asset('storage/img/kit-e2-24-piezas-Pesa patron 1,500w.png')],
                 ['nombre' => 'Horno industrial', 'categoria' => 'Hornos', 'imagen' => asset('storage/img/hornos.webp')],
                 ['nombre' => 'Balanza comercial', 'categoria' => 'Balanzas', 'imagen' => asset('storage/img/balanzas.png')],
                 ['nombre' => 'Sierra circular de mesa', 'categoria' => 'Sierras', 'imagen' => asset('storage/img/sierra-circular-dientes-mesa.jpg')],
@@ -82,8 +82,8 @@
                     </div>
                 </div>
 
-                <div class="grid gap-8 lg:grid-cols-[230px_minmax(0,1fr)]">
-                    <aside class="self-start lg:sticky lg:top-24">
+                <div class="grid gap-8 lg:grid-cols-[230px_minmax(0,1fr)] ">
+                    <aside class="self-start lg:sticky lg:top-24 bg-[#f1f1f1]">
                         <form action="{{ route('productos') }}" method="GET" class="mb-8">
                             <label for="buscar-producto" class="sr-only">Buscar producto o marca</label>
                             <div class="flex items-center rounded-md border border-black bg-white px-3 focus-within:ring-2 focus-within:ring-primary">
@@ -137,17 +137,29 @@
 
                         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                             @foreach ($productos as $producto)
-                                <article class="group overflow-hidden border border-gray-200 bg-[#f1f1f1] transition hover:-translate-y-1 hover:shadow-lg">
-                                    <div class="flex aspect-[1.08] items-center justify-center bg-white p-3">
+                                <article class="group overflow-hidden border border-gray-200 bg-white transition hover:-translate-y-1 hover:shadow-lg">
+                                    <div class="flex aspect-square items-center justify-center bg-white p-6">
                                         <img src="{{ $producto['imagen'] }}" alt="{{ $producto['nombre'] }}" class="h-full w-full object-contain transition duration-300 group-hover:scale-105" loading="lazy">
                                     </div>
-                                    <div class="p-5">
-                                        <p class="text-[11px] font-bold uppercase tracking-wide text-gray-500">{{ $producto['categoria'] }}</p>
-                                        <h3 class="mt-1 min-h-[40px] text-sm font-bold uppercase leading-5 text-black">{{ $producto['nombre'] }}</h3>
-                                        <a href="{{ route('contacto') }}" class="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-bold text-black transition hover:bg-black hover:text-white">
-                                            Solicitar cotización <i class="bx bx-right-arrow-alt text-base" aria-hidden="true"></i>
-                                        </a>
+                                    <div class="px-5 pb-5">
+                                        <h3 class="min-h-[40px] text-center text-sm font-bold leading-5 text-black">
+                                            <a href="{{ route('productos.show', $producto['id']) }}" class="transition hover:text-primary">
+                                                {{ $producto['nombre'] }}
+                                            </a>
+                                        </h3>
+                                        <hr class="my-4 border-dashed border-gray-300">
+                                        <div class="space-y-1 text-sm">
+                                            <p class="font-bold text-primary">
+                                                CÓDIGO: <span class="font-normal text-gray-700">{{ $producto['codigo'] }}</span>
+                                            </p>
+                                            <p class="font-bold text-primary">
+                                                UNIDAD: <span class="font-normal text-gray-700">{{ $producto['unidad'] }}</span>
+                                            </p>
+                                        </div>
                                     </div>
+                                </article>
+                            @endforeach
+                        </div>
                                 </article>
                             @endforeach
                         </div>
