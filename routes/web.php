@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CarritoController;
 
 // Página principal pública
@@ -10,7 +11,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Página Nosotros
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 // Página principal pública
-Route::get('/productos', [HomeController::class, 'productos'])->name('productos');
+Route::get('/productos', [ProductoController::class, 'productos'])->name('productos');
 // Página principal pública
 Route::get('/servicios', [HomeController::class, 'servicios'])->name('servicios');
 // Página principal pública
