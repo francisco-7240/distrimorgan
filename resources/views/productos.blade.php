@@ -86,15 +86,6 @@
                             </section>
 
                             <section>
-                                <h2 class="rounded-md bg-primary px-4 py-2 text-base font-bold text-black">Productos</h2>
-                                <ul class="mt-4 space-y-2 px-1 text-sm font-semibold uppercase text-black">
-                                    <li><a href="#" class="transition hover:text-primary">Más vendidos</a></li>
-                                    <li><a href="#" class="transition hover:text-primary">Novedades</a></li>
-                                    <li><a href="#" class="transition hover:text-primary">Ofertas</a></li>
-                                </ul>
-                            </section>
-
-                            <section>
                                 <h2 class="rounded-md bg-primary px-4 py-2 text-base font-bold text-black">Marcas</h2>
                                 <div class="mt-4 grid grid-cols-2 gap-2">
                                     @foreach ($marcas as $marca)

@@ -272,6 +272,7 @@
     <x-carrito-icono />
 </header>
 
+
 <!-- WhatsApp -->
     <a
         href="https://wa.me/573026400248?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
