@@ -570,103 +570,14 @@
 
             <!-- productos -->
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                @foreach ($productos as $producto)
-                @php
-                    $imagenPortada = $producto->imagenes->where('es_portada', true)->first();
-                    $varianteDisponible = $producto->productoColores->firstWhere('stock', '>', 0)
-                        ?? $producto->productoColores->first();
-                @endphp
-                <div class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
-                    <!-- Imagen -->
-                    <div class="flex justify-center mb-5">
-                    <!-- Categoría -->
-                        <p class="text-sm text-dark bg-primary hover:text-white hover:bg-dark rounded-xl absolute top-2 left-2 py-2 px-4">{{ $producto->categoria->nombre }}</p>
-                        @if ($imagenPortada)
-                            <img src="{{ asset('storage/productos/' . $imagenPortada->imagen) }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
-                        @else
-                            <img src="{{ asset('storage/productos/producto-default.png') }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
-                        @endif
-                    </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <!-- Marca -->
-                        <span class="text-xs uppercase text-gray-500 font-semibold">{{ $producto->marca->nombre }}</span>
-                        <!-- Colores -->
-                         @if ($producto->productoColores->count())
-                            <div class="flex flex-col items-start gap-1">
-                                <span class="text-xs font-semibold">Colores:</span>
-
-                                <div class="flex gap-1">
-                                    @foreach ($producto->productoColores as $productoColor)
-                                        <span
-                                            class="w-4 h-4 rounded-full border"
-                                            style="background-color: {{ $productoColor->color->codigo_hex }}"
-                                            title="{{ $productoColor->color->nombre }}"
-                                        ></span>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-
-                    <!-- Nombre del producto -->
-                    <h3 class="font-black uppercase text-dark mt-1">{{ $producto->nombre }}</h3>
-
-                    <!-- Cantidad -->
-                    <div class="flex items-center justify-between mt-6">
-
-                        <div class="flex border rounded-lg overflow-hidden">
-
-                            <button class="w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition"> -</button>
-
-                            <div class="w-12 flex items-center justify-center font-bold"> 1</div>
-
-                            <button class="w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition"> +</button>
-
-                        </div>
-
-                        <!-- Agregar a la cotización -->
-                        @if ($varianteDisponible)
-                            <x-agregar-cotizacion
-                                :producto-color-id="$varianteDisponible->id"
-                                texto="Agregar"
-                                class="rounded-xl px-5 py-3 text-sm"
-                            />
-                        @else
-                            <span class="text-xs font-semibold text-gray-500">Sin variantes</span>
-                        @endif
-
-                    </div>
-
-                </div>
-                @endforeach
-
+                <x-producto-card :productos="$productos"/>
             </div>
 
             <!-- Botón -->
             <div class="mt-10 text-center" data-aos="fade-in">
-                <a
-                    href="#"
-                    class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:rounded-full hover:text-white"
-                >
+                <a href="#" class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-2 hover:bg-dark hover:rounded-full hover:text-white">
                     Ver Catálogo Completo
-
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 5l7 7-7 7"
-                        />
-                    </svg>
-
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>

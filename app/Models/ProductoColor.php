@@ -20,10 +20,12 @@ class ProductoColor extends Model
         'producto_id',
         'color_id',
         'stock',
+        'es_predeterminado',
     ];
 
     protected $casts = [
         'stock' => 'integer',
+        'es_predeterminado' => 'boolean',
     ];
 
     /**

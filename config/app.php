@@ -16,8 +16,9 @@ return [
     'name' => env('APP_NAME', 'DistriMorgan'),
     // Redes Sociales
     'redfacebook' => env('RED_FACEBOOK', 'https://www.facebook.com/share/1BnmHqmmqu/'),
-    'redinstagram' => env('RED_INSTAGRAM', 'https://www.instagram.com/distrimorgan?igsi=MWw4aGdic3V1cDg2'),
+    'redinstagram' => env('RED_INSTAGRAM', 'https://www.instagram.com/distrimorgan'),
     'redyoutube' => env('RED_YOUTUBE', 'https://youtube.com/@distrimorgan?si=frU1CWVnsn08Z8Sx'),
+    'redwhatsapp' => env('RED_WHATSAPP', 'https://api.whatsapp.com/send/?phone=573026400248'),
 
     /*
     |--------------------------------------------------------------------------

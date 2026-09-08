@@ -21,8 +21,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Rutas para el carrito de compras
 Route::prefix('carrito')->name('carrito.')->group(function () {
     Route::get('/', [CarritoController::class, 'index'])->name('index');
+    Route::post('/productos', [CarritoController::class, 'productos'])->name('productos');
+
     Route::post('/agregar', [CarritoController::class, 'agregar'])->name('agregar');
     Route::patch('/{productoColorId}', [CarritoController::class, 'actualizar'])->name('actualizar');
     Route::delete('/{productoColorId}', [CarritoController::class, 'eliminar'])->name('eliminar');

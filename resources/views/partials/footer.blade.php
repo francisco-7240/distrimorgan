@@ -210,7 +210,7 @@
 
 <!-- BOTÓN FLOTANTE "IR ARRIBA" -->
 <button id="scrollTopBtn" aria-label="Ir Arriba"
-    class="hidden fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-dark transition transform hover:scale-110 cursor-pointer animate-bounce"
+    class="hidden fixed bottom-32 right-6 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-dark transition transform hover:scale-110 cursor-pointer animate-bounce"
     onclick="scrollToTop()"
 >
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

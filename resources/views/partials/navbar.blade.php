@@ -269,20 +269,22 @@
         </div>
 
     </div>
-    <x-carrito-icono />
+
 </header>
 
 
+<!-- Carrito -->
+<a href="{{ route('carrito.index') }}" target="_blank" rel="noopener noreferrer" aria-label="Ver Carrito" class="fixed bottom-20 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full bg-dark text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-primary">
+    <span id="carritoContador" class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white">
+        0
+    </span>
+    <i class="bx bx-cart text-2xl" aria-hidden="true"></i>
+</a>
+
 <!-- WhatsApp -->
-    <a
-        href="https://wa.me/573026400248?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contactar por WhatsApp"
-        class="fixed bottom-6 right-6 z-[60] flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]"
-    >
-        <i class="bx bxl-whatsapp text-4xl" aria-hidden="true"></i>
-    </a>
+<a href="{{ config('app.redwhatsapp') }}?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" class="fixed bottom-6 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]">
+    <i class="bx bxl-whatsapp text-2xl" aria-hidden="true"></i>
+</a>
 
 <script>
 function navbarHandler() {
