@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'DistriMorgan'),
+    'name' => env('APP_NAME', 'Distribuidora Morgan'),
     // Redes Sociales
     'redfacebook' => env('RED_FACEBOOK', 'https://www.facebook.com/share/1BnmHqmmqu/'),
     'redinstagram' => env('RED_INSTAGRAM', 'https://www.instagram.com/distrimorgan'),

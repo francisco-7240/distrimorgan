@@ -1,54 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
 
-@include('partials.navbar')
-<head>
-    @include('partials.header')
-    <title>Distribuidora Morgan</title>
-    <meta name="description" content="Distribuidora líder en herramientas y equipos industriales. Más de 15 años ofreciendo calidad y servicio excepcional">
-</head>
-<main>
-    <!-- Banner principal -->
-    <section @class(['relative', 'w-full', 'min-h-screen', 'bg-cover', 'bg-center']) style="background-image: url('{{ asset('storage/img/img-banner-principal.jpg') }}')">
-                <!-- Capa oscura -->
-        <div @class(['absolute', 'inset-0', 'bg-black/60'])></div>
+        @include('partials.header')
 
-                <!-- Contenido -->
-                <div @class(['relative', 'z-10', 'flex', 'items-center', 'min-h-screen'])>
-                    <div @class(['max-w-1xl', 'mx-auto', 'text-center', 'px-6', 'lg:px-10', 'w-full'])>
+        <title>{{ config('app.name') }} - Contacto</title>
+        <meta name="description" content="Distribuidora Morgan - Contáctanos para obtener información sobre nuestros productos y servicios. Estamos aquí para ayudarte a potenciar tu negocio con maquinaria industrial, herramientas especializadas y servicio técnico certificado.">
 
-                        <div @class(['max-w-1xl'])>
+    </head>
+    <body class="bg-white">
 
-                            <!-- Título -->
-                            <h1 @class(['font-black', 'uppercase', 'leading-none'])>
+        @include('partials.navbar')
 
-                                <span @class(['block', 'text-white', 'text-5xl', 'md:text-7xl'])>
-                                    SERVICIO TÉCNICO
-                                </span>
+        <!-- Banner -->
+        <section class="relative w-full h-64 sm:h-80 md:h-96 bg-cover bg-center overflow-hidden" style="background-image: url('{{ asset('storage/img/banner_mis_productos.jpg') }}')">
+            <!-- Capa oscura -->
+            <div class="absolute inset-0 bg-black/70"></div>
 
-                                <span @class(['block', 'text-primary', 'text-5xl', 'md:text-7xl'])>
-                                    PARA TU NEGOCIO
-                                </span>
-
-                            </h1>
-
-                            <!-- Descripción -->
-                            <p @class(['mt-8', 'text-gray-200', 'text-lg', 'max-w-xl', 'text-center', 'mx-auto'])>
-                                Diagnóstico, reparación y mantenimiento especializado para
-                                cocinas profesionales que necesitan seguir produciendo.
-                            </p>
-                        </div>
-
-                    </div>
+            <!-- Contenido -->
+            <div class="relative flex min-h-screen items-start pt-28 pb-28 md:pt-44 lg:pt-48">
+                <div class="container px-6 lg:px-10 w-full">
+                    <!-- Título -->
+                    <h1 class="font-black uppercase leading-none text-white text-4xl md:text-7xl">Nuestros <span class="text-primary">Servicios</span>
+                    </h1>
                 </div>
-                <!-- Indicador de scroll -->
-                <div @class(['absolute', 'bottom-8', 'left-1/2', '-translate-x-1/2', 'z-20'])>
-                    <a href="#section-category" @class(['flex', 'flex-col', 'items-center', 'text-white', 'transition', 'duration-300', 'hover:scale-110'])>
-                        <div @class(['w-5', 'h-10', 'border', 'border-white', 'rounded-full', 'flex', 'justify-center', 'pt-2'])>
-                            <div @class(['w-1', 'h-2', 'bg-primary', 'rounded-full', 'animate-bounce'])></div>
-                        </div>
-                    </a>
-                </div>
-    </section>
-    <!-- Encabezado -->
+            </div>
+
+        </section>
+
+            <!-- Encabezado -->
     <section>
         <div @class(['max-w-7xl', 'mx-auto', 'px-6', 'mt-16', 'sm:mt-32']) data-aos="fade-up">
 
@@ -336,7 +316,10 @@
     </div>
 </section>
     
-    
-</main>
 
-@include('partials.footer')
+        @include('partials.footer')
+
+    </body>
+</html>
+
+

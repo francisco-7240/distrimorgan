@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     @include('partials.header')
-    <title>Distribuidora Morgan</title>
+    <title>{{ config('app.name') }} - Inicio</title>
     <meta name="description" content="Distribuidora líder en herramientas y equipos industriales. Más de 15 años ofreciendo calidad y servicio excepcional">
 </head>
 <body class="overflow-x-hidden">
@@ -535,18 +535,23 @@
 
                     <input
                         type="text"
+                        id="buscadorProductos"
                         placeholder="Buscar producto"
-                        class="w-full lg:w-72 rounded-lg border border-gray-300 py-3 pl-11 pr-4 focus:ring-primary focus:border-primary">
+                        class="w-full lg:w-72 rounded-lg border border-gray-300 py-3 pl-11 pr-4 focus:ring-primary focus:border-primary"
+                    >
 
-                    <svg class="w-5 h-5 absolute left-4 top-3.5 text-primary"
+                    <svg
+                        class="w-5 h-5 absolute left-4 top-3.5 text-primary"
                         fill="none"
                         stroke="currentColor"
-                        viewBox="0 0 24 24">
-
-                        <path stroke-linecap="round"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="m21 21-4.35-4.35m1.85-5.15a7 7 0 11-14 0a7 7 0 0114 0z"/>
+                            d="m21 21-4.35-4.35m1.85-5.15a7 7 0 11-14 0a7 7 0 0114 0z"
+                        />
                     </svg>
 
                 </div>
@@ -554,14 +559,25 @@
                 <!-- Categorías -->
                 <div class="flex flex-wrap gap-2">
 
-                    <button class="bg-primary px-4 py-2 rounded-lg font-bold text-sm">
+                    <!-- Todos -->
+                    <button
+                        type="button"
+                        class="btn-categoria bg-primary text-dark px-4 py-2 rounded-lg font-bold text-sm hover:bg-dark hover:text-white transition"
+                        data-categoria-id="todos"
+                    >
                         Todos
                     </button>
 
                     @foreach ($categorias as $categoria)
-                        <button class="border px-4 py-2 rounded-lg text-sm font-bold">
+
+                        <button
+                            type="button"
+                            class="btn-categoria border px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition"
+                            data-categoria-id="{{ $categoria->id }}"
+                        >
                             {{ $categoria->nombre }}
                         </button>
+
                     @endforeach
 
                 </div>
@@ -569,8 +585,21 @@
             </div>
 
             <!-- productos -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="listaProductos">
                 <x-producto-card :productos="$productos"/>
+            </div>
+
+            <!-- Sin resultados -->
+            <div id="sinResultados" class="hidden text-center py-16">
+                <i class="bx bx-search-alt-2 text-6xl text-gray-300"></i>
+
+                <h3 class="text-xl font-black text-dark mt-4">
+                    No encontramos productos
+                </h3>
+
+                <p id="mensajeSinResultados" class="text-gray-500 mt-2">
+                    No hay productos que coincidan con tu búsqueda.
+                </p>
             </div>
 
             <!-- Botón -->
@@ -1151,9 +1180,7 @@
         observer.observe(document.querySelector('#section-brands'));
 
     });
-    </script>
-
-    
+    </script>    
 
     <!-- Footer -->
     @include('partials.footer')

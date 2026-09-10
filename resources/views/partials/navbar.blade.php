@@ -86,7 +86,7 @@
                         Nosotros
                     </x-nav-link>
 
-                    <x-nav-link :href="route('productos')" :active="request()->routeIs('productos')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
+                    <x-nav-link :href="route('productos.show')" :active="request()->routeIs('productos.show')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
                         Productos
                     </x-nav-link>
 

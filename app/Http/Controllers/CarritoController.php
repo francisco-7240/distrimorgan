@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CarritoService;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class CarritoController extends Controller
 {
-    public function __construct(protected CarritoService $carrito)
+    public function __construct()
     {
     }
 

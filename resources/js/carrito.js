@@ -311,9 +311,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const carrito = obtenerCarrito();
 
+        const acciones = document.querySelector('#accionesCarrito');
+
         if (carrito.length === 0) {
+
+            if (acciones) {
+                acciones.classList.add('hidden');
+            }
+
             mostrarCarritoVacio();
             return;
+        }
+
+        if (acciones) {
+            acciones.classList.remove('hidden');
         }
 
         const ids = carrito.map(item => item.producto_id);
@@ -424,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     data-carrito-color="${item.color ? item.color.id : ''}"
                 >
 
-                    <div class="flex gap-5 items-center">
+                    <div class="flex flex-wrap gap-5 items-center">
 
                         <!-- Imagen -->
                         <div class="w-16 h-16 flex-shrink-0 border rounded-lg overflow-hidden">
@@ -451,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     : ''
                             }
 
-                            <h3 class="font-black uppercase text-dark text-lg">
+                            <h3 class="font-black uppercase text-dark text-md">
                                 ${producto.nombre}
                             </h3>
 
@@ -487,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <!-- Eliminar -->
                         <button
                             type="button"
-                            class="btn-carrito-eliminar text-red-600 hover:text-red-800 transition"
+                            class="btn-carrito-eliminar text-red-600 hover:bg-dark hover:text-white hover:rounded-full transition p-2"
                             title="Eliminar producto"
                         >
                             <i class="bx bx-trash text-2xl"></i>
@@ -726,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         contenedor.innerHTML = `
-            <div class="text-center py-20">
+            <div class="text-center py-20 col-span-2">
 
                 <i class="bx bx-cart text-6xl text-gray-300"></i>
 
@@ -751,6 +762,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.querySelector('#carritoProductos')) {
         cargarProductosCarrito();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enviar carrito por WhatsApp
+    |--------------------------------------------------------------------------
+    */
+
+    const btnEnviarWhatsApp = document.querySelector('#btnEnviarWhatsApp');
+
+    if (btnEnviarWhatsApp) {
+        btnEnviarWhatsApp.addEventListener('click', enviarCarritoWhatsApp);
+    }
+
+    function enviarCarritoWhatsApp() {
+
+        const carrito = obtenerCarrito();
+
+        if (carrito.length === 0) {
+            alert('El carrito está vacío.');
+            return;
+        }
+
+        const contenedor = document.querySelector('#carritoProductos');
+
+        if (!contenedor) return;
+
+        const numeroWhatsApp = contenedor.dataset.whatsapp;
+
+        if (!numeroWhatsApp) {
+            console.error('No se ha configurado el número de WhatsApp.');
+            alert('No se pudo configurar el envío por WhatsApp.');
+            return;
+        }
+
+        let mensaje = 'Hola, quisiera solicitar una cotización con los siguientes productos: \n';
+
+        carrito.forEach((item, index) => {
+
+            mensaje += `${index + 1}. ${item.nombre}\n`;
+            mensaje += `   Cantidad: ${item.cantidad}\n`;
+
+            if (item.color) {
+                mensaje += `   Color: ${item.color.nombre}\n`;
+            }
+
+            mensaje += '\n';
+        });
+
+        mensaje += 'Quedo atento(a) a la cotización. Muchas gracias.';
+
+        const url = `${numeroWhatsApp}&text=${encodeURIComponent(mensaje)}`;
+
+        window.open(url, '_blank');
     }
 
 });

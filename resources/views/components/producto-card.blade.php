@@ -1,10 +1,10 @@
 @foreach ($productos as $producto)
     @php
         $imagenPortada = $producto->imagenes->where('es_portada', true)->first();
-        $coloresDisponibles = $producto->productoColores->filter(fn ($productoColor) => $productoColor->stock == NULL || $productoColor->stock > 0 && $productoColor->es_predeterminado != true);
+        $coloresDisponibles = $producto->productoColores->filter(fn ($productoColor) => !$productoColor->color->es_predeterminado && (is_null($productoColor->stock) || $productoColor->stock > 0));
     @endphp
 
-    <div class="bg-white p-2 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
+    <div class="producto-card bg-white p-2 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100" data-producto-id="{{ $producto->id }}" data-categoria-id="{{ $producto->categoria_id }}" data-producto-nombre="{{ strtolower($producto->nombre) }}" data-marca-id="{{ $producto->marca_id }}" data-producto-fecha="{{ $producto->created_at->timestamp }}">
         <!-- Imagen -->
         <div class="flex justify-center relative w-full h-56 overflow-hidden rounded-2xl bg-gray-50 mb-1">
             <!-- Categoría -->
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Marca y colores -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
             <!-- Marca -->
             @if ($producto->marca)
                 <span class="text-xs uppercase text-gray-500 font-semibold">
@@ -27,7 +27,7 @@
                 </span>
             @endif
             <!-- Colores -->
-            @if ($producto->productoColores->count())
+            @if ($coloresDisponibles->count())
                 <div class="flex flex-col items-start gap-1">
                     <!-- Color seleccionado -->
                     <p class="text-xs font-semibold">

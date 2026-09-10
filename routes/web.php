@@ -10,8 +10,8 @@ use App\Http\Controllers\CarritoController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Página Nosotros
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
-// Página principal pública
-Route::get('/productos', [ProductoController::class, 'productos'])->name('productos');
+// Página para mostrar todos los productos
+Route::get('/productos', [ProductoController::class, 'show'])->name('productos.show');
 // Página principal pública
 Route::get('/servicios', [HomeController::class, 'servicios'])->name('servicios');
 // Página principal pública
