@@ -15,6 +15,34 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('productos.index')" :active="request()->routeIs('productos.index')">
+                        Productos
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        Categorías
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        Marcas
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        Colores
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        Negocios
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        Contactos
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        Usuarios
+                    </x-nav-link>
                 </div>
             </div>
 
