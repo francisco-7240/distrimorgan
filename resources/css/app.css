@@ -18,6 +18,18 @@
   --color-secondary: #000000;
 }
 
+@media (min-width: 1024px) {
+    #abrirFiltros,
+    #cerrarFiltros,
+    #fondoFiltros {
+        display: none !important;
+    }
+
+    #panelFiltros {
+        display: flex !important;
+    }
+}
+
 /* barra de scroll (scrollbar) */
 /* Chrome, Edge, Safari */
 ::-webkit-scrollbar {

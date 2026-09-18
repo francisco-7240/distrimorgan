@@ -11,10 +11,10 @@
             <p class="text-sm text-dark bg-primary hover:text-white hover:bg-dark rounded-xl absolute top-1 left-1 py-2 px-4">
                 {{ $producto->categoria->nombre }}
             </p>
-            @if ($imagenPortada)
-                <img src="{{ asset('storage/productos/' . $imagenPortada->imagen) }}" class="h-56 object-contain" alt="{{ $producto->nombre }}" >
+            @if ($imagenPortada && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagenPortada->imagen))
+                <img src="{{ asset('storage/' . $imagenPortada->imagen) }}" class="h-56 object-contain" alt="{{ $producto->nombre }}" >
             @else
-                <img src="{{ asset('storage/productos/producto-default.png') }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
+                <img src="{{ asset('storage/logo/logo_distrimorgan.png') }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
             @endif
         </div>
 

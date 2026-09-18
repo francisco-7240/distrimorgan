@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MarcaController;
 
 // Página principal pública
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -37,7 +39,10 @@ Route::prefix('dashboard')->group(function () {
 
     // Administrador y Editor
     Route::middleware(['auth'])->group(function () {
+        Route::get('/productos/{producto}/article', [ProductoController::class, 'article'])->name('productos.article');
         Route::resource('productos', ProductoController::class);
+        Route::resource('categorias', CategoriaController::class)->except('show');
+        Route::resource('marcas', MarcaController::class)->except('show');
         // Perfil
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

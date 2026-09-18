@@ -20,11 +20,11 @@
                         Productos
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">
                         Categorías
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('marcas.index')" :active="request()->routeIs('marcas.*')">
                         Marcas
                     </x-nav-link>
 

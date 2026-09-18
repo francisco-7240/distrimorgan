@@ -274,7 +274,7 @@
 
 
 <!-- Carrito -->
-<a href="{{ route('carrito.index') }}" target="_blank" rel="noopener noreferrer" aria-label="Ver Carrito" class="fixed bottom-20 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full bg-dark text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-primary">
+<a href="{{ route('carrito.index') }}" rel="noopener noreferrer" aria-label="Ver Carrito" class="fixed bottom-20 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full bg-dark text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-primary">
     <span id="carritoContador" class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white">
         0
     </span>

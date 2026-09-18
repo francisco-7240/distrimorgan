@@ -4,7 +4,7 @@
 
         @include('partials.header')
 
-        <title>{{ config('app.name') }} - Mi Carrito</title>
+        <title>{{ config('app.name') }} - Productos</title>
         <meta name="description" content="Distribuidora Morgan - Listado de productos. Encuentra equipos profesionales para potenciar tu negocio.">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -14,7 +14,7 @@
         @include('partials.navbar')
 
         <!-- Banner -->
-        <section class="relative w-full h-64 sm:h-80 md:h-96 bg-cover bg-center overflow-hidden" style="background-image: url('{{ asset('storage/img/banner_mis_productos.jpg') }}')">
+        <section class="relative w-full h-64 sm:h-80 md:h-96 bg-cover bg-center overflow-hidden" style="background-image: url('{{ asset('storage/img/banner_mis_productos.jpeg') }}')">
             <!-- Capa oscura -->
             <div class="absolute inset-0 bg-black/70"></div>
 
@@ -41,9 +41,29 @@
                     </div>
                 </div>
                 
+                <div class="mb-6 flex items-center justify-between gap-4 lg:!hidden">
+                    <button
+                        type="button"
+                        id="abrirFiltros"
+                        class="inline-flex items-center gap-2 rounded border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm"
+                        aria-controls="panelFiltros"
+                        aria-expanded="false"
+                    >
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M7 12h10m-7 6h4"/></svg>
+                        Filtros
+                    </button>
+                    <span class="text-sm font-medium text-gray-500">{{ $productos->count() }} productos</span>
+                </div>
+
                 <div class="grid gap-8 grid-cols-1 lg:grid-cols-[230px_minmax(0,1fr)]">
                     <!-- Filtros -->
-                    <div class="flex flex-col gap-4 py-4 px-2 bg-gray-100 rounded-lg shadow-lg">
+                    <div id="panelFiltros" class="fixed inset-y-0 left-0 z-50 hidden w-[min(88vw,320px)] flex-col gap-4 overflow-y-auto bg-gray-100 px-4 py-6 shadow-2xl lg:static lg:!flex lg:w-auto lg:rounded-lg lg:px-2 lg:py-4 lg:shadow-lg">
+                        <div class="flex items-center justify-between lg:!hidden">
+                            <h2 class="text-lg font-bold text-gray-800">Filtros</h2>
+                            <button type="button" id="cerrarFiltros" class="rounded p-2 text-gray-600 hover:bg-gray-200" aria-label="Cerrar filtros">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18"/></svg>
+                            </button>
+                        </div>
 
                         <!-- Buscador -->
                         <div class="w-full flex flex-col gap-2">
@@ -120,9 +140,11 @@
 
                     </div>
 
+                    <div id="fondoFiltros" class="fixed inset-0 z-40 hidden bg-black/40 lg:!hidden" aria-hidden="true"></div>
+
                     <!-- productos -->
                     <div>
-                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="listaProductos">
+                        <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4" id="listaProductos">
                             <x-producto-card :productos="$productos"/>
                         </div>
 

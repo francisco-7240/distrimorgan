@@ -22,8 +22,8 @@ class HomeController extends Controller
             'productoColores.imagenes',
             'imagenes',
         ])->where('estado', 1)->get();
-        // Obtener 8 categorías principales en orden aleatorio
-        $categorias = Categoria::where('estado', 1)->whereNull('categoria_padre_id')->inRandomOrder()->limit(8)->get();
+        // Obtener 8 categorías activas en orden aleatorio
+        $categorias = Categoria::where('estado', 1)->inRandomOrder()->limit(8)->get();
         // Obtener marcas
         $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get();
         // Contadores

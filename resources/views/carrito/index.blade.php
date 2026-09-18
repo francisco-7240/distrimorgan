@@ -13,7 +13,7 @@
         @include('partials.navbar')
 
         <!-- Banner -->
-        <section class="relative w-full h-64 sm:h-80 md:h-96 bg-cover bg-center overflow-hidden" style="background-image: url('{{ asset('storage/img/banner_mi_carrito.webp') }}')">
+        <section class="relative w-full h-64 sm:h-80 md:h-96 bg-cover bg-center overflow-hidden" style="background-image: url('{{ asset('storage/img/banner_mi_carrito.jpeg') }}')">
             <!-- Capa oscura -->
             <div class="absolute inset-0 bg-black/70"></div>
 

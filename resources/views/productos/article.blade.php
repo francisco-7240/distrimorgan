@@ -1,97 +1,47 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        @include('partials.header')
-        <title>{{ $noticia->titulo }}</title>
-        <!-- Metadatos para Facebook y redes sociales -->
-        <meta property="og:title" content="{{ $noticia->titulo }}" />
-        @php
-            // Quitar HTML y limpiar espacios
-            $desc = trim(strip_tags($noticia->contenido));
-            $desc = preg_replace('/\s+/', ' ', $desc);
-        @endphp
-
-        <meta property="og:description" content="{{ $desc !== '' ? Str::limit($desc, 150) : 'Lee la noticia completa en Aguas del Huila' }}" />
-        <!-- Imagen principal (URL absoluta) -->
-        <meta property="og:image" content="{{ asset('storage/'.$noticia->imagen_portada) }}" />
-        <meta property="og:image:secure_url" content="{{ asset('storage/'.$noticia->imagen_portada) }}" />
-        <meta property="og:image:alt" content="{{ $noticia->titulo }}" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <!-- URL absoluta del artículo -->
-        <meta property="og:url" content="{{ url('/noticias/'.$noticia->slug.'/'.$noticia->id) }}" />
-        <!-- Tipo de contenido -->
-        <meta property="og:type" content="article" />
-
-        <meta property="og:site_name" content="Aguas del Huila" />
-    </head>
-    <body class="bg-white">
-
-        @include('partials.navbar')
-
-        <!-- banner inicial -->
-        <div class="w-full h-96 overflow-hidden shadow-lg -top-8 bg-center bg-no-repeat bg-cover relative" style="background-image: url('{{ asset('storage/img/banner_seccion.webp') }}');">
-            <div class="absolute inset-0 bg-gradient-to-l from-slate-50/5 to-[#0047DC]/80 flex flex-col justify-center items-center text-white text-center px-16 md:px-32">
-                <h2 class="text-2xl lg:text-5xl font-bold mb-2">{{ $noticia->titulo }}</h2>
-                <p class="text-lg">Inicio / Noticias /</span class="font-bold"> {{ $noticia->titulo }}</span></p>
-            </div>
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex w-full items-center justify-between">
+            <h1 class="font-black">Visualizar producto</h1>
+            <a href="{{ route('productos.index') }}" class="rounded-lg bg-gray-700 px-4 py-2 text-white">Volver</a>
         </div>
+    </x-slot>
 
+    <main class="py-12">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <article class="overflow-hidden rounded-lg bg-white shadow">
+                @php($imagenPortada = $producto->imagenes->where('es_portada', true)->first())
+                @if ($imagenPortada)
+                    <img src="{{ asset('storage/' . $imagenPortada->imagen) }}" alt="{{ $producto->nombre }}" class="h-80 w-full object-cover">
+                @endif
 
-        <!-- noticias -->
-        <section class="px-2 lg:px-32 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-8">
-                <div class="w-full mx-auto">
-                    <img src="{{ asset('storage/'.$noticia->imagen_portada) }}" alt="{{ $noticia->titulo }}" class="w-full h-96 object-cover rounded-lg mb-6">
-
-                    <h1 class="text-3xl font-bold text-[#0047DC] mb-4">{{ $noticia->titulo }}</h1>
-                    <p class="text-gray-500 text-sm mb-8">
-                        Publicado el {{ $noticia->created_at->format('d M Y') }} 
-                        por <strong>{{ $noticia->autor->name ?? 'Aguas del Huila' }}</strong>
-                    </p>
-
-                    <div class="prose max-w-none text-justify text-gray-900">
-                        {!! $noticia->contenido !!}
+                <div class="space-y-6 p-6">
+                    <div class="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">{{ $producto->nombre }}</h2>
+                            <p class="mt-2 text-sm text-gray-500">Publicado el {{ $producto->created_at->format('d/m/Y') }}</p>
+                        </div>
+                        <span class="rounded-full px-3 py-1 text-sm font-semibold {{ $producto->estado ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ $producto->estado ? 'Activo' : 'Inactivo' }}</span>
                     </div>
 
-                    <hr class="my-10">
+                    <dl class="grid grid-cols-1 gap-4 border-y py-5 sm:grid-cols-2">
+                        <div><dt class="text-sm text-gray-500">Categoría</dt><dd class="font-semibold">{{ $producto->categoria?->nombre ?? 'Sin categoría' }}</dd></div>
+                        <div><dt class="text-sm text-gray-500">Marca</dt><dd class="font-semibold">{{ $producto->marca?->nombre ?? 'Sin marca' }}</dd></div>
+                    </dl>
 
-                </div>
+                    <div class="prose max-w-none whitespace-pre-line text-gray-800">{{ $producto->descripcion }}</div>
 
-                <!-- noticias relacionadas -->
-                <div class="w-full mx-auto">
-                    <h3 class="text-2xl font-bold text-[#0047DC] mb-4">Noticias relacionadas</h3>
-                    <div class="grid grid-cols-1 gap-6">
-                        @foreach($relacionadas as $relacion)
-                            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                                <!-- Imagen de portada -->
-                                <img src="{{ asset('storage/' . $relacion->imagen_portada) }}" 
-                                    alt="{{ $relacion->titulo }}" 
-                                    class="w-full h-48 object-cover">
-
-                                <!-- Contenido -->
-                                <div class="p-4 text-[#0047DC] text-left">
-                                    <!-- Título -->
-                                    <h3 class="text-lg font-bold mb-2 hover:text-[#00C81F] transition-colors">
-                                        <a href="{{ route('noticias.article', [$relacion->slug, $relacion->id]) }}">
-                                            {{ Str::limit($relacion->titulo, 70) }}
-                                        </a>
-                                    </h3>
-
-                                    <!-- Fecha y usuario -->
-                                    <div class="text-sm text-gray-500 flex justify-between items-center">
-                                        <span>{{ $relacion->created_at->format('d M Y') }}</span>
-                                        <span class="font-semibold">{{ $relacion->autor->name }}</span>
-                                    </div>
-                                </div>
+                    @if ($producto->productoColores->isNotEmpty())
+                        <div>
+                            <h3 class="mb-3 text-lg font-bold">Colores disponibles</h3>
+                            <div class="flex flex-wrap gap-3">
+                                @foreach ($producto->productoColores as $productoColor)
+                                    <span class="rounded-full border px-3 py-1 text-sm">{{ $productoColor->color?->nombre ?? 'Predeterminado' }}{{ $productoColor->stock !== null ? ' - Stock: ' . $productoColor->stock : '' }}</span>
+                                @endforeach
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endif
                 </div>
-            </div>
-        </section>
-
-        @include('partials.footer')
-
-    </body>
-</html>
+            </article>
+        </div>
+    </main>
+</x-app-layout>

@@ -1,0 +1,3 @@
+<div><label for="nombre" class="mb-1 block text-sm font-semibold">Nombre</label><input id="nombre" name="nombre" value="{{ old('nombre', $marca->nombre ?? '') }}" required class="w-full rounded-lg border-gray-300"><x-input-error :messages="$errors->get('nombre')" class="mt-1" /></div>
+<div><label for="descripcion" class="mb-1 block text-sm font-semibold">Descripción</label><textarea id="descripcion" name="descripcion" rows="4" class="w-full rounded-lg border-gray-300">{{ old('descripcion', $marca->descripcion ?? '') }}</textarea></div>
+<label class="flex items-center gap-2"><input type="checkbox" name="estado" value="1" @checked(old('estado', $marca->estado ?? true))> Activa</label>

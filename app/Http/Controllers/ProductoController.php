@@ -216,18 +216,18 @@ class ProductoController extends Controller
 
             if ($request->hasFile('imagen_portada')) {
 
+                $categoria = Categoria::find($request->categoria_id);
+                $carpetaCategoria = $categoria ? Str::slug($categoria->nombre) : 'sin-categoria';
+                $rutaBase = 'productos/' . $carpetaCategoria;
                 $extension = $request->file('imagen_portada')->getClientOriginalExtension();
-
                 $nombrePortada = $slug . '.' . $extension;
 
-                $rutaPortada = $request
-                    ->file('imagen_portada')
-                    ->storeAs('productos', $nombrePortada, 'public');
+                $request->file('imagen_portada')->storeAs($rutaBase, $nombrePortada, 'public');
 
                 ProductoImagen::create([
                     'producto_id' => $producto->id,
                     'producto_color_id' => null,
-                    'imagen' => $nombrePortada,
+                    'imagen' => $rutaBase . '/' . $nombrePortada,
                     'es_portada' => true,
                     'orden' => 0,
                 ]);
@@ -242,6 +242,9 @@ class ProductoController extends Controller
 
             if ($request->hasFile('galeria')) {
 
+                $categoria = Categoria::find($request->categoria_id);
+                $carpetaCategoria = $categoria ? Str::slug($categoria->nombre) : 'sin-categoria';
+                $rutaBase = 'productos/' . $carpetaCategoria;
                 $orden = 1;
 
                 foreach ($request->file('galeria') as $imagen) {
@@ -249,16 +252,12 @@ class ProductoController extends Controller
                     $extension = $imagen->getClientOriginalExtension();
                     $nombreImagen = $slug . '-' . $orden . '.' . $extension;
 
-                    $imagen->storeAs(
-                        'productos',
-                        $nombreImagen,
-                        'public'
-                    );
+                    $imagen->storeAs($rutaBase, $nombreImagen, 'public');
 
                     ProductoImagen::create([
                         'producto_id' => $producto->id,
                         'producto_color_id' => null,
-                        'imagen' => $nombreImagen,
+                        'imagen' => $rutaBase . '/' . $nombreImagen,
                         'es_portada' => false,
                         'orden' => $orden,
                     ]);
@@ -294,63 +293,77 @@ class ProductoController extends Controller
 
     public function edit(Producto $producto)
     {
-        // Traemos todas las categorías para el select
-        $categorias = Categoria::all();
+        $producto->load('imagenes');
+        $categorias = Categoria::orderBy('nombre')->get();
+        $marcas = Marca::orderBy('nombre')->get();
 
-        return view('productos.edit', compact('producto', 'categorias'));
+        return view('productos.edit', compact('producto', 'categorias', 'marcas'));
     }
 
     public function update(Request $request, Producto $producto)
     {
         $validated = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'contenido' => 'required|string',
-            'categoria_id' => 'nullable|exists:categorias,id',
-            'imagen_portada' => 'nullable|image|max:500',
+            'nombre' => ['required', 'string', 'max:255'],
+            'descripcion' => ['required', 'string'],
+            'categoria_id' => ['required', 'integer', 'exists:categorias,id'],
+            'marca_id' => ['required', 'integer', 'exists:marcas,id'],
+            'estado' => ['required', 'boolean'],
+            'imagen_portada' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ], [
-                'imagen_portada.max' => 'La imagen no debe superar los 500 KB.',
-            ]);
+            'imagen_portada.max' => 'La imagen no debe superar los 2 MB.',
+        ]);
 
-        $producto->titulo = $validated['titulo'];
-        $producto->slug = Str::slug($validated['titulo']);
-        $producto->contenido = $validated['contenido'];
-        $producto->categoria_id = $validated['categoria_id'] ?? null;
+        $producto->update([
+            'nombre' => $validated['nombre'],
+            'slug' => $this->uniqueSlug($validated['nombre'], $producto->id),
+            'descripcion' => $validated['descripcion'],
+            'categoria_id' => $validated['categoria_id'],
+            'marca_id' => $validated['marca_id'],
+            'estado' => $validated['estado'],
+        ]);
 
         // Si se sube una nueva imagen, eliminar la anterior y guardar la nueva
         if ($request->hasFile('imagen_portada')) {
-            if ($producto->imagen_portada) {
-                Storage::disk('public')->delete($producto->imagen_portada);
+            $imagenAnterior = $producto->imagenes()->where('es_portada', true)->first();
+            if ($imagenAnterior) {
+                Storage::disk('public')->delete('productos/' . $imagenAnterior->imagen);
+                $imagenAnterior->delete();
             }
-            // Obtener año actual
-            $year = now()->format('Y');
-            // Obtener el nombre y la extensión del archivo
-            $originalName = pathinfo($request->file('imagen_portada')->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $request->file('imagen_portada')->getClientOriginalExtension();
-            $filename = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
-            // Guardar en la carpeta 'posts/archivos/AÑO/'
-            $rutaImagen = $request->file('imagen_portada')->storeAs("productos/{$year}", $filename, 'public');
-            $producto->imagen_portada = $rutaImagen;
+
+            $filename = $producto->slug . '.' . $request->file('imagen_portada')->getClientOriginalExtension();
+            $request->file('imagen_portada')->storeAs('productos', $filename, 'public');
+            $producto->imagenes()->create([
+                'imagen' => $filename,
+                'es_portada' => true,
+                'orden' => 0,
+            ]);
         }
 
-        $producto->save();
-
-        session()->flash('success', 'Producto actualizada correctamente');
+        session()->flash('success', 'Producto actualizado correctamente');
         return redirect()->route('productos.index');
     }
 
     public function destroy(Producto $producto)
     {
-        // Verificar si existe una imagen asociada y eliminarla del almacenamiento
-        if ($producto->imagen_portada && Storage::disk('public')->exists($producto->imagen_portada)) {
-            Storage::disk('public')->delete($producto->imagen_portada);
-        }
+        DB::transaction(function () use ($producto) {
+            foreach ($producto->imagenes as $imagen) {
+                Storage::disk('public')->delete('productos/' . $imagen->imagen);
+            }
 
-        // Eliminar la producto de la base de datos
-        $producto->delete();
+            $producto->imagenes()->delete();
+            $producto->productoColores()->delete();
+            $producto->delete();
+        });
 
-        // Redirigir con mensaje de éxito
-        session()->flash('success', 'Producto eliminada correctamente');
+        session()->flash('success', 'Producto eliminado correctamente');
         return redirect()->route('productos.index');
+    }
+
+    public function article(Producto $producto)
+    {
+        $producto->load(['categoria', 'marca', 'productoColores.color', 'imagenes']);
+
+        return view('productos.article', compact('producto'));
     }
 
     public function show(Request $request)
@@ -363,11 +376,26 @@ class ProductoController extends Controller
             'productoColores.imagenes',
             'imagenes',
         ])->where('estado', 1)->get();
-        // Obtener categorías principales
-        $categorias = Categoria::where('estado', 1)->whereNull('categoria_padre_id')->get();
+        // Obtener categorías activas
+        $categorias = Categoria::where('estado', 1)->orderBy('nombre')->get();
         // Obtener marcas
         $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get();
 
         return view('productos.show', compact('productos', 'categorias', 'marcas'));
+    }
+
+    private function uniqueSlug(string $nombre, ?int $productoId = null): string
+    {
+        $slugBase = Str::slug($nombre);
+        $slug = $slugBase;
+        $contador = 1;
+
+        while (Producto::where('slug', $slug)
+            ->when($productoId, fn ($query) => $query->where('id', '!=', $productoId))
+            ->exists()) {
+            $slug = $slugBase . '-' . $contador++;
+        }
+
+        return $slug;
     }
 }

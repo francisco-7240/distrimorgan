@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonesMarca = document.querySelectorAll('.btn-marca');
 
     const contenedorProductos = document.querySelector('#listaProductos');
+    const panelFiltros = document.querySelector('#panelFiltros');
+    const fondoFiltros = document.querySelector('#fondoFiltros');
+    const abrirFiltros = document.querySelector('#abrirFiltros');
+    const cerrarFiltros = document.querySelector('#cerrarFiltros');
     const productos = Array.from(
         document.querySelectorAll('.producto-card')
     );
@@ -15,6 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let marcaActual = 'todos';
     let textoBusqueda = '';
     let ordenActual = '';
+
+    function cambiarEstadoFiltros(abierto) {
+        if (!panelFiltros || !fondoFiltros) return;
+
+        panelFiltros.classList.toggle('hidden', !abierto);
+        panelFiltros.classList.toggle('flex', abierto);
+        fondoFiltros.classList.toggle('hidden', !abierto);
+        document.body.classList.toggle('overflow-hidden', abierto);
+        abrirFiltros?.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    }
+
+    abrirFiltros?.addEventListener('click', () => cambiarEstadoFiltros(true));
+    cerrarFiltros?.addEventListener('click', () => cambiarEstadoFiltros(false));
+    fondoFiltros?.addEventListener('click', () => cambiarEstadoFiltros(false));
 
     function filtrarProductos() {
 
@@ -131,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             actualizarCategoriaActiva();
 
             filtrarProductos();
+            cambiarEstadoFiltros(false);
 
         });
 
@@ -151,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             actualizarMarcaActiva();
 
             filtrarProductos();
+            cambiarEstadoFiltros(false);
 
         });
 
