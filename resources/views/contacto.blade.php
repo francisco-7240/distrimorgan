@@ -51,7 +51,20 @@
                             Envíanos un mensaje
                         </h3>
 
-                        <form class="space-y-6">
+                        @if (session('success'))
+                            <div class="mb-6 rounded-xl bg-green-100 px-5 py-4 text-sm font-semibold text-green-800" role="status">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="mb-6 rounded-xl bg-red-100 px-5 py-4 text-sm text-red-800" role="alert">
+                                Revisa los campos marcados e inténtalo nuevamente.
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('contacto.store') }}" class="space-y-6">
+                            @csrf
 
                             <div>
 
@@ -61,7 +74,29 @@
 
                                 <input
                                     type="text"
+                                    name="nombre"
+                                    value="{{ old('nombre') }}"
+                                    required
                                     class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                                @error('nombre')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+                            <div>
+
+                                <label class="block mb-2 text-sm font-semibold text-gray-700">
+                                    Teléfono
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    name="telefono"
+                                    value="{{ old('telefono') }}"
+                                    class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                                @error('telefono')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
 
                             </div>
 
@@ -74,7 +109,13 @@
 
                                 <input
                                     type="email"
+                                    name="email"
+                                    value="{{ old('email') }}"
+                                    required
                                     class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                                @error('email')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
 
                             </div>
 
@@ -87,7 +128,12 @@
 
                                 <textarea
                                     rows="6"
-                                    class="w-full rounded-2xl border-gray-300 px-5 py-4 resize-none focus:border-primary focus:ring-primary"></textarea>
+                                    name="mensaje"
+                                    required
+                                    class="w-full rounded-2xl border-gray-300 px-5 py-4 resize-none focus:border-primary focus:ring-primary">{{ old('mensaje') }}</textarea>
+                                @error('mensaje')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
 
                             </div>
 

@@ -30,7 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
         abrirFiltros?.setAttribute('aria-expanded', abierto ? 'true' : 'false');
     }
 
-    abrirFiltros?.addEventListener('click', () => cambiarEstadoFiltros(true));
+    abrirFiltros?.addEventListener('click', () => {
+        if (panelFiltros) {
+            panelFiltros.scrollTop = 0;
+        }
+        panelFiltros?.querySelectorAll('.overflow-y-auto').forEach(lista => {
+            lista.scrollTop = 0;
+        });
+        cambiarEstadoFiltros(true);
+    });
     cerrarFiltros?.addEventListener('click', () => cambiarEstadoFiltros(false));
     fondoFiltros?.addEventListener('click', () => cambiarEstadoFiltros(false));
 
@@ -43,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const categoriaId = producto.dataset.categoriaId;
             const marcaId = producto.dataset.marcaId;
             const nombre = producto.dataset.productoNombre;
+            const slug = producto.dataset.productoSlug;
 
             // Filtro categoría
             const coincideCategoria =
@@ -56,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Filtro nombre
             const coincideBusqueda =
-                nombre.includes(textoBusqueda);
+                nombre.includes(textoBusqueda) ||
+                slug.includes(textoBusqueda);
 
             const coincide =
                 coincideCategoria &&
@@ -194,7 +204,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
+        const buscarInicial =
+            new URLSearchParams(window.location.search).get('buscar');
+
+        if (buscarInicial) {
+            buscador.value = buscarInicial;
+            textoBusqueda = buscarInicial.trim().toLowerCase();
+            filtrarProductos();
+        }
+
     }
+
+    const categoriaInicial =
+        new URLSearchParams(window.location.search).get('categoria_id');
+
+    if (categoriaInicial) {
+        categoriaActual = categoriaInicial;
+        actualizarCategoriaActiva();
+    }
+
+    filtrarProductos();
 
 
     // ==============================

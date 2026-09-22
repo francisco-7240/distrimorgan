@@ -98,7 +98,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('productos.show') }}"
+                            <a href="{{ route('productos.catalogo') }}"
                                class="hover:text-primary transition">
                                 Productos
                             </a>

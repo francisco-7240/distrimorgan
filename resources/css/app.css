@@ -18,16 +18,8 @@
   --color-secondary: #000000;
 }
 
-@media (min-width: 1024px) {
-    #abrirFiltros,
-    #cerrarFiltros,
-    #fondoFiltros {
-        display: none !important;
-    }
-
-    #panelFiltros {
-        display: flex !important;
-    }
+html {
+        overflow-x: hidden;
 }
 
 /* barra de scroll (scrollbar) */

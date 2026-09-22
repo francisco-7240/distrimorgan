@@ -25,6 +25,8 @@
 
 <!-- Animaciones -->
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+<!-- Alertas -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Herramienta de accecibilidad -->
 <script src="https://cdn.userway.org/widget.js" data-account="EvnCUKYTJM"></script>
 

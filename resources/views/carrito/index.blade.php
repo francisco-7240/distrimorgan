@@ -43,7 +43,7 @@
                 </div>
                 
                 <div id="accionesCarrito" class="hidden flex justify-between mt-10 gap-4">
-                    <a class="bg-primary text-dark hover:bg-dark hover:text-white transition px-4 py-2 rounded-xl text-center align-middle" title="Seguir comprando" href="{{ route('home') }}">
+                    <a class="bg-primary text-dark hover:bg-dark hover:text-white transition px-4 py-2 rounded-xl text-center align-middle" title="Seguir comprando" href="{{ route('productos.catalogo') }}">
                         <i class="bx bx-arrow-back text-2xl"></i> Seguir comprando
                     </a>
                     <button type="button" id="btnEnviarWhatsApp" class="bg-green-600 text-white hover:bg-green-700 transition px-4 py-2 rounded-xl text-center align-middle" title="Enviar solicitud">

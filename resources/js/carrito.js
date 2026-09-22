@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const CART_KEY = 'distrimorgan_carrito';
 
+    function obtenerStockSeleccionado(card) {
+        const botonAgregar = card.querySelector('.btn-agregar-carrito');
+        const colorSeleccionado = card.querySelector('.producto-color.ring-2');
+        const stock = colorSeleccionado?.dataset.stock || botonAgregar?.dataset.stock || '';
+
+        return stock === '' ? null : Number(stock);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Obtener carrito
@@ -67,10 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         button.addEventListener('click', () => {
 
-            const card = button.closest('[data-aos]');
+            const card = button.closest('[data-producto-card], [data-aos]');
             const cantidadElement = card.querySelector('.cantidad-producto');
 
             let cantidad = parseInt(cantidadElement.textContent);
+            const stock = obtenerStockSeleccionado(card);
+
+            if (stock !== null && cantidad >= stock) {
+                return;
+            }
 
             cantidad++;
 
@@ -84,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         button.addEventListener('click', () => {
 
-            const card = button.closest('[data-aos]');
+            const card = button.closest('[data-producto-card], [data-aos]');
             const cantidadElement = card.querySelector('.cantidad-producto');
 
             let cantidad = parseInt(cantidadElement.textContent);
@@ -109,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         button.addEventListener('click', () => {
 
-            const card = button.closest('[data-aos]');
+            const card = button.closest('[data-producto-card], [data-aos]');
 
             // Quitar selección anterior
             card.querySelectorAll('.producto-color').forEach(color => {
@@ -139,6 +152,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.dataset.colorName;
             }
 
+            const stockLabel = card.querySelector('[data-stock-label]');
+            if (stockLabel) {
+                stockLabel.textContent = button.dataset.stock === ''
+                    ? 'Stock: Disponible'
+                    : `Stock: ${button.dataset.stock}`;
+            }
+
         });
 
     });
@@ -154,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         button.addEventListener('click', () => {
 
-            const card = button.closest('[data-aos]');
+            const card = button.closest('[data-producto-card], [data-aos]');
 
             const productoId = button.dataset.productoId;
             const productoNombre = button.dataset.productoNombre;
@@ -168,6 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const cantidad = parseInt(
                 cantidadElement.textContent
             );
+
+            const stock = obtenerStockSeleccionado(card);
+
+            if (stock !== null && cantidad > stock) {
+                cantidadElement.textContent = stock;
+                return;
+            }
+
+            if (stock === 0) {
+                return;
+            }
 
 
             /*
@@ -292,7 +323,13 @@ document.addEventListener('DOMContentLoaded', () => {
             |--------------------------------------------------------------------------
             */
 
-            alert('Producto agregado al carrito.');
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto agregado',
+                text: 'El producto se agregó correctamente al carrito.',
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: '#c9a03a'
+            });
 
         });
 
@@ -380,6 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         contenedor.innerHTML = '';
+        let carritoActualizado = false;
 
         carrito.forEach(item => {
 
@@ -396,8 +434,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 .find(imagen => imagen.es_portada);
 
             const imagen = imagenPortada
-                ? `/storage/productos/${imagenPortada.imagen}`
-                : '/storage/productos/producto-default.png';
+                ? `/storage/${imagenPortada.imagen}`
+                : '/storage/logo/logo_distrimorgan.png';
+
+            const productoColor = item.color
+                ? producto.producto_colores?.find(productoColor =>
+                    productoColor.id == item.color.producto_color_id ||
+                    productoColor.color_id == item.color.id
+                )
+                : producto.producto_colores?.find(productoColor => productoColor.color?.es_predeterminado)
+                    || producto.producto_colores?.[0];
+            const stock = productoColor?.stock ?? null;
+
+            if (stock !== null && item.cantidad > stock) {
+                item.cantidad = stock;
+                carritoActualizado = true;
+            }
 
 
             // Color
@@ -433,6 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     class="bg-white rounded-2xl shadow-sm p-5 mb-4"
                     data-carrito-producto="${item.producto_id}"
                     data-carrito-color="${item.color ? item.color.id : ''}"
+                    data-carrito-stock="${stock ?? ''}"
                 >
 
                     <div class="flex flex-wrap gap-5 items-center">
@@ -444,6 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 src="${imagen}"
                                 class="w-full h-full object-contain"
                                 alt="${producto.nombre}"
+                                onerror="this.onerror=null; this.src='/storage/logo/logo_distrimorgan.png';"
                             >
 
                         </div>
@@ -513,6 +567,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
+        if (carritoActualizado) {
+            guardarCarrito(carrito);
+            actualizarContadorCarrito();
+        }
+
     }
 
     document.addEventListener('click', (event) => {
@@ -532,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const productoId = card.dataset.carritoProducto;
             const colorId = card.dataset.carritoColor || null;
 
-            aumentarCantidad(productoId, colorId);
+            aumentarCantidad(productoId, colorId, card.dataset.carritoStock);
 
             return;
         }
@@ -586,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
     |--------------------------------------------------------------------------
     */
 
-    function aumentarCantidad(productoId, colorId = null) {
+    function aumentarCantidad(productoId, colorId = null, stockValue = '') {
 
         const carrito = obtenerCarrito();
 
@@ -611,6 +670,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         if (!item) {
+            return;
+        }
+
+        const stock = stockValue === '' ? null : Number(stockValue);
+
+        if (stock !== null && item.cantidad >= stock) {
             return;
         }
 

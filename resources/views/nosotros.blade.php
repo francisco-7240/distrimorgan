@@ -53,7 +53,7 @@
                 <!-- Botón -->
                 <div class="mt-10 ">
                     <a
-                        href="#"
+                        href="/contacto"
                         class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:rounded-full hover:text-white"
                     >
                         Contáctanos
@@ -99,8 +99,7 @@
                         <div>
                             <h3 class="font-black text-dark text-3xl mb-2">Misión</h3>
                             <p class="text-dark text-sm">
-                                En Distri Morgan trabajamos para ofrecer maquinaria industrial,
-                                herramientas especializadas, repuestos y servicio técnico
+                                DISTRI MORGAN es la empresa que se especializa en la distribución de equipos industriales y profesionales, repuestos, utensilios entre otros; ofreciendo un producto y servicio diversificado con calidad y confianza, proporcionando soluciones logísticas e innovadoras, contribuyendo a la optimización de tiempos y recursos en los procesos, brindando seguridad a los clientes en cumplimiento a las normas sanitarias, conectando de manera efectiva a un servicio excepcional a los productores con los consumidores, lo que les garantiza generar un mayor rendimiento, aportando al crecimiento y desarrollo en el ámbito comercial e industrial en un mercado más competitivo, gracias a la innovación y durabilidad de nuestros productos.
                             </p>
                         </div>
                     </div>
@@ -113,8 +112,7 @@
                         <div>
                             <h3 class="font-black text-dark text-3xl mb-2">Visión</h3>
                             <p class="text-dark text-sm">
-                                En Distri Morgan trabajamos para ofrecer maquinaria industrial,
-                                herramientas especializadas, repuestos y servicio técnico certificado
+                                Para el 2030, DISTRI MORGAN será la empresa líder y referente en la distribución de equipos industriales y profesionales, repuestos y utensilios a nivel nacional, reconocida por la excelencia, calidad y confianza de sus productos y servicios. Consolidaremos alianzas estratégicas con productores y consumidores, ampliando nuestra cobertura y presencia en el mercado, mediante la incorporación continua de tecnología, innovación logística y procesos sostenibles. Seremos la opción preferida de nuestros clientes gracias a un equipo humano altamente calificado y comprometido, que garantiza soluciones eficientes, seguras y de vanguardia, impulsando el crecimiento del sector comercial e industrial y contribuyendo al desarrollo económico de la región.
                             </p>
                         </div>
                     </div>

@@ -9,7 +9,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
     </head>
-    <body class="bg-white">
+    <body class="overflow-x-hidden bg-white">
 
         @include('partials.navbar')
 
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 
-                <div class="mb-6 flex items-center justify-between gap-4 lg:!hidden">
+                <div class="mb-6 flex items-center justify-between gap-4">
                     <button
                         type="button"
                         id="abrirFiltros"
@@ -55,10 +55,10 @@
                     <span class="text-sm font-medium text-gray-500">{{ $productos->count() }} productos</span>
                 </div>
 
-                <div class="grid gap-8 grid-cols-1 lg:grid-cols-[230px_minmax(0,1fr)]">
+                <div class="relative">
                     <!-- Filtros -->
-                    <div id="panelFiltros" class="fixed inset-y-0 left-0 z-50 hidden w-[min(88vw,320px)] flex-col gap-4 overflow-y-auto bg-gray-100 px-4 py-6 shadow-2xl lg:static lg:!flex lg:w-auto lg:rounded-lg lg:px-2 lg:py-4 lg:shadow-lg">
-                        <div class="flex items-center justify-between lg:!hidden">
+                    <div id="panelFiltros" class="fixed inset-y-0 left-0 z-50 hidden w-[min(88vw,320px)] flex-col gap-4 overflow-y-auto bg-gray-100 px-4 py-6 shadow-2xl">
+                        <div class="flex items-center justify-between">
                             <h2 class="text-lg font-bold text-gray-800">Filtros</h2>
                             <button type="button" id="cerrarFiltros" class="rounded p-2 text-gray-600 hover:bg-gray-200" aria-label="Cerrar filtros">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18"/></svg>
@@ -89,7 +89,7 @@
 
                         <!-- Categorías -->
                         <label class="text-sm font-medium text-gray-700">Categorías:</label>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex h-40 shrink-0 flex-col gap-2 overflow-y-auto pr-1">
                             <!-- Todas -->
                             <button
                                 type="button"
@@ -115,7 +115,7 @@
 
                         <!-- Marcas -->
                         <label class="text-sm font-medium text-gray-700">Marcas:</label>
-                        <section>
+                        <section class="h-40 shrink-0 overflow-y-auto pr-1">
                             <!-- Todas -->
                             <button
                                 type="button"
@@ -143,8 +143,8 @@
                     <div id="fondoFiltros" class="fixed inset-0 z-40 hidden bg-black/40 lg:!hidden" aria-hidden="true"></div>
 
                     <!-- productos -->
-                    <div>
-                        <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4" id="listaProductos">
+                    <div class="w-full">
+                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 xl:grid-cols-5" id="listaProductos">
                             <x-producto-card :productos="$productos"/>
                         </div>
 

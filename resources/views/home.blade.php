@@ -45,7 +45,7 @@
 
                     <!-- Botón -->
                     <div class="mt-10">
-                        <a href="#" class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:text-white">
+                        <a href="{{ config('app.redwhatsapp') }}&text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" target="_blank" class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-1 hover:bg-dark hover:text-white">
                             Solicitar cotización
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -159,7 +159,7 @@
                     @endphp
 
 
-                    <a href="#" data-aos="{{ $aos }}" class="relative {{ $gridClass }} {{ $heightClass }} overflow-hidden group">
+                    <a href="{{ route('productos.catalogo', ['categoria_id' => $categoria->id]) }}" data-aos="{{ $aos }}" class="relative {{ $gridClass }} {{ $heightClass }} overflow-hidden group">
 
                         <!-- Imagen -->
                         @if ($categoria->imagen)
@@ -604,7 +604,7 @@
 
             <!-- Botón -->
             <div class="mt-10 text-center" data-aos="fade-in">
-                <a href="#" class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-2 hover:bg-dark hover:rounded-full hover:text-white">
+                <a href="/productos" class="inline-flex items-center gap-3 bg-primary transition rounded-full font-semibold text-black text-center px-3 py-2 hover:bg-dark hover:rounded-full hover:text-white">
                     Ver Catálogo Completo
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
@@ -667,7 +667,7 @@
                     <!-- Botón -->
                     <div class="mt-5">
 
-                        <a href="#"
+                        <a href="/contacto"
                         class="inline-flex w-full items-center gap-4 bg-primary px-10 py-5 rounded-xl font-bold text-xl hover:bg-dark hover:text-white transition">
 
                             Agendar Visita Técnica
@@ -880,7 +880,23 @@
                         Envíanos un mensaje
                     </h3>
 
-                    <form class="space-y-6">
+                    @if (session('success'))
+                        <div class="mb-6 rounded-xl bg-green-100 px-5 py-4 text-sm font-semibold text-green-800" role="status">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="mb-6 rounded-xl bg-red-100 px-5 py-4 text-sm text-red-800" role="alert">
+                            Revisa los campos marcados e inténtalo nuevamente.
+                        </div>
+                    @endif
+
+                    <div id="contactoHomeEstado" class="hidden mb-6 rounded-xl px-5 py-4 text-sm font-semibold" role="status"></div>
+
+                    <form id="contactoHomeForm" method="POST" action="{{ route('contacto.store') }}" class="space-y-6">
+                        @csrf
+                        <input type="hidden" name="origen" value="home">
 
                         <div>
 
@@ -890,7 +906,29 @@
 
                             <input
                                 type="text"
+                                name="nombre"
+                                value="{{ old('nombre') }}"
+                                required
                                 class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                            @error('nombre')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+
+                        </div>
+                        <div>
+
+                            <label class="block mb-2 text-sm font-semibold text-gray-700">
+                                Teléfono
+                            </label>
+
+                            <input
+                                type="tel"
+                                name="telefono"
+                                value="{{ old('telefono') }}"
+                                class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                            @error('telefono')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
 
                         </div>
 
@@ -903,7 +941,13 @@
 
                             <input
                                 type="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                required
                                 class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                            @error('email')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
 
                         </div>
 
@@ -916,12 +960,18 @@
 
                             <textarea
                                 rows="6"
-                                class="w-full rounded-2xl border-gray-300 px-5 py-4 resize-none focus:border-primary focus:ring-primary"></textarea>
+                                name="mensaje"
+                                required
+                                class="w-full rounded-2xl border-gray-300 px-5 py-4 resize-none focus:border-primary focus:ring-primary">{{ old('mensaje') }}</textarea>
+                            @error('mensaje')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
 
                         </div>
 
 
                         <button
+                            type="submit"
                             class="bg-primary px-8 py-4 rounded-xl font-bold text-dark hover:bg-dark hover:text-white transition">
 
                             Enviar mensaje <i class='bx bx-send text-xl'></i> 

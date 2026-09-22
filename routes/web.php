@@ -7,17 +7,21 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ContactoController;
 
 // Página principal pública
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Página Nosotros
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 // Página para mostrar todos los productos
-Route::get('/productos', [ProductoController::class, 'show'])->name('productos.show');
+Route::get('/productos/sugerencias', [ProductoController::class, 'suggestions'])->name('productos.sugerencias');
+Route::get('/productos', [ProductoController::class, 'show'])->name('productos.catalogo');
+Route::get('/producto/{producto}/{slug}', [ProductoController::class, 'detail'])->name('producto.detalle');
 // Página principal pública
 Route::get('/servicios', [HomeController::class, 'servicios'])->name('servicios');
 // Página principal pública
 Route::get('/contacto', [HomeController::class, 'contacto'])->name('contacto');
+Route::post('/contacto', [HomeController::class, 'guardarContacto'])->name('contacto.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -39,10 +43,11 @@ Route::prefix('dashboard')->group(function () {
 
     // Administrador y Editor
     Route::middleware(['auth'])->group(function () {
-        Route::get('/productos/{producto}/article', [ProductoController::class, 'article'])->name('productos.article');
         Route::resource('productos', ProductoController::class);
         Route::resource('categorias', CategoriaController::class)->except('show');
         Route::resource('marcas', MarcaController::class)->except('show');
+        Route::get('/contactos', [ContactoController::class, 'index'])->name('contactos.index');
+        Route::patch('/contactos/{contacto}/estado', [ContactoController::class, 'updateEstado'])->name('contactos.estado');
         // Perfil
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

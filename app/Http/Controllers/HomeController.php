@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Marca;
 use App\Models\ProductoColor;
+use App\Models\Contacto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -46,5 +47,29 @@ class HomeController extends Controller
     public function contacto()
     {
         return view('contacto');
+    }
+
+    public function guardarContacto(Request $request)
+    {
+        $datos = $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'telefono' => ['nullable', 'string', 'max:20'],
+            'email' => ['required', 'email', 'max:255'],
+            'mensaje' => ['required', 'string'],
+            'origen' => ['nullable', 'in:home,contacto'],
+        ]);
+
+        unset($datos['origen']);
+        Contacto::create($datos);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Su mensaje ha sido enviado.',
+            ]);
+        }
+
+        return redirect()
+            ->route($request->input('origen') === 'home' ? 'home' : 'contacto')
+            ->with('success', 'Su mensaje ha sido enviado.');
     }
 }

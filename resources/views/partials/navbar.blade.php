@@ -19,7 +19,7 @@
                 <div class="flex items-center gap-2 text-sm whitespace-nowrap">
                     <i class='bx bx-calendar'></i>
                     <span x-text="currentDate"></span>
-                    <a href="#" class="text-dark bg-primary text-sm rounded-full font-medium hover:text-white" aria-label="Iniciar cotizacion">
+                    <a href="{{ config('app.redwhatsapp') }}&text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" class="text-dark bg-primary text-sm rounded-full font-medium hover:text-white" aria-label="Iniciar cotizacion">
                         <div class="text-center px-3 py-1 hover:bg-dark hover:rounded-full">
                             Solicitar cotización
                         </div>
@@ -70,7 +70,7 @@
     <nav x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 130"
         :class="scrolled 
             ? 'bg-primary text-dark shadow-lg fixed top-0 z-[9999] w-full' 
-            : 'bg-primary text-dark relative rounded-xl w-[800px] justify-self-center -top-4'"
+            : 'bg-primary text-dark relative rounded-xl w-full max-w-[800px] justify-self-center -top-4'"
         class="border-b transition-all duration-300">
         <div class="container mx-auto px-2">
             <div class=" fuentes flex h-14 items-center justify-center">
@@ -86,7 +86,7 @@
                         Nosotros
                     </x-nav-link>
 
-                    <x-nav-link :href="route('productos.show')" :active="request()->routeIs('productos.show')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
+                    <x-nav-link :href="route('productos.catalogo')" :active="request()->routeIs('productos.catalogo')" class="inline-flex items-center rounded-t-xl px-5 py-1 text-sm font-semibold !text-inherit hover:!text-white hover:bg-[#a17b1e] transition">
                         Productos
                     </x-nav-link>
 
@@ -101,10 +101,10 @@
                 </ul>
 
                 <!-- BOTÓN BUSCADOR -->
-                <div x-data="{ openSearch: false }">
+                <div x-data="searchHandler()">
 
                     <button aria-label="Abrir buscador"
-                        @click="openSearch = true"
+                        @click="openSearch = true; $nextTick(() => $refs.searchInput.focus())"
                         class="rounded-xl border px-3 py-2 transition hover:bg-dark hover:text-primary hover:border-primary"
                     >
                         <i class='bx bx-search text-xl'></i>
@@ -151,7 +151,7 @@
                                     const value = $refs.searchInput.value.trim();
 
                                     if(value){
-                                        window.location.href = '/buscador/' + encodeURIComponent(value);
+                                        window.location.href = '{{ route('productos.catalogo') }}?buscar=' + encodeURIComponent(value);
                                     }
                                 "
                             >
@@ -160,12 +160,40 @@
 
                                     <input
                                         x-ref="searchInput"
+                                        x-model="searchText"
+                                        @input.debounce.300ms="buscarSugerencias()"
+                                        @keydown.escape="openSearch = false"
                                         type="text"
                                         placeholder="Escribe el nombre del producto..."
                                         class="w-full rounded-2xl border border-gray-300 px-5 py-4 pr-14 text-lg focus:border-primary focus:ring-primary"
                                         autofocus
                                     >
 
+
+                                    <div
+                                        x-show="searchText.length >= 2 && (suggestions.length || searching || (!searching && searched))"
+                                        x-transition
+                                        class="absolute left-0 right-0 top-full z-10 mt-2 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg"
+                                    >
+                                        <div x-show="searching" class="px-5 py-3 text-sm text-gray-500">
+                                            Buscando productos...
+                                        </div>
+
+                                        <div
+                                            x-show="!searching && searched && !suggestions.length"
+                                            class="px-5 py-3 text-sm text-gray-500"
+                                        >
+                                            No encontramos productos relacionados con la búsqueda.
+                                        </div>
+
+                                        <template x-for="producto in suggestions" :key="producto.slug">
+                                            <a
+                                                :href="`{{ route('productos.catalogo') }}?buscar=${encodeURIComponent(producto.slug)}`"
+                                                class="block border-b border-gray-100 px-5 py-3 text-sm font-medium text-gray-800 transition last:border-0 hover:bg-primary"
+                                                x-text="producto.nombre"
+                                            ></a>
+                                        </template>
+                                    </div>
                                     <button aria-label="Buscar la producto"
                                         type="submit"
                                         class="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:text-dark"
@@ -282,7 +310,7 @@
 </a>
 
 <!-- WhatsApp -->
-<a href="{{ config('app.redwhatsapp') }}?text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" class="fixed bottom-6 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]">
+<a href="{{ config('app.redwhatsapp') }}&text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" class="fixed bottom-6 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition duration-300 hover:scale-110 hover:bg-[#128C7E]">
     <i class="bx bxl-whatsapp text-2xl" aria-hidden="true"></i>
 </a>
 
@@ -305,6 +333,40 @@ function navbarHandler() {
             });
         }
     }
+}
+
+function searchHandler() {
+    return {
+        openSearch: false,
+        searchText: '',
+        suggestions: [],
+        searching: false,
+        searched: false,
+
+        async buscarSugerencias() {
+            const buscar = this.searchText.trim();
+
+            if (buscar.length < 2) {
+                this.suggestions = [];
+                this.searched = false;
+                return;
+            }
+
+            this.searching = true;
+            this.searched = false;
+
+            try {
+                const response = await fetch(`{{ route('productos.sugerencias') }}?buscar=${encodeURIComponent(buscar)}`);
+                this.suggestions = response.ok ? await response.json() : [];
+                this.searched = true;
+            } catch (error) {
+                this.suggestions = [];
+                this.searched = true;
+            } finally {
+                this.searching = false;
+            }
+        }
+    };
 }
 </script>
 

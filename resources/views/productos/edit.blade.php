@@ -48,7 +48,7 @@
                     <label for="imagen_portada" class="block text-sm font-semibold text-gray-700 mb-1">Imagen de portada</label>
                     @php($imagenPortada = $producto->imagenes->where('es_portada', true)->first())
                     @if ($imagenPortada)
-                        <img src="{{ asset('storage/productos/' . $imagenPortada->imagen) }}" alt="{{ $producto->nombre }}" class="mb-3 h-40 w-full rounded-lg object-cover">
+                        <img src="{{ asset('storage/' . $imagenPortada->imagen) }}" alt="{{ $producto->nombre }}" class="mb-3 h-40 w-full rounded-lg object-cover">
                     @endif
                     <input 
                         type="file" 
@@ -94,6 +94,55 @@
                         <option value="0" @selected(old('estado', $producto->estado) == 0)>Inactivo</option>
                     </select>
                 </div>
+                <!-- Gestión de Stock por Color -->
+<div class="lg:col-span-3 space-y-4 mt-6">
+    <div class="rounded-lg bg-white p-6 border border-gray-200">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">📦 Stock por Color</h2>
+        
+        @if($producto->productoColores->count() > 0)
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Color</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">Stock Actual</th>
+                            <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">Nuevo Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach($producto->productoColores as $productoColor)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center gap-2">
+                                        <div 
+                                            class="w-6 h-6 rounded"
+                                            style="background-color: {{ $productoColor->color->codigo_hex ?? '#ccc' }}"
+                                        ></div>
+                                        {{ $productoColor->color->nombre }}
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-center font-bold">
+                                    {{ $productoColor->stock ?? 0 }}
+                                </td>
+                                <td class="px-4 py-3 text-center">
+                                    <input 
+                                        type="number" 
+                                        name="stock[{{ $productoColor->id }}]"
+                                        value="{{ old('stock.' . $productoColor->id, $productoColor->stock) }}"
+                                        min="0"
+                                        class="w-24 text-center rounded-lg border border-gray-300 px-2 py-2"
+                                    >
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <p class="text-gray-500 text-center py-8">Sin colores asignados</p>
+        @endif
+    </div>
+</div>
 
                 <!-- Botón -->
                 <div class="pt-4">

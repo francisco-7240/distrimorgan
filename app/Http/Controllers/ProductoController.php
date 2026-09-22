@@ -326,14 +326,17 @@ class ProductoController extends Controller
         if ($request->hasFile('imagen_portada')) {
             $imagenAnterior = $producto->imagenes()->where('es_portada', true)->first();
             if ($imagenAnterior) {
-                Storage::disk('public')->delete('productos/' . $imagenAnterior->imagen);
+                Storage::disk('public')->delete($imagenAnterior->imagen);
                 $imagenAnterior->delete();
             }
 
+            $categoria = Categoria::find($validated['categoria_id']);
+            $carpetaCategoria = $categoria ? Str::slug($categoria->nombre) : 'sin-categoria';
+            $rutaBase = 'productos/' . $carpetaCategoria;
             $filename = $producto->slug . '.' . $request->file('imagen_portada')->getClientOriginalExtension();
-            $request->file('imagen_portada')->storeAs('productos', $filename, 'public');
+            $request->file('imagen_portada')->storeAs($rutaBase, $filename, 'public');
             $producto->imagenes()->create([
-                'imagen' => $filename,
+                'imagen' => $rutaBase . '/' . $filename,
                 'es_portada' => true,
                 'orden' => 0,
             ]);
@@ -359,29 +362,63 @@ class ProductoController extends Controller
         return redirect()->route('productos.index');
     }
 
-    public function article(Producto $producto)
+    public function detail(Producto $producto, string $slug)
     {
         $producto->load(['categoria', 'marca', 'productoColores.color', 'imagenes']);
 
-        return view('productos.article', compact('producto'));
+        abort_unless($producto->estado && $producto->slug === $slug, 404);
+
+        return view('productos.detail', compact('producto'));
     }
 
     public function show(Request $request)
     {
         // Obtener productos con sus relaciones
-        $productos = Producto::with([
-            'categoria',
-            'marca',
-            'productoColores.color',
-            'productoColores.imagenes',
-            'imagenes',
-        ])->where('estado', 1)->get();
+        $productos = Producto::query()
+            ->when($request->filled('categoria_id'), function ($query) use ($request) {
+                $query->where('categoria_id', $request->integer('categoria_id'));
+            })
+            ->when($request->filled('buscar'), function ($query) use ($request) {
+                $buscar = trim($request->string('buscar')->toString());
+
+                $query->where(function ($query) use ($buscar) {
+                    $query->where('nombre', 'like', "%{$buscar}%")
+                        ->orWhere('slug', 'like', "%{$buscar}%");
+                });
+            })
+            ->with([
+                'categoria',
+                'marca',
+                'productoColores.color',
+                'productoColores.imagenes',
+                'imagenes',
+            ])
+            ->where('estado', 1)
+            ->get();
         // Obtener categorías activas
         $categorias = Categoria::where('estado', 1)->orderBy('nombre')->get();
         // Obtener marcas
         $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get();
 
         return view('productos.show', compact('productos', 'categorias', 'marcas'));
+    }
+
+    public function suggestions(Request $request)
+    {
+        $buscar = trim($request->string('buscar')->toString());
+
+        if (mb_strlen($buscar) < 2) {
+            return response()->json([]);
+        }
+
+        $productos = Producto::query()
+            ->where('estado', 1)
+            ->where('nombre', 'like', "%{$buscar}%")
+            ->orderBy('nombre')
+            ->limit(6)
+            ->get(['nombre', 'slug']);
+
+        return response()->json($productos);
     }
 
     private function uniqueSlug(string $nombre, ?int $productoId = null): string
