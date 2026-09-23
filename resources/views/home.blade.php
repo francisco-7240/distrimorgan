@@ -830,7 +830,7 @@
 
     </section>
 
-    <!-- Seccion contacto -->
+        <!-- Seccion contacto -->
     <section id="contacto" class="py-32 bg-gray-100">
 
         <div class="max-w-7xl mx-auto px-6">
@@ -1004,7 +1004,7 @@
 
                             <div class="bg-primary w-14 h-14 rounded-2xl flex items-center justify-center">
 
-                                <i class='bx bx-phone text-3xl'></i>
+                                <i class='bx bx-phone text-3xl text-dark'></i>
 
                             </div>
 
@@ -1028,7 +1028,7 @@
 
                             <div class="bg-primary w-14 h-14 rounded-2xl flex items-center justify-center">
 
-                                <i class='bx bx-envelope text-3xl'></i>
+                                <i class='bx bx-envelope text-3xl text-dark'></i>
 
                             </div>
 
@@ -1052,7 +1052,7 @@
 
                             <div class="bg-primary w-14 h-14 rounded-2xl flex items-center justify-center">
 
-                                <i class='bx bx-map-pin text-3xl'></i>
+                                <i class='bx bx-map-pin text-3xl text-dark'></i>
 
                             </div>
 
@@ -1076,7 +1076,7 @@
 
                             <div class="bg-primary w-14 h-14 rounded-2xl flex items-center justify-center">
 
-                                <i class='bx bx-time text-3xl'></i>
+                                <i class='bx bx-time text-3xl text-dark'></i>
 
                             </div>
 

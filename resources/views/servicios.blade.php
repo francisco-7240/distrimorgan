@@ -140,120 +140,104 @@
         </div>
     </div>
     </section>
-    <section>
-        <div
-                @class(['bg-dark', 'mt-20', 'px-80', 'py-16','mx-auto' ])
-                data-aos="fade-up">
+    <!-- VERSIÓN RESPONSIVE MEJORADA -->
+<section>
+    <div @class(['bg-dark', 'mt-20', 'px-4', 'sm:px-6', 'md:px-12', 'lg:px-20', 'py-12', 'sm:py-16', 'lg:py-20', 'mx-auto', 'max-w-7xl'])
+         data-aos="fade-up">
 
-                <div @class(['mb-12'])>
+        <!-- Header -->
+        <div @class(['mb-12', 'md:mb-16'])>
+            <span @class(['uppercase', 'tracking-[3px]', 'text-xs', 'sm:text-sm', 'text-white', 'block', 'mb-2'])>
+                EL RESPALDO QUE TU OPERACIÓN NECESITA
+            </span>
 
-                    <span @class(['uppercase', 'tracking-[3px]', 'text-xs', 'text-white'])>
-                        EL RESPALDO QUE TU OPERACIÓN NECESITA
-                    </span>
+            <h3 @class(['text-primary', 'uppercase', 'text-xl', 'sm:text-2xl', 'md:text-3xl', 'font-bold', 'leading-tight'])>
+                Nuestro Proceso
+            </h3>
+        </div>
 
+        <!-- Grid de Pasos -->
+        <div @class(['grid', 'grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-4', 'gap-6', 'sm:gap-8', 'md:gap-10'])>
 
-                    <h3 @class(['text-primary', 'uppercase', 'text-2xl', 'font-bold'])>
-                        Nuestro Proceso
-                    </h3>
-
+            <!-- Paso 1 -->
+            <div @class(['relative', 'flex', 'flex-col'])>
+                <div @class(['text-white', 'font-black', 'text-5xl', 'sm:text-6xl', 'lg:text-7xl', 'mb-3'])>
+                    01
                 </div>
 
+                <h4 @class(['text-primary', 'text-lg', 'sm:text-xl', 'tracking-[2px]', 'sm:tracking-[4px]', 'uppercase', 'font-bold'])>
+                    Diagnóstico
+                </h4>
 
-                <div @class(['grid', 'md:grid-cols-2', 'lg:grid-cols-4', 'gap-10'])>
-
-                    <!-- Paso 1 -->
-                    <div @class(['relative'])>
-
-                        <div @class(['text-white', 'font-black', 'text-7xl'])>
-                            01
-                        </div>
-
-                        <h4 @class(['text-primary', 'text-xl', 'tracking-[4px]', 'uppercase', 'mt-2'])>
-                            Diagnóstico
-                        </h4>
-
-                        <p @class(['text-gray-300', 'mt-4'])>
-                            Evaluamos tu equipo y te damos un reporte preciso y sin costo.
-                        </p>
-
-                    </div>
-
-
-                    <!-- Paso 2 -->
-                    <div @class(['relative'])>
-
-                        <div @class(['absolute', 'left-0', 'top-0', 'h-full', 'w-[2px]', 'bg-primary', 'hidden', 'lg:block'])></div>
-
-                        <div @class(['pl-10'])>
-
-                            <div @class(['text-white', 'font-black', 'text-7xl'])>
-                                02
-                            </div>
-
-                            <h4 @class(['text-primary', 'text-xl', 'tracking-[4px]', 'uppercase', 'mt-2'])>
-                                Cotización
-                            </h4>
-
-                            <p @class(['text-gray-300', 'mt-4'])>
-                                Presupuesto detallado, sin letras pequeñas ni sorpresas.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Paso 3 -->
-                    <div @class(['relative'])>
-
-                        <div @class(['absolute', 'left-0', 'top-0', 'h-full', 'w-[2px]', 'bg-primary', 'hidden', 'lg:block'])></div>
-
-                        <div @class(['pl-10'])>
-
-                            <div @class(['text-white', 'font-black', 'text-7xl'])>
-                                03
-                            </div>
-
-                            <h4 @class(['text-primary', 'text-xl', 'tracking-[4px]', 'uppercase', 'mt-2'])>
-                                Reparación
-                            </h4>
-
-                            <p @class(['text-gray-300', 'mt-4'])>
-                                Técnicos certificados con repuestos originales de cada marca.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Paso 4 -->
-                    <div @class(['relative'])>
-
-                        <div @class(['absolute', 'left-0', 'top-0', 'h-full', 'w-[2px]', 'bg-primary', 'hidden', 'lg:block'])></div>
-
-                        <div @class(['pl-10'])>
-
-                            <div @class(['text-white', 'font-black', 'text-7xl'])>
-                                04
-                            </div>
-
-                            <h4 @class(['text-primary', 'text-xl', 'tracking-[4px]', 'uppercase', 'mt-2'])>
-                                Entrega
-                            </h4>
-
-                            <p @class(['text-gray-300', 'mt-4'])>
-                                Equipo funcionando como nuevo con garantía escrita.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                <p @class(['text-gray-300', 'mt-3', 'sm:mt-4', 'text-sm', 'sm:text-base', 'leading-relaxed', 'flex-grow'])>
+                    Evaluamos tu equipo y te damos un reporte preciso y sin costo.
+                </p>
             </div>
-    </section>
+
+            <!-- Paso 2 -->
+            <div @class(['relative', 'flex', 'flex-col'])>
+                <!-- Línea vertical (solo en lg) -->
+                <div @class(['absolute', 'left-0', 'top-0', 'h-full', 'w-[2px]', 'bg-primary', 'hidden', 'lg:block'])></div>
+
+                <div @class(['pl-0', 'sm:pl-0', 'lg:pl-10'])>
+                    <div @class(['text-white', 'font-black', 'text-5xl', 'sm:text-6xl', 'lg:text-7xl', 'mb-3'])>
+                        02
+                    </div>
+
+                    <h4 @class(['text-primary', 'text-lg', 'sm:text-xl', 'tracking-[2px]', 'sm:tracking-[4px]', 'uppercase', 'font-bold'])>
+                        Cotización
+                    </h4>
+
+                    <p @class(['text-gray-300', 'mt-3', 'sm:mt-4', 'text-sm', 'sm:text-base', 'leading-relaxed'])>
+                        Presupuesto detallado, sin letras pequeñas ni sorpresas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Paso 3 -->
+            <div @class(['relative', 'flex', 'flex-col'])>
+                <!-- Línea vertical (solo en lg) -->
+                <div @class(['absolute', 'left-0', 'top-0', 'h-full', 'w-[2px]', 'bg-primary', 'hidden', 'lg:block'])></div>
+
+                <div @class(['pl-0', 'sm:pl-0', 'lg:pl-10'])>
+                    <div @class(['text-white', 'font-black', 'text-5xl', 'sm:text-6xl', 'lg:text-7xl', 'mb-3'])>
+                        03
+                    </div>
+
+                    <h4 @class(['text-primary', 'text-lg', 'sm:text-xl', 'tracking-[2px]', 'sm:tracking-[4px]', 'uppercase', 'font-bold'])>
+                        Reparación
+                    </h4>
+
+                    <p @class(['text-gray-300', 'mt-3', 'sm:mt-4', 'text-sm', 'sm:text-base', 'leading-relaxed'])>
+                        Técnicos certificados con repuestos originales de cada marca.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Paso 4 -->
+            <div @class(['relative', 'flex', 'flex-col'])>
+                <!-- Línea vertical (solo en lg) -->
+                <div @class(['absolute', 'left-0', 'top-0', 'h-full', 'w-[2px]', 'bg-primary', 'hidden', 'lg:block'])></div>
+
+                <div @class(['pl-0', 'sm:pl-0', 'lg:pl-10'])>
+                    <div @class(['text-white', 'font-black', 'text-5xl', 'sm:text-6xl', 'lg:text-7xl', 'mb-3'])>
+                        04
+                    </div>
+
+                    <h4 @class(['text-primary', 'text-lg', 'sm:text-xl', 'tracking-[2px]', 'sm:tracking-[4px]', 'uppercase', 'font-bold'])>
+                        Entrega
+                    </h4>
+
+                    <p @class(['text-gray-300', 'mt-3', 'sm:mt-4', 'text-sm', 'sm:text-base', 'leading-relaxed'])>
+                        Equipo funcionando como nuevo con garantía escrita.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
     {{-- La diferencia Morgan --}}
 <section
     id="experiencia"
@@ -305,7 +289,7 @@
             {{-- Botón --}}
             <div @class(['mt-9'])>
                 <a
-                    href="#contacto"
+                    href="/contacto"
                     @class(['group', 'inline-flex', 'items-center', 'gap-3', 'rounded-xl', 'bg-[#c99b3a]', 'px-8', 'py-4', 'text-base', 'font-bold', 'text-slate-950', 'shadow-lg', 'transition', 'hover:bg-[#b3862d]'])
                 >
                     Contáctanos

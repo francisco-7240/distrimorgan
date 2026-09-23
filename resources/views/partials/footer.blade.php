@@ -139,7 +139,7 @@
                             <i class='bx bx-map text-primary text-3xl'></i>
 
                             <span class="text-gray-200 text-lg">
-                                Calle 45 #23-67, Bogotá, Colombia
+                                Neiva, Huila - Colombia
                             </span>
 
                         </div>
