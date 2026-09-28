@@ -31,4 +31,9 @@ class Categoria extends Model
     {
         return $this->hasMany(Producto::class, 'categoria_id');
     }
+
+    public function subcategorias(): HasMany
+    {
+        return $this->hasMany(self::class, 'categoria_padre_id');
+    }
 }

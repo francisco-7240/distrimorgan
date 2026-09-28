@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
+let carritoClickController;
+
+document.addEventListener('turbo:load', () => {
+    carritoClickController?.abort();
+    carritoClickController = new AbortController();
 
     const CART_KEY = 'distrimorgan_carrito';
 
@@ -637,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
-    });
+    }, { signal: carritoClickController.signal });
 
     /*
     |--------------------------------------------------------------------------
@@ -815,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </p>
 
                 <a
-                    href="/"
+                    href="/productos"
                     class="inline-block mt-6 bg-primary text-white font-bold px-6 py-3 rounded-xl hover:bg-dark transition"
                 >
                     Ver productos

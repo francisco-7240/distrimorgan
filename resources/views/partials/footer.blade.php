@@ -220,22 +220,21 @@
 </button>
 
 <script>
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    (() => {
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        if (!scrollTopBtn) return;
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            scrollTopBtn.classList.remove('hidden');
-        } else {
-            scrollTopBtn.classList.add('hidden');
-        }
-    });
+        window.removeEventListener('scroll', window.scrollTopListener);
+        window.scrollTopListener = () => {
+            scrollTopBtn.classList.toggle('hidden', window.scrollY <= 300);
+        };
+        window.addEventListener('scroll', window.scrollTopListener);
+        window.scrollTopListener();
 
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
+        window.scrollToTop = () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    })();
 </script>
 
 <!-- animaciones -->

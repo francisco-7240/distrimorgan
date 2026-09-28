@@ -11,7 +11,7 @@
 
         <main class="px-5 pb-24 pt-32 sm:px-8 lg:px-12">
             <div class="mx-auto max-w-7xl">
-                <a href="{{ route('productos.catalogo') }}" class="mb-8 inline-flex items-center gap-2 font-semibold text-dark transition hover:text-primary">
+                <a href="{{ route('productos.catalogo') }}" class="relative z-[60] mb-8 inline-flex items-center gap-2 font-semibold text-dark transition hover:text-primary">
                     <i class="bx bx-arrow-back text-xl"></i>
                     Volver al catálogo
                 </a>

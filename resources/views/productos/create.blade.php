@@ -401,7 +401,7 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        (() => {
 
         const radioSi = document.querySelector('#tiene_colores_si');
         const radioNo = document.querySelector('#tiene_colores_no');
@@ -521,7 +521,7 @@
             actualizarStockColores();
         }
 
-    });
+    })();
     </script>
 
     <!-- 🧠 Script para editor de texto -->

@@ -6,11 +6,11 @@
         $stockProducto = $productoSinColor ? $producto->productoColores->first()?->stock : null;
     @endphp
 
-    <div class="producto-card bg-white p-2 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100" data-producto-id="{{ $producto->id }}" data-categoria-id="{{ $producto->categoria_id }}" data-producto-nombre="{{ strtolower($producto->nombre) }}" data-producto-slug="{{ $producto->slug }}" data-marca-id="{{ $producto->marca_id }}" data-producto-fecha="{{ $producto->created_at->timestamp }}">
+    <div class="producto-card flex h-full flex-col bg-white p-2 rounded-2xl shadow-sm hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100" data-producto-id="{{ $producto->id }}" data-categoria-id="{{ $producto->categoria_id }}" data-producto-nombre="{{ strtolower($producto->nombre) }}" data-producto-slug="{{ $producto->slug }}" data-marca-id="{{ $producto->marca_id }}" data-producto-fecha="{{ $producto->created_at->timestamp }}">
         <!-- Imagen -->
         <a href="{{ route('producto.detalle', ['producto' => $producto, 'slug' => $producto->slug]) }}" class="flex justify-center relative w-full h-56 overflow-hidden rounded-2xl bg-gray-50 mb-1">
             <!-- Categoría -->
-            <p class="text-sm text-white bg-black hover:bg-primary hover:bg-dark rounded-xl absolute top-1 left-1 py-2 px-4">
+            <p class="text-sm text-white bg-black hover:bg-primary rounded-xl absolute top-1 left-1 py-2 px-4">
                 {{ $producto->categoria->nombre }}
             </p>
             @if ($imagenPortada && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagenPortada->imagen))
@@ -48,7 +48,7 @@
 
         <!-- Nombre -->
         <h3 class="mt-1 font-black uppercase text-dark">
-            <a href="{{ route('producto.detalle', ['producto' => $producto, 'slug' => $producto->slug]) }}" class="transition hover:text-primary">
+            <a href="{{ route('producto.detalle', ['producto' => $producto, 'slug' => $producto->slug]) }}" class="block truncate transition hover:text-primary">
                 {{ $producto->nombre }}
             </a>
         </h3>
@@ -62,7 +62,7 @@
         </p>
 
         <!-- Cantidad y agregar -->
-        <div class="flex items-center justify-between mt-6">
+        <div class="flex items-end justify-between mt-auto pt-4 gap-2">
             <!-- Cantidad -->
             <div class="flex border rounded-lg overflow-hidden">
                 <button type="button" class="btn-cantidad-menos w-10 h-10 bg-gray-100 hover:bg-primary hover:text-white transition">-</button>

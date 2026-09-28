@@ -9,6 +9,8 @@ use App\Models\ProductoColor;
 use App\Models\Contacto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class HomeController extends Controller
@@ -25,8 +27,19 @@ class HomeController extends Controller
         ])->where('estado', 1)->get();
         // Obtener 8 categorías activas en orden aleatorio
         $categorias = Categoria::where('estado', 1)->inRandomOrder()->limit(8)->get();
-        // Obtener marcas
-        $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get();
+        // Mostrar solo las marcas que tienen un logo disponible.
+        $logosMarcas = collect(Storage::disk('public')->files('logo marcas'))
+            ->keyBy(fn ($path) => Str::slug(pathinfo($path, PATHINFO_FILENAME)));
+        $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get()
+            ->map(function ($marca) use ($logosMarcas) {
+                $marca->logo_path = $marca->imagen && Storage::disk('public')->exists($marca->imagen)
+                    ? $marca->imagen
+                    : $logosMarcas->get(Str::slug($marca->slug));
+
+                return $marca;
+            })
+            ->filter(fn ($marca) => $marca->logo_path)
+            ->values();
         // Contadores
         $marcasDisponibles = Marca::where('estado', 1)->count();
         $productosEnStock = ProductoColor::where('stock', '>', 0)->sum('stock');

@@ -444,7 +444,9 @@
 
                             <div class="swiper-slide flex" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
 
-                                <a href="{{ $marca->slug }}" class="bg-white/90 border-2 border-white rounded-3xl h-[90px] w-full flex items-center justify-center text-4xl font-black text-dark hover:bg-dark hover:text-white transition">{{ $marca->nombre }}</a>
+                                <a href="{{ route('productos.catalogo', ['marca_id' => $marca->id]) }}" aria-label="Ver productos {{ $marca->nombre }}" class="bg-white border-2 border-white rounded-2xl h-[90px] w-full flex items-center justify-center p-4 transition hover:bg-gray-100">
+                                    <img src="{{ asset('storage/' . $marca->logo_path) }}" alt="{{ $marca->nombre }}" class="max-h-full max-w-full object-contain" loading="lazy">
+                                </a>
 
                             </div>
 
@@ -585,7 +587,7 @@
             </div>
 
             <!-- productos -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="listaProductos">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="listaProductos" data-max-productos="8">
                 <x-producto-card :productos="$productos"/>
             </div>
 
@@ -1174,7 +1176,7 @@
 
     <!-- estadisticas de marcas -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        (() => {
 
         const counters = document.querySelectorAll('.contador');
 
@@ -1229,7 +1231,7 @@
 
         observer.observe(document.querySelector('#section-brands'));
 
-    });
+    })();
     </script>    
 
     <!-- Footer -->

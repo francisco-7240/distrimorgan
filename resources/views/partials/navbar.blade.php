@@ -1,4 +1,4 @@
-<header x-data="{ openMenu:false }" x-init="init()" class="absolute w-full z-50">
+<header x-data="{ openMenu:false }" class="absolute w-full z-50">
     <!-- NAVBAR DESKTOP -->
     <div class="hidden md:block" x-data="navbarHandler()" >
     <!-- BLOQUE 1: Top Bar -->

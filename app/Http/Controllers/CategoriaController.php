@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CategoriaController extends Controller
@@ -26,6 +28,10 @@ class CategoriaController extends Controller
         $data['slug'] = $this->uniqueSlug($data['nombre']);
         $data['estado'] = $request->boolean('estado');
 
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $this->storeOriginalImage($request->file('imagen'));
+        }
+
         Categoria::create($data);
 
         return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente.');
@@ -41,14 +47,32 @@ class CategoriaController extends Controller
         $data = $this->validated($request);
         $data['slug'] = $this->uniqueSlug($data['nombre'], $categoria->id);
         $data['estado'] = $request->boolean('estado');
+        $imagenAnterior = $categoria->imagen;
+
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $this->storeOriginalImage($request->file('imagen'));
+        }
 
         $categoria->update($data);
+
+        if (
+            $request->hasFile('imagen')
+            && $imagenAnterior
+            && !in_array($imagenAnterior, ['img-categoria.jpg', 'categoria-default.jpg'], true)
+            && !Categoria::where('imagen', $imagenAnterior)->exists()
+        ) {
+            Storage::disk('public')->delete('categorias/' . $imagenAnterior);
+        }
 
         return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente.');
     }
 
     public function destroy(Categoria $categoria)
     {
+        if ($categoria->subcategorias()->exists()) {
+            return back()->with('error', 'No se puede eliminar una categoría que tiene subcategorías asociadas.');
+        }
+
         if ($categoria->productos()->exists()) {
             return back()->with('error', 'No se puede eliminar una categoría que tiene productos asociados.');
         }
@@ -63,8 +87,21 @@ class CategoriaController extends Controller
         return $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'descripcion' => ['nullable', 'string'],
+            'imagen' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'estado' => ['nullable', 'boolean'],
+        ], [
+            'imagen.image' => 'El archivo debe ser una imagen.',
+            'imagen.mimes' => 'La imagen debe ser JPG, PNG o WEBP.',
+            'imagen.max' => 'La imagen no debe superar los 2 MB.',
         ]);
+    }
+
+    private function storeOriginalImage(UploadedFile $image): string
+    {
+        $originalName = basename(str_replace('\\', '/', $image->getClientOriginalName()));
+        $image->storeAs('categorias', $originalName, 'public');
+
+        return $originalName;
     }
 
     private function uniqueSlug(string $nombre, ?int $categoriaId = null): string

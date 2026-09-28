@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
 
     const buscador = document.querySelector('#buscadorProductos');
     const selectOrden = document.querySelector('#orden');
@@ -87,10 +87,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
-        // Actualizar número de resultados
-        actualizarContadorProductos(productosVisibles.length);
+        const limiteProductos = Number(contenedorProductos?.dataset.maxProductos) || Infinity;
+        const productosMostrados = productosVisibles.slice(0, limiteProductos);
 
-        ordenarProductos(productosVisibles);
+        productosVisibles.slice(limiteProductos).forEach(producto => {
+            producto.classList.add('hidden');
+        });
+
+        // Actualizar número de resultados
+        actualizarContadorProductos(productosMostrados.length);
+
+        ordenarProductos(productosMostrados);
 
         mostrarMensajeSinResultados(productosVisibles.length);
 
@@ -221,6 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (categoriaInicial) {
         categoriaActual = categoriaInicial;
         actualizarCategoriaActiva();
+    }
+
+    const marcaInicial =
+        new URLSearchParams(window.location.search).get('marca_id');
+
+    if (marcaInicial) {
+        marcaActual = marcaInicial;
+        actualizarMarcaActiva();
     }
 
     filtrarProductos();

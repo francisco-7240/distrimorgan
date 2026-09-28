@@ -1,17 +1,22 @@
 
 
 import Alpine from 'alpinejs';
+import { cache as turboCache, start as startTurbo } from '@hotwired/turbo';
 import './carrito';
 import './productos';
 
 window.Alpine = Alpine;
 
 Alpine.start();
+startTurbo();
 
-const formularioContactoHome = document.querySelector('#contactoHomeForm');
-const estadoContactoHome = document.querySelector('#contactoHomeEstado');
+document.addEventListener('turbo:load', () => {
+	turboCache.exemptPageFromCache();
 
-formularioContactoHome?.addEventListener('submit', async (event) => {
+	const formularioContactoHome = document.querySelector('#contactoHomeForm');
+	const estadoContactoHome = document.querySelector('#contactoHomeEstado');
+
+	formularioContactoHome?.addEventListener('submit', async (event) => {
 	event.preventDefault();
 
 	const boton = formularioContactoHome.querySelector('button[type="submit"]');
@@ -46,4 +51,5 @@ formularioContactoHome?.addEventListener('submit', async (event) => {
 		estadoContactoHome.classList.remove('hidden');
 		boton && (boton.disabled = false);
 	}
+	});
 });
