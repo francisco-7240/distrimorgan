@@ -13,43 +13,50 @@ startTurbo();
 document.addEventListener('turbo:load', () => {
 	turboCache.exemptPageFromCache();
 
-	const formularioContactoHome = document.querySelector('#contactoHomeForm');
-	const estadoContactoHome = document.querySelector('#contactoHomeEstado');
+	document.querySelectorAll('.contactoAjaxForm').forEach((formularioContacto) => {
+		formularioContacto.addEventListener('submit', async (event) => {
+			event.preventDefault();
 
-	formularioContactoHome?.addEventListener('submit', async (event) => {
-	event.preventDefault();
+			const boton = formularioContacto.querySelector('button[type="submit"]');
+			const datos = new FormData(formularioContacto);
 
-	const boton = formularioContactoHome.querySelector('button[type="submit"]');
-	const datos = new FormData(formularioContactoHome);
+			if (boton) boton.disabled = true;
 
-	boton && (boton.disabled = true);
-	estadoContactoHome.className = 'hidden mb-6 rounded-xl px-5 py-4 text-sm font-semibold';
+			try {
+				const response = await fetch(formularioContacto.action, {
+					method: 'POST',
+					body: datos,
+					headers: {
+						Accept: 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+					},
+				});
 
-	try {
-		const response = await fetch(formularioContactoHome.action, {
-			method: 'POST',
-			body: datos,
-			headers: {
-				Accept: 'application/json',
-				'X-Requested-With': 'XMLHttpRequest',
-			},
-		});
+				const resultado = await response.json();
 
-		const resultado = await response.json();
+				if (!response.ok) {
+					const errores = Object.values(resultado.errors ?? {}).flat();
+					throw new Error(errores.join(' ') || 'No fue posible enviar el mensaje. Revisa los datos ingresados.');
+				}
 
-		if (!response.ok) {
-			throw new Error('No fue posible enviar el mensaje. Revisa los datos ingresados.');
-		}
-
-		formularioContactoHome.reset();
-		estadoContactoHome.textContent = resultado.message;
-		estadoContactoHome.classList.add('bg-green-100', 'text-green-800');
-	} catch (error) {
-		estadoContactoHome.textContent = error.message;
-		estadoContactoHome.classList.add('bg-red-100', 'text-red-800');
-	} finally {
-		estadoContactoHome.classList.remove('hidden');
-		boton && (boton.disabled = false);
-	}
+				formularioContacto.reset();
+				window.Swal.fire({
+					icon: 'success',
+					title: '¡Mensaje enviado!',
+					text: resultado.message,
+					confirmButtonText: 'Aceptar',
+					confirmButtonColor: '#a17b1e',
+				});
+			} catch (error) {
+				window.Swal.fire({
+					icon: 'error',
+					title: 'No se pudo enviar',
+					text: error.message,
+					confirmButtonText: 'Aceptar',
+				});
+			} finally {
+				if (boton) boton.disabled = false;
+			}
+	});
 	});
 });

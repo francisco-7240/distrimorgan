@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\UserController;
 
 // Página principal pública
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -45,6 +46,7 @@ Route::prefix('dashboard')->group(function () {
     // Administrador y Editor
     Route::middleware(['auth'])->group(function () {
         Route::resource('productos', ProductoController::class);
+        Route::resource('usuarios', UserController::class)->except(['show', 'destroy']);
         Route::resource('categorias', CategoriaController::class)->except('show');
         Route::resource('marcas', MarcaController::class)->except('show');
         Route::resource('colores', ColorController::class)

@@ -386,6 +386,9 @@ class ProductoController extends Controller
             ->when($request->filled('categoria_id'), function ($query) use ($request) {
                 $query->where('categoria_id', $request->integer('categoria_id'));
             })
+            ->when($request->filled('marca_id'), function ($query) use ($request) {
+                $query->where('marca_id', $request->integer('marca_id'));
+            })
             ->when($request->filled('buscar'), function ($query) use ($request) {
                 $buscar = trim($request->string('buscar')->toString());
 
