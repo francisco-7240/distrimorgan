@@ -4,6 +4,7 @@ document.addEventListener('turbo:load', () => {
     const selectOrden = document.querySelector('#orden');
 
     const botonesCategoria = document.querySelectorAll('.btn-categoria');
+    const botonesSubcategorias = document.querySelectorAll('.toggle-subcategorias');
     const botonesMarca = document.querySelectorAll('.btn-marca');
 
     const contenedorProductos = document.querySelector('#listaProductos');
@@ -42,6 +43,17 @@ document.addEventListener('turbo:load', () => {
     cerrarFiltros?.addEventListener('click', () => cambiarEstadoFiltros(false));
     fondoFiltros?.addEventListener('click', () => cambiarEstadoFiltros(false));
 
+    botonesSubcategorias.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const grupo = boton.closest('.categoria-grupo');
+            const subcategorias = grupo?.querySelector('.categoria-subcategorias');
+            const abierto = subcategorias?.classList.toggle('hidden') === false;
+
+            boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+            boton.querySelector('svg')?.classList.toggle('rotate-180', abierto);
+        });
+    });
+
     function filtrarProductos() {
 
         let productosVisibles = [];
@@ -54,9 +66,10 @@ document.addEventListener('turbo:load', () => {
             const slug = producto.dataset.productoSlug;
 
             // Filtro categoría
+            const categoriasSeleccionadas = categoriaActual.split(',');
             const coincideCategoria =
                 categoriaActual === 'todos' ||
-                categoriaId === categoriaActual;
+                categoriasSeleccionadas.includes(categoriaId);
 
             // Filtro marca
             const coincideMarca =
@@ -161,7 +174,7 @@ document.addEventListener('turbo:load', () => {
         boton.addEventListener('click', () => {
 
             categoriaActual =
-                boton.dataset.categoriaId;
+                boton.dataset.categoriaIds || boton.dataset.categoriaId;
 
             actualizarCategoriaActiva();
 
@@ -267,8 +280,11 @@ document.addEventListener('turbo:load', () => {
 
         botonesCategoria.forEach(boton => {
 
+            const categoriaBoton =
+                boton.dataset.categoriaIds || boton.dataset.categoriaId;
+
             const activo =
-                boton.dataset.categoriaId === categoriaActual;
+                categoriaBoton === categoriaActual;
 
             if (activo) {
 

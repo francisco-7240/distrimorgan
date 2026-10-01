@@ -1,4 +1,14 @@
 <div><label for="nombre" class="mb-1 block text-sm font-semibold">Nombre</label><input id="nombre" name="nombre" value="{{ old('nombre', $categoria->nombre ?? '') }}" required class="w-full rounded-lg border-gray-300"><x-input-error :messages="$errors->get('nombre')" class="mt-1" /></div>
+<div>
+	<label for="categoria_padre_id" class="mb-1 block text-sm font-semibold">Categoría padre</label>
+	<select id="categoria_padre_id" name="categoria_padre_id" class="w-full rounded-lg border-gray-300">
+		<option value="">Sin categoría padre (categoría principal)</option>
+		@foreach ($categoriasPadre as $categoriaPadre)
+			<option value="{{ $categoriaPadre->id }}" @selected(old('categoria_padre_id', $categoria->categoria_padre_id ?? '') == $categoriaPadre->id)>{{ $categoriaPadre->nombre }}</option>
+		@endforeach
+	</select>
+	<x-input-error :messages="$errors->get('categoria_padre_id')" class="mt-1" />
+</div>
 <div><label for="descripcion" class="mb-1 block text-sm font-semibold">Descripción</label><textarea id="descripcion" name="descripcion" rows="4" class="w-full rounded-lg border-gray-300">{{ old('descripcion', $categoria->descripcion ?? '') }}</textarea></div>
 @if (isset($categoria) && $categoria->imagen && \Illuminate\Support\Facades\Storage::disk('public')->exists('categorias/' . $categoria->imagen))
 	<div>

@@ -28,7 +28,7 @@
                         Marcas
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('colores.index')" :active="request()->routeIs('colores.*')">
                         Colores
                     </x-nav-link>
 

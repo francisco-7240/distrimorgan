@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactoController;
 
 // Página principal pública
@@ -46,14 +47,19 @@ Route::prefix('dashboard')->group(function () {
         Route::resource('productos', ProductoController::class);
         Route::resource('categorias', CategoriaController::class)->except('show');
         Route::resource('marcas', MarcaController::class)->except('show');
+        Route::resource('colores', ColorController::class)
+            ->except('show')
+            ->parameters(['colores' => 'color']);
         Route::get('/contactos', [ContactoController::class, 'index'])->name('contactos.index');
         Route::patch('/contactos/{contacto}/estado', [ContactoController::class, 'updateEstado'])->name('contactos.estado');
-        // Perfil
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 

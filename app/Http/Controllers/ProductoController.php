@@ -308,6 +308,8 @@ class ProductoController extends Controller
             'categoria_id' => ['required', 'integer', 'exists:categorias,id'],
             'marca_id' => ['required', 'integer', 'exists:marcas,id'],
             'estado' => ['required', 'boolean'],
+            'stock' => ['nullable', 'array'],
+            'stock.*' => ['nullable', 'integer', 'min:0'],
             'imagen_portada' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ], [
             'imagen_portada.max' => 'La imagen no debe superar los 2 MB.',
@@ -321,6 +323,12 @@ class ProductoController extends Controller
             'marca_id' => $validated['marca_id'],
             'estado' => $validated['estado'],
         ]);
+
+        foreach ($validated['stock'] ?? [] as $productoColorId => $stock) {
+            $producto->productoColores()
+                ->whereKey($productoColorId)
+                ->update(['stock' => $stock]);
+        }
 
         // Si se sube una nueva imagen, eliminar la anterior y guardar la nueva
         if ($request->hasFile('imagen_portada')) {
@@ -396,7 +404,13 @@ class ProductoController extends Controller
             ->where('estado', 1)
             ->get();
         // Obtener categorías activas
-        $categorias = Categoria::where('estado', 1)->orderBy('nombre')->get();
+        $categorias = Categoria::where('estado', 1)
+            ->whereNull('categoria_padre_id')
+            ->with(['subcategorias' => fn ($query) => $query
+                ->where('estado', 1)
+                ->orderBy('nombre')])
+            ->orderBy('nombre')
+            ->get();
         // Obtener marcas
         $marcas = Marca::where('estado', 1)->orderBy('id', 'asc')->get();
 

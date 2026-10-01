@@ -1,9 +1,16 @@
 <?php
 
-it('can render', function () {
-    $contents = $this->view('nosotros', [
-        //
-    ]);
+namespace Tests\Feature\View;
 
-    $contents->assertSee('');
-});
+use Tests\TestCase;
+
+class NosotrosTest extends TestCase
+{
+    public function test_can_render(): void
+    {
+        $response = $this->get('/nosotros');
+
+        $response->assertOk();
+        $response->assertSee('Conoce a');
+    }
+}

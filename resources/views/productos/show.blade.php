@@ -100,14 +100,46 @@
                             </button>
 
                             @foreach ($categorias as $categoria)
+                                @php($idsCategoria = $categoria->subcategorias->pluck('id')->prepend($categoria->id)->implode(','))
+                                <div class="categoria-grupo">
+                                    <div class="flex items-center gap-1">
+                                        <button
+                                            type="button"
+                                            class="btn-categoria min-w-0 flex-1 border px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition text-left"
+                                            data-categoria-id="{{ $categoria->id }}"
+                                            data-categoria-ids="{{ $idsCategoria }}"
+                                        >
+                                            {{ $categoria->nombre }}
+                                        </button>
 
-                                <button
-                                    type="button"
-                                    class="btn-categoria w-full border px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition text-left"
-                                    data-categoria-id="{{ $categoria->id }}"
-                                >
-                                    {{ $categoria->nombre }}
-                                </button>
+                                        @if ($categoria->subcategorias->isNotEmpty())
+                                            <button
+                                                type="button"
+                                                class="toggle-subcategorias flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border text-gray-600 transition hover:bg-gray-100"
+                                                aria-expanded="false"
+                                                aria-label="Mostrar subcategorías de {{ $categoria->nombre }}"
+                                            >
+                                                <svg class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                                                </svg>
+                                            </button>
+                                        @endif
+                                    </div>
+
+                                    @if ($categoria->subcategorias->isNotEmpty())
+                                        <div class="categoria-subcategorias mt-1 hidden space-y-1 pl-3">
+                                            @foreach ($categoria->subcategorias as $subcategoria)
+                                                <button
+                                                    type="button"
+                                                    class="btn-categoria w-full border px-4 py-2 rounded-lg text-sm hover:bg-primary hover:text-white transition text-left"
+                                                    data-categoria-id="{{ $subcategoria->id }}"
+                                                >
+                                                    {{ $subcategoria->nombre }}
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
 
                             @endforeach
 
@@ -144,7 +176,7 @@
 
                     <!-- productos -->
                     <div class="w-full">
-                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 xl:grid-cols-5" id="listaProductos">
+                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 xl:grid-cols-5" id="listaProductos" data-max-productos="50">
                             <x-producto-card :productos="$productos"/>
                         </div>
 

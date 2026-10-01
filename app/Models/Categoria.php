@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Categoria extends Model
@@ -18,6 +19,7 @@ class Categoria extends Model
         'descripcion',
         'imagen',
         'estado',
+        'categoria_padre_id',
     ];
 
     protected $casts = [
@@ -35,5 +37,10 @@ class Categoria extends Model
     public function subcategorias(): HasMany
     {
         return $this->hasMany(self::class, 'categoria_padre_id');
+    }
+
+    public function categoriaPadre(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'categoria_padre_id');
     }
 }
