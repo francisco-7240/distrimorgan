@@ -10,7 +10,7 @@
                 <div class="flex justify-center">
                     <a href="{{ route('home') }}" aria-label="Ir al inicio">
                         <img src="{{ asset('storage/logo/logo_distrimorgan.png') }}"
-                             alt="Logo opanoticias"
+                             alt="Logo Distri Morgan"
                              class="h-16 w-auto">
                     </a>
                 </div>
@@ -19,7 +19,7 @@
                 <div class="flex items-center gap-2 text-sm whitespace-nowrap">
                     <i class='bx bx-calendar'></i>
                     <span x-text="currentDate"></span>
-                    <a href="{{ config('app.redwhatsapp') }}&text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" class="text-dark bg-primary text-sm rounded-full font-medium hover:text-white" aria-label="Iniciar cotizacion">
+                    <a href="{{ config('app.redwhatsapp') }}&text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n" class="text-dark bg-primary text-sm rounded-full font-medium hover:text-white" aria-label="Iniciar cotizacion" target="_blank">
                         <div class="text-center px-3 py-1 hover:bg-dark hover:rounded-full">
                             Solicitar cotización
                         </div>
@@ -264,18 +264,22 @@
                    class="px-6 py-3 hover:bg-primary hover:text-white">
                     Inicio
                 </a>
+                <a href="{{ route('nosotros') }}"
+                   class="px-6 py-3 hover:bg-primary hover:text-white">
+                    Nosotros
+                </a>
 
-                <a href="#section-products"
+                <a href="{{ route('productos.catalogo') }}"
                    class="px-6 py-3 hover:bg-primary hover:text-white">
                     Productos
                 </a>
 
-                <a href="#section-services"
+                <a href="{{ route('servicios') }}"
                    class="px-6 py-3 hover:bg-primary hover:text-white">
                     Servicios
                 </a>
 
-                <a href="#contacto"
+                <a href="{{ route('contacto') }}"
                    class="px-6 py-3 hover:bg-primary hover:text-white">
                     Contacto
                 </a>
@@ -283,7 +287,7 @@
                 <!-- Botón cotización -->
                 <div class="px-6 mt-4">
 
-                    <a href="#"
+                    <a href="{{ config('app.redwhatsapp') }}&text=Hola%20DistriMorgan,%20quiero%20solicitar%20una%20cotizaci%C3%B3n"
                         class="block bg-primary text-dark text-center rounded-xl py-3 font-semibold hover:bg-dark hover:text-white transition">
 
                         Solicitar cotización
