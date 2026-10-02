@@ -69,7 +69,7 @@
     </section>
 
     <!-- Seccion categorias y equipos -->
-    <section class="relative py-24 overflow-hidden bg-gray-100" style="background-image: url('{{ asset('storage/img/img-figura-sierras.png') }}'); background-repeat: no-repeat; background-position: center;" id="section-category">
+    <section class="relative py-24 overflow-hidden bg-gray-100" style="background-image: url('{{ asset('storage/img/img-figura-sierras.png') }}'); background-repeat: no-repeat; background-position: center; background-size: cover;" id="section-category">
 
         <!-- categorias -->
         <div class="max-w-7xl mx-auto px-6" data-aos="fade-up">
