@@ -92,6 +92,7 @@
 
 
                             <button
+                                type="submit"
                                 class="bg-primary px-8 py-4 rounded-xl font-bold text-dark hover:bg-dark hover:text-white transition">
 
                                 Enviar mensaje <i class='bx bx-send text-xl'></i> 

@@ -83,6 +83,21 @@ class ContactFormTest extends TestCase
         Storage::disk('local')->assertExists($contacto->archivo);
     }
 
+    public function test_invalid_document_returns_json_errors_instead_of_redirect(): void
+    {
+        Storage::fake('local');
+        $documento = UploadedFile::fake()->create('rut.exe', 100, 'application/octet-stream');
+
+        $this->postJson(route('contacto.store'), [
+            'nombre' => 'Usuario con documento',
+            'email' => 'documento@example.com',
+            'mensaje' => 'Mensaje con documento adjunto',
+            'archivo' => $documento,
+        ])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('archivo');
+    }
+
     public function test_admin_can_download_a_contact_document(): void
     {
         Storage::fake('local');

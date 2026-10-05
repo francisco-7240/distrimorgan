@@ -71,6 +71,11 @@ class HomeController extends Controller
             'mensaje' => ['required', 'string'],
             'origen' => ['nullable', 'in:home,contacto'],
             'archivo' => ['nullable', 'file', 'mimes:pdf,doc,docx,jpg,jpeg,png', 'max:10240'],
+        ], [
+            'archivo.uploaded' => 'No fue posible subir el archivo. Verifica que no supere los 10 MB.',
+            'archivo.file' => 'No fue posible subir el archivo. Verifica que no supere los 10 MB.',
+            'archivo.mimes' => 'El archivo debe ser PDF, Word (doc, docx) o imagen (jpg, png).',
+            'archivo.max' => 'El archivo no puede superar los 10 MB.',
         ]);
 
         $archivo = $request->file('archivo');

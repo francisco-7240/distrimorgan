@@ -20,6 +20,17 @@ document.addEventListener('turbo:load', () => {
 
 			const boton = formularioContacto.querySelector('button[type="submit"]');
 			const datos = new FormData(formularioContacto);
+			const archivo = formularioContacto.querySelector('input[name="archivo"]')?.files[0];
+
+			if (archivo && archivo.size > 10 * 1024 * 1024) {
+				window.Swal.fire({
+					icon: 'error',
+					title: 'Archivo muy grande',
+					text: 'El archivo no puede superar los 10 MB.',
+					confirmButtonText: 'Aceptar',
+				});
+				return;
+			}
 
 			if (boton) boton.disabled = true;
 
