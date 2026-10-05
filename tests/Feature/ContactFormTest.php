@@ -3,7 +3,11 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ViewErrorBag;
+use App\Models\Contacto;
+use App\Models\User;
 use Tests\TestCase;
 
 class ContactFormTest extends TestCase
@@ -26,6 +30,7 @@ class ContactFormTest extends TestCase
         $this->get(route('contacto'))
             ->assertOk()
             ->assertSee('class="space-y-6 contactoAjaxForm"', false)
+            ->assertSee('enctype="multipart/form-data"', false)
             ->assertSee('name="origen" value="contacto"', false);
     }
 
@@ -56,5 +61,58 @@ class ContactFormTest extends TestCase
             ->assertJson(['message' => 'Su mensaje ha sido enviado.']);
 
         $this->assertDatabaseHas('contactos', ['email' => 'ajax@example.com']);
+    }
+
+    public function test_contact_form_stores_an_optional_document(): void
+    {
+        Storage::fake('local');
+        $documento = UploadedFile::fake()->create('rut.pdf', 100, 'application/pdf');
+
+        $this->postJson(route('contacto.store'), [
+            'nombre' => 'Usuario con documento',
+            'email' => 'documento@example.com',
+            'mensaje' => 'Mensaje con documento adjunto',
+            'archivo' => $documento,
+        ])
+            ->assertOk()
+            ->assertJson(['message' => 'Su mensaje ha sido enviado.']);
+
+        $contacto = Contacto::where('email', 'documento@example.com')->firstOrFail();
+
+        $this->assertNotNull($contacto->archivo);
+        Storage::disk('local')->assertExists($contacto->archivo);
+    }
+
+    public function test_invalid_document_returns_json_errors_instead_of_redirect(): void
+    {
+        Storage::fake('local');
+        $documento = UploadedFile::fake()->create('rut.exe', 100, 'application/octet-stream');
+
+        $this->postJson(route('contacto.store'), [
+            'nombre' => 'Usuario con documento',
+            'email' => 'documento@example.com',
+            'mensaje' => 'Mensaje con documento adjunto',
+            'archivo' => $documento,
+        ])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('archivo');
+    }
+
+    public function test_admin_can_download_a_contact_document(): void
+    {
+        Storage::fake('local');
+        Storage::disk('local')->put('contactos/rut.pdf', 'Documento de prueba');
+        $contacto = Contacto::create([
+            'nombre' => 'Usuario con documento',
+            'email' => 'documento@example.com',
+            'mensaje' => 'Mensaje con documento adjunto',
+            'archivo' => 'contactos/rut.pdf',
+        ]);
+        $usuario = User::factory()->create();
+
+        $this->actingAs($usuario)
+            ->get(route('contactos.archivo', $contacto))
+            ->assertOk()
+            ->assertDownload('rut.pdf');
     }
 }

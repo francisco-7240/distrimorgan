@@ -172,7 +172,10 @@
                                     </p>
 
                                     <p class="font-semibold text-lg">
-                                        Lun - Sáb: 7:00 AM - 6:00 PM
+                                        Lun - vie: 7:00 AM - 5:30 PM
+                                    </p>
+                                    <p class="font-semibold text-lg">
+                                        Sábados: 8:00 AM - 12:00 PM
                                     </p>
 
                                 </div>
