@@ -4,6 +4,7 @@ import Alpine from 'alpinejs';
 import { cache as turboCache, start as startTurbo } from '@hotwired/turbo';
 import './carrito';
 import './productos';
+import './proteccion';
 
 window.Alpine = Alpine;
 
