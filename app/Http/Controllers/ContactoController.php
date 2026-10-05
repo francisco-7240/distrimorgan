@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contacto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContactoController extends Controller
 {
@@ -34,5 +35,12 @@ class ContactoController extends Controller
         return redirect()
             ->route('contactos.index', $request->only('buscar'))
             ->with('success', 'Estado del contacto actualizado correctamente.');
+    }
+
+    public function descargarArchivo(Contacto $contacto)
+    {
+        abort_unless($contacto->archivo, 404);
+
+        return Storage::disk('local')->download($contacto->archivo);
     }
 }

@@ -44,6 +44,7 @@
                                 <th class="whitespace-nowrap px-6 py-4">Correo</th>
                                 <th class="whitespace-nowrap px-6 py-4">Teléfono</th>
                                 <th class="px-6 py-4">Mensaje</th>
+                                <th class="whitespace-nowrap px-6 py-4">Documento</th>
                                 <th class="whitespace-nowrap px-6 py-4">Estado</th>
                                 <th class="whitespace-nowrap px-6 py-4">Fecha</th>
                             </tr>
@@ -55,6 +56,15 @@
                                     <td class="whitespace-nowrap px-6 py-4 text-gray-600">{{ $contacto->email }}</td>
                                     <td class="whitespace-nowrap px-6 py-4 text-gray-600">{{ $contacto->telefono ?: 'No indicado' }}</td>
                                     <td class="min-w-72 px-6 py-4 text-gray-600">{{ $contacto->mensaje }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        @if ($contacto->archivo)
+                                            <a href="{{ route('contactos.archivo', $contacto) }}" class="font-semibold text-blue-600 hover:text-blue-800">
+                                                Descargar documento
+                                            </a>
+                                        @else
+                                            <span class="text-gray-500">No adjuntó</span>
+                                        @endif
+                                    </td>
                                     <td class="whitespace-nowrap px-6 py-4">
                                         <form method="POST" action="{{ route('contactos.estado', $contacto) }}" class="flex items-center gap-2">
                                             @csrf
@@ -74,7 +84,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="px-6 py-10 text-center text-gray-500">No hay mensajes de contacto registrados.</td>
+                                    <td colspan="7" class="px-6 py-10 text-center text-gray-500">No hay mensajes de contacto registrados.</td>
                                 </tr>
                             @endforelse
                         </tbody>

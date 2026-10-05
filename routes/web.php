@@ -54,6 +54,7 @@ Route::prefix('dashboard')->group(function () {
             ->parameters(['colores' => 'color']);
         Route::get('/contactos', [ContactoController::class, 'index'])->name('contactos.index');
         Route::patch('/contactos/{contacto}/estado', [ContactoController::class, 'updateEstado'])->name('contactos.estado');
+        Route::get('/contactos/{contacto}/archivo', [ContactoController::class, 'descargarArchivo'])->name('contactos.archivo');
     });
 
 });

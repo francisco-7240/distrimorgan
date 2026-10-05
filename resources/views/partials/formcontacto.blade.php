@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('contacto.store') }}" class="space-y-6 contactoAjaxForm">
+<form method="POST" action="{{ route('contacto.store') }}" enctype="multipart/form-data" class="space-y-6 contactoAjaxForm">
                             @csrf
                             <input type="hidden" name="origen" value="{{ $origen ?? 'contacto' }}">
 
@@ -68,6 +68,23 @@
                                     required
                                     class="w-full rounded-2xl border-gray-300 px-5 py-4 resize-none focus:border-primary focus:ring-primary">{{ old('mensaje') }}</textarea>
                                 @error('mensaje')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+                            <div>
+
+                                <label class="block mb-2 text-sm font-semibold text-gray-700">
+                                    Adjuntar RUT
+                                </label>
+
+                                <input
+                                    type="file"
+                                    name="archivo"
+                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                    class="w-full rounded-xl border-gray-300 px-5 py-4 focus:border-primary focus:ring-primary">
+                                <p class="mt-1 text-sm text-gray-500">PDF, Word o imagen. Máximo 10 MB.</p>
+                                @error('archivo')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
 

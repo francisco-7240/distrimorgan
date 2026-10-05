@@ -33,11 +33,26 @@ document.addEventListener('turbo:load', () => {
 					},
 				});
 
-				const resultado = await response.json();
+				const contentType = response.headers.get('content-type') ?? '';
+				const resultado = contentType.includes('application/json')
+					? await response.json()
+					: null;
 
 				if (!response.ok) {
-					const errores = Object.values(resultado.errors ?? {}).flat();
-					throw new Error(errores.join(' ') || 'No fue posible enviar el mensaje. Revisa los datos ingresados.');
+					const errores = Object.values(resultado?.errors ?? {}).flat();
+					const rutaRespuesta = new URL(response.url).pathname;
+					const mensaje = errores.join(' ')
+						|| resultado?.message
+						|| (response.status === 419
+							? 'La sesión expiró. Actualiza la página e inténtalo nuevamente.'
+							: `El servidor respondió con el error ${response.status} en ${rutaRespuesta}. Revisa los registros del servidor.`);
+
+					throw new Error(mensaje);
+				}
+
+				if (!resultado) {
+					const rutaRespuesta = new URL(response.url).pathname;
+					throw new Error(`El servidor respondió con una página en vez de JSON (HTTP ${response.status}, ${rutaRespuesta}). Revisa la configuración del servidor.`);
 				}
 
 				formularioContacto.reset();

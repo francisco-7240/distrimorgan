@@ -70,9 +70,22 @@ class HomeController extends Controller
             'email' => ['required', 'email', 'max:255'],
             'mensaje' => ['required', 'string'],
             'origen' => ['nullable', 'in:home,contacto'],
+            'archivo' => ['nullable', 'file', 'mimes:pdf,doc,docx,jpg,jpeg,png', 'max:10240'],
         ]);
 
-        unset($datos['origen']);
+        $archivo = $request->file('archivo');
+        unset($datos['origen'], $datos['archivo']);
+
+        if ($archivo) {
+            $rutaArchivo = $archivo->store('contactos', 'local');
+
+            if ($rutaArchivo === false) {
+                throw new \RuntimeException('No fue posible guardar el documento adjunto.');
+            }
+
+            $datos['archivo'] = $rutaArchivo;
+        }
+
         Contacto::create($datos);
 
         if ($request->expectsJson()) {
