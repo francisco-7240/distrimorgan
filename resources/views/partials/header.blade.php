@@ -6,7 +6,7 @@
 <link rel="canonical" href="{{ url()->current() }}">
 <meta name="theme-color" content="#c9a03a">
 
-<link rel="icon" href="{{ asset('favicon.ico?v=2') }}" sizes="any">
+<link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
 <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 

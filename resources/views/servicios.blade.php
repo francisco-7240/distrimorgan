@@ -4,7 +4,7 @@
 
         @include('partials.header')
 
-        <title>{{ config('app.name') }} - Contacto</title>
+        <title>{{ config('app.name') }} - Servicios</title>
         <meta name="description" content="Distribuidora Morgan - Contáctanos para obtener información sobre nuestros productos y servicios. Estamos aquí para ayudarte a potenciar tu negocio con maquinaria industrial, herramientas especializadas y servicio técnico certificado.">
 
     </head>

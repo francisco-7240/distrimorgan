@@ -4,6 +4,7 @@
     @include('partials.header')
     <title>{{ config('app.name') }} - Inicio</title>
     <meta name="description" content="Distribuidora líder en herramientas y equipos industriales. Más de 15 años ofreciendo calidad y servicio excepcional">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
 </head>
 <body class="overflow-x-hidden">
 
