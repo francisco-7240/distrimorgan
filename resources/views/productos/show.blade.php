@@ -180,6 +180,9 @@
                             <x-producto-card :productos="$productos"/>
                         </div>
 
+                        <!-- Paginación -->
+                        <nav id="paginacionProductos" class="hidden mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Paginación de productos"></nav>
+
                         <!-- Sin resultados -->
                         <div id="sinResultados" class="hidden text-center py-16">
                             <i class="bx bx-search-alt-2 text-6xl text-gray-300"></i>

@@ -20,6 +20,11 @@ document.addEventListener('turbo:load', () => {
     let marcaActual = 'todos';
     let textoBusqueda = '';
     let ordenActual = '';
+    let productosFiltrados = [];
+    let paginaActual = 1;
+
+    const productosPorPagina = Number(contenedorProductos?.dataset.maxProductos) || Infinity;
+    const paginacion = document.querySelector('#paginacionProductos');
 
     function cambiarEstadoFiltros(abierto) {
         if (!panelFiltros || !fondoFiltros) return;
@@ -100,20 +105,134 @@ document.addEventListener('turbo:load', () => {
 
         });
 
-        const limiteProductos = Number(contenedorProductos?.dataset.maxProductos) || Infinity;
-        const productosMostrados = productosVisibles.slice(0, limiteProductos);
+        ordenarProductos(productosVisibles);
 
-        productosVisibles.slice(limiteProductos).forEach(producto => {
-            producto.classList.add('hidden');
-        });
+        productosFiltrados = productosVisibles;
+        paginaActual = 1;
 
         // Actualizar número de resultados
-        actualizarContadorProductos(productosMostrados.length);
+        actualizarContadorProductos(productosVisibles.length);
 
-        ordenarProductos(productosMostrados);
+        mostrarPagina(1, false);
 
         mostrarMensajeSinResultados(productosVisibles.length);
 
+    }
+
+
+    // ==============================
+    // PAGINACIÓN
+    // ==============================
+
+    function totalPaginas() {
+        return Math.max(1, Math.ceil(productosFiltrados.length / productosPorPagina));
+    }
+
+    function mostrarPagina(pagina, desplazar = true) {
+
+        paginaActual = Math.min(Math.max(1, pagina), totalPaginas());
+
+        const inicio = (paginaActual - 1) * productosPorPagina;
+        const fin = inicio + productosPorPagina;
+
+        productosFiltrados.forEach((producto, indice) => {
+            producto.classList.toggle('hidden', indice < inicio || indice >= fin);
+        });
+
+        dibujarPaginacion();
+
+        if (desplazar && contenedorProductos) {
+            const top = contenedorProductos.getBoundingClientRect().top + window.scrollY - 140;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    }
+
+    function paginasVisibles(total, actual) {
+
+        if (total <= 7) {
+            return Array.from({ length: total }, (_, i) => i + 1);
+        }
+
+        const paginas = new Set([1, total, actual - 1, actual, actual + 1]);
+        const lista = [...paginas].filter(p => p >= 1 && p <= total).sort((a, b) => a - b);
+        const resultado = [];
+
+        lista.forEach((pagina, i) => {
+            if (i > 0 && pagina - lista[i - 1] > 1) {
+                resultado.push('…');
+            }
+            resultado.push(pagina);
+        });
+
+        return resultado;
+    }
+
+    function crearBotonPagina(contenido, pagina, { activo = false, deshabilitado = false, etiqueta = '' } = {}) {
+
+        const boton = document.createElement('button');
+        boton.type = 'button';
+        boton.innerHTML = contenido;
+        boton.disabled = deshabilitado;
+        boton.setAttribute('aria-label', etiqueta || `Página ${pagina}`);
+
+        boton.className = [
+            'min-w-10 h-10 px-3 rounded-lg font-semibold transition flex items-center justify-center',
+            activo
+                ? 'bg-primary text-dark'
+                : 'bg-white text-dark border border-gray-200 hover:bg-primary hover:border-primary',
+            deshabilitado ? 'opacity-40 cursor-not-allowed hover:bg-white hover:border-gray-200' : '',
+        ].join(' ');
+
+        if (activo) {
+            boton.setAttribute('aria-current', 'page');
+        }
+
+        if (!deshabilitado && !activo) {
+            boton.addEventListener('click', () => mostrarPagina(pagina));
+        }
+
+        return boton;
+    }
+
+    function dibujarPaginacion() {
+
+        if (!paginacion) return;
+
+        paginacion.innerHTML = '';
+
+        const total = totalPaginas();
+
+        if (total <= 1) {
+            paginacion.classList.add('hidden');
+            return;
+        }
+
+        paginacion.classList.remove('hidden');
+
+        paginacion.appendChild(crearBotonPagina('<i class="bx bx-chevron-left text-xl"></i>', paginaActual - 1, {
+            deshabilitado: paginaActual === 1,
+            etiqueta: 'Página anterior',
+        }));
+
+        paginasVisibles(total, paginaActual).forEach(pagina => {
+
+            if (pagina === '…') {
+                const separador = document.createElement('span');
+                separador.className = 'px-1 text-gray-400';
+                separador.textContent = '…';
+                paginacion.appendChild(separador);
+                return;
+            }
+
+            paginacion.appendChild(crearBotonPagina(String(pagina), pagina, {
+                activo: pagina === paginaActual,
+            }));
+        });
+
+        paginacion.appendChild(crearBotonPagina('<i class="bx bx-chevron-right text-xl"></i>', paginaActual + 1, {
+            deshabilitado: paginaActual === total,
+            etiqueta: 'Página siguiente',
+        }));
     }
 
 
