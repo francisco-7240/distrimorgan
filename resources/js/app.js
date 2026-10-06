@@ -5,6 +5,7 @@ import { cache as turboCache, start as startTurbo } from '@hotwired/turbo';
 import './carrito';
 import './productos';
 import './proteccion';
+import './logos';
 
 window.Alpine = Alpine;
 
