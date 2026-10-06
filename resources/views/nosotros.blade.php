@@ -21,7 +21,7 @@
             <div class="relative flex min-h-screen items-start pt-28 pb-28 md:pt-44 lg:pt-48">
                 <div class="container px-6 lg:px-10 w-full">
                     <!-- Título -->
-                    <h1 class="font-black uppercase leading-none text-white text-4xl md:text-7xl">Conoce a <span class="text-primary">DistriMorgan</span>
+                    <h1 class="font-black uppercase leading-none text-white text-4xl md:text-7xl">Conoce a <span class="text-primary">Distri Morgan</span>
                     </h1>
                 </div>
             </div>
