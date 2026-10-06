@@ -3,7 +3,10 @@
     <x-slot name="header">
         <div class="flex w-full justify-between">
             <h1 class="text-center content-center font-black">Listado de Productos</h1>           
+            <div class="flex gap-2">
+            <a href="{{ route('productos.importar') }}" class="flex px-4 py-2 rounded-lg text-white bg-blue-600 text-center justify-center gap-2">Importar ZIP</a>
             <a href="{{ route('productos.create') }}" class="flex w-48 px-4 py-2 border-green-700 rounded-lg text-white bg-green-600 text-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg> Agregar Producto</a>
+            </div>
         </div>
     </x-slot>
 
