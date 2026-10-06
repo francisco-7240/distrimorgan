@@ -19,6 +19,7 @@ return [
     'redinstagram' => env('RED_INSTAGRAM', 'https://www.instagram.com/distrimorgan'),
     'redyoutube' => env('RED_YOUTUBE', 'https://youtube.com/@distrimorgan?si=frU1CWVnsn08Z8Sx'),
     'redwhatsapp' => env('RED_WHATSAPP', 'https://api.whatsapp.com/send/?phone=573026400248'),
+    'redtiktok' => env('RED_TIKTOK', 'https://www.tiktok.com/@distrimorgan'),
 
     /*
     |--------------------------------------------------------------------------

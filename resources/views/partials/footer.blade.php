@@ -65,6 +65,17 @@
                                 <i class='bx bxl-youtube'></i>
 
                             </a>
+                            <a
+                                target="_blank"
+                                rel="noopener"
+                                aria-label="Red TikTok"
+                                href="{{ config('app.redtiktok') }}"
+                                class="w-8 h-8 rounded-full bg-white flex items-center justify-center
+                                text-dark text-2xl hover:bg-primary transition">
+
+                                <i class='bx bxl-tiktok'></i>
+
+                            </a>
 
                         </div>
 
