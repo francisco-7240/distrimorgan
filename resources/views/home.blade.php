@@ -269,8 +269,8 @@
                             <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
 
                                 <img
-                                    src="{{ asset('storage/industrias/icons/icon-carniceria.png') }}"
-                                    class="w-24 h-24 mx-auto mb-8"
+                                    src="{{ asset('storage/industrias/icons/carnes.jpg') }}"
+                                    class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
                                     alt="Carnicerías">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
@@ -278,7 +278,7 @@
                                 </h3>
 
                                 <p class="mt-4 text-gray-800 flex-grow">
-                                    Equipos especializados para el procesamiento y venta de carnes.
+                                    Equipos para el procesamiento y venta de carnes.
                                 </p>
 
                             </div>
@@ -292,16 +292,16 @@
                             <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
 
                                 <img
-                                    src="{{ asset('storage/industrias/icons/icon-pesqueria.png') }}"
-                                    class="w-24 h-24 mx-auto mb-8"
+                                    src="{{ asset('storage/industrias/icons/pesqueria.jpg') }}"
+                                    class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
                                     alt="Pesquerías">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
-                                    Pesquerías
+                                    Pesquera
                                 </h3>
 
                                 <p class="mt-4 text-gray-800 flex-grow">
-                                    Soluciones para conservación y exhibición de productos del mar.
+                                    Conservación y exhibición de productos del mar.
                                 </p>
 
                             </div>
@@ -315,8 +315,8 @@
                             <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
 
                                 <img
-                                    src="{{ asset('storage/industrias/icons/icon-panaderia.png') }}"
-                                    class="w-24 h-24 mx-auto mb-8"
+                                    src="{{ asset('storage/industrias/icons/panaderia.jpg') }}"
+                                    class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
                                     alt="Panaderías">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
@@ -338,30 +338,8 @@
                             <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
 
                                 <img
-                                    src="{{ asset('storage\industrias\icons\icon-supermercado.png') }}"
-                                    class="w-24 h-24 mx-auto mb-8"
-                                    alt="Supermercados">
-
-                                <h3 class="text-2xl font-black uppercase text-dark">
-                                    Supermercados
-                                </h3>
-
-                                <p class="mt-4 text-gray-800 flex-grow">
-                                    Sistemas completos para operación de retail alimenticio.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <!-- Supermercados -->
-                        <div class="swiper-slide flex" data-aos="fade-up" data-aos-delay="{{ 5 * 100 }}">
-
-                            <div class="bg-gray-300 rounded-3xl p-10 text-center flex flex-col min-h-[340px] w-full">
-
-                                <img
-                                    src="{{ asset('storage\industrias\icons\icon-supermercado.png') }}"
-                                    class="w-24 h-24 mx-auto mb-8"
+                                    src="{{ asset('storage\industrias\icons\supermercado.jpg') }}"
+                                    class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
                                     alt="Supermercados">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
