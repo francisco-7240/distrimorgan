@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProductoImportController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
@@ -45,6 +46,8 @@ Route::prefix('dashboard')->group(function () {
 
     // Administrador y Editor
     Route::middleware(['auth'])->group(function () {
+        Route::get('/importar-productos', [ProductoImportController::class, 'create'])->name('productos.importar');
+        Route::post('/importar-productos', [ProductoImportController::class, 'store'])->name('productos.importar.store');
         Route::resource('productos', ProductoController::class);
         Route::resource('usuarios', UserController::class)->except(['show', 'destroy']);
         Route::resource('categorias', CategoriaController::class)->except('show');
