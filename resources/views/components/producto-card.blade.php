@@ -7,7 +7,7 @@
         $stockProducto = $productoSinColor ? $producto->productoColores->first()?->stock : null;
     @endphp
 
-    <div class="producto-card flex h-full flex-col bg-gray-200 p-2 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-200" data-aos="fade-up" data-aos-delay="100" data-producto-id="{{ $producto->id }}" data-categoria-id="{{ $producto->categoria_id }}" data-producto-nombre="{{ strtolower($producto->nombre) }}" data-producto-slug="{{ $producto->slug }}" data-marca-id="{{ $producto->marca_id }}" data-producto-fecha="{{ $producto->created_at->timestamp }}">
+    <div class="producto-card flex h-full flex-col bg-gray-200 p-2 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-200" data-producto-card data-producto-id="{{ $producto->id }}" data-categoria-id="{{ $producto->categoria_id }}" data-producto-nombre="{{ strtolower($producto->nombre) }}" data-producto-slug="{{ $producto->slug }}" data-marca-id="{{ $producto->marca_id }}" data-producto-fecha="{{ $producto->created_at->timestamp }}">
         <!-- Imagen -->
         <a href="{{ route('producto.detalle', ['producto' => $producto, 'slug' => $producto->slug]) }}" class="flex justify-center relative w-full h-56 overflow-hidden rounded-2xl bg-gray-50 mb-1">
             <!-- Categoría -->

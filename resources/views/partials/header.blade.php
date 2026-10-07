@@ -26,9 +26,9 @@
 <!-- Animaciones -->
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 <!-- Alertas -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <!-- Herramienta de accecibilidad -->
-<script src="https://cdn.userway.org/widget.js" data-account="EvnCUKYTJM"></script>
+<script src="https://cdn.userway.org/widget.js" data-account="EvnCUKYTJM" defer></script>
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
