@@ -11,6 +11,19 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MiniaturaController;
+
+// Miniaturas livianas de las imágenes (sin sesión ni cookies para que respondan rápido)
+Route::get('/miniaturas/{ancho}/{version}/{ruta}', MiniaturaController::class)
+    ->where(['ancho' => '[0-9]+', 'version' => '[0-9]+', 'ruta' => '.+'])
+    ->withoutMiddleware([
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+    ])
+    ->name('miniatura');
 
 // Página principal pública
 Route::get('/', [HomeController::class, 'index'])->name('home');

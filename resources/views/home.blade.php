@@ -165,12 +165,12 @@
                         <!-- Imagen -->
                         @if ($categoria->imagen)
 
-                            <img src="{{ asset('storage/categorias/' . $categoria->imagen) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $categoria->nombre }}">
+                            <img src="{{ asset('storage/categorias/' . $categoria->imagen) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $categoria->nombre }}" loading="lazy" decoding="async">
 
                         @else
 
                             <!-- Imagen por defecto -->
-                            <img src="{{ asset('storage/categorias/categoria-default.jpg') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $categoria->nombre }}">
+                            <img src="{{ asset('storage/categorias/categoria-default.jpg') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="{{ $categoria->nombre }}" loading="lazy" decoding="async">
 
                         @endif
 
@@ -271,7 +271,7 @@
                                 <img
                                     src="{{ asset('storage/industrias/icons/carnes.jpg') }}"
                                     class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
-                                    alt="Carnicerías">
+                                    alt="Carnicerías" loading="lazy" decoding="async">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
                                     Carnicerías
@@ -294,7 +294,7 @@
                                 <img
                                     src="{{ asset('storage/industrias/icons/pesqueria.jpg') }}"
                                     class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
-                                    alt="Pesquerías">
+                                    alt="Pesquerías" loading="lazy" decoding="async">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
                                     Pesquera
@@ -317,7 +317,7 @@
                                 <img
                                     src="{{ asset('storage/industrias/icons/panaderia.jpg') }}"
                                     class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
-                                    alt="Panaderías">
+                                    alt="Panaderías" loading="lazy" decoding="async">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
                                     Panaderías
@@ -340,7 +340,7 @@
                                 <img
                                     src="{{ asset('storage\industrias\icons\supermercado.jpg') }}"
                                     class="w-60 h-40 mx-auto mb-8 rounded-md object-cover"
-                                    alt="Supermercados">
+                                    alt="Supermercados" loading="lazy" decoding="async">
 
                                 <h3 class="text-2xl font-black uppercase text-dark">
                                     Supermercados
@@ -681,7 +681,7 @@
                     <img
                         src="{{ asset('storage/img/img-servicios.jpg') }}"
                         class="rounded-3xl w-full h-[500px] object-cover"
-                        alt="Servicio técnico">
+                        alt="Servicio técnico" loading="lazy" decoding="async">
 
                     <!-- Etiqueta -->
                     <div class="absolute top-8 right-8">

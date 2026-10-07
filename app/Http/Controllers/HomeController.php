@@ -17,16 +17,26 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Obtener productos con sus relaciones
-        $productos = Producto::with([
+        // Obtener 8 categorías activas en orden aleatorio
+        $categorias = Categoria::where('estado', 1)->inRandomOrder()->limit(8)->get();
+
+        // Solo se cargan los productos que el home puede mostrar: 8 para "Todos"
+        // y 8 por cada categoría de los filtros, en lugar del catálogo completo.
+        $consultaProductos = fn () => Producto::with([
             'categoria',
             'marca',
             'productoColores.color',
-            'productoColores.imagenes',
             'imagenes',
-        ])->where('estado', 1)->get();
-        // Obtener 8 categorías activas en orden aleatorio
-        $categorias = Categoria::where('estado', 1)->inRandomOrder()->limit(8)->get();
+        ])->where('estado', 1)->orderBy('id')->limit(8);
+
+        $productos = $consultaProductos()->get();
+
+        foreach ($categorias as $categoria) {
+            $productos = $productos->merge(
+                $consultaProductos()->where('categoria_id', $categoria->id)->get()
+            );
+        }
+
         // Mostrar solo las marcas que tienen un logo disponible.
         $logosMarcas = collect(Storage::disk('public')->files('logo marcas'))
             ->keyBy(fn ($path) => Str::slug(pathinfo($path, PATHINFO_FILENAME)));

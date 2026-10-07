@@ -401,7 +401,6 @@ class ProductoController extends Controller
                 'categoria',
                 'marca',
                 'productoColores.color',
-                'productoColores.imagenes',
                 'imagenes',
             ])
             ->where('estado', 1)

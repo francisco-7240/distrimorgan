@@ -1,6 +1,7 @@
 @foreach ($productos as $producto)
     @php
         $imagenPortada = $producto->imagenes->where('es_portada', true)->first();
+        $miniatura = \App\Support\Miniatura::url($imagenPortada?->imagen);
         $coloresDisponibles = $producto->productoColores->filter(fn ($productoColor) => !$productoColor->color->es_predeterminado && (is_null($productoColor->stock) || $productoColor->stock > 0));
         $productoSinColor = $coloresDisponibles->isEmpty();
         $stockProducto = $productoSinColor ? $producto->productoColores->first()?->stock : null;
@@ -13,11 +14,7 @@
             <p class="text-sm text-white bg-black hover:bg-primary rounded-xl absolute top-1 left-1 py-2 px-4">
                 {{ $producto->categoria->nombre }}
             </p>
-            @if ($imagenPortada && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagenPortada->imagen))
-                <img src="{{ asset('storage/' . $imagenPortada->imagen) }}" class="h-56 object-contain" alt="{{ $producto->nombre }}" >
-            @else
-                <img src="{{ asset('storage/logo/logo_distrimorgan.png') }}" class="h-56 object-contain" alt="{{ $producto->nombre }}">
-            @endif
+            <img src="{{ $miniatura ?? asset('storage/logo/logo_distrimorgan.png') }}" class="h-56 object-contain" alt="{{ $producto->nombre }}" loading="lazy" decoding="async">
         </a>
 
         <!-- Marca y colores -->
