@@ -13,16 +13,8 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MiniaturaController;
 
-// Miniaturas livianas de las imágenes (sin sesión ni cookies para que respondan rápido)
-Route::get('/miniatura', MiniaturaController::class)
-    ->withoutMiddleware([
-        \Illuminate\Cookie\Middleware\EncryptCookies::class,
-        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
-    ])
-    ->name('miniatura');
+// Miniaturas livianas de las imágenes del catálogo
+Route::get('/miniatura', MiniaturaController::class)->name('miniatura');
 
 // Página principal pública
 Route::get('/', [HomeController::class, 'index'])->name('home');
