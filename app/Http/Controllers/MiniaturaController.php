@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\Miniatura;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 /**
@@ -11,8 +12,12 @@ use Illuminate\Support\Facades\File;
  */
 class MiniaturaController extends Controller
 {
-    public function __invoke(int $ancho, int $version, string $ruta)
+    public function __invoke(Request $request)
     {
+        $ancho = (int) $request->query('w');
+        $version = (int) $request->query('v');
+        $ruta = (string) $request->query('r');
+
         abort_unless(in_array($ancho, Miniatura::ANCHOS, true), 404);
 
         $base = realpath(storage_path('app/public'));

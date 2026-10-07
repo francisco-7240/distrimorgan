@@ -23,6 +23,8 @@ class Miniatura
             return null;
         }
 
-        return route('miniatura', ['ancho' => $ancho, 'version' => $version, 'ruta' => $ruta]);
+        // La ruta va como parámetro (?r=) para que la URL no termine en .jpg/.png:
+        // algunos servidores atienden esas extensiones como archivos estáticos sin pasar por Laravel.
+        return route('miniatura', ['w' => $ancho, 'v' => $version, 'r' => $ruta]);
     }
 }

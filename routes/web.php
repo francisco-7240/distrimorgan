@@ -14,8 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MiniaturaController;
 
 // Miniaturas livianas de las imágenes (sin sesión ni cookies para que respondan rápido)
-Route::get('/miniaturas/{ancho}/{version}/{ruta}', MiniaturaController::class)
-    ->where(['ancho' => '[0-9]+', 'version' => '[0-9]+', 'ruta' => '.+'])
+Route::get('/miniatura', MiniaturaController::class)
     ->withoutMiddleware([
         \Illuminate\Cookie\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
