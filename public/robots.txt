@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /carrito
+Disallow: /miniatura
+
+Sitemap: https://distrimorgan.com/sitemap.xml

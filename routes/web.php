@@ -12,6 +12,10 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MiniaturaController;
+use App\Http\Controllers\SitemapController;
+
+// Sitemap para buscadores
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 // Miniaturas livianas de las imágenes del catálogo
 Route::get('/miniatura', MiniaturaController::class)->name('miniatura');
