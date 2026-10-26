@@ -98,7 +98,6 @@
                                         type="checkbox"
                                         name="acepta_politica"
                                         value="1"
-                                        required
                                         @checked(old('acepta_politica'))
                                         class="mt-0.5 h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary">
                                     <span>
