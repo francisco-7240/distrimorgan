@@ -91,6 +91,28 @@
                             </div>
 
 
+                            <div>
+
+                                <label class="flex items-start gap-3 text-sm text-gray-700">
+                                    <input
+                                        type="checkbox"
+                                        name="acepta_politica"
+                                        value="1"
+                                        required
+                                        @checked(old('acepta_politica'))
+                                        class="mt-0.5 h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary">
+                                    <span>
+                                        He leído y acepto la
+                                        <a href="{{ route('privacidad') }}" target="_blank" rel="noopener" class="font-semibold text-primary underline hover:text-dark">política de privacidad y tratamiento de datos personales</a>.
+                                    </span>
+                                </label>
+                                @error('acepta_politica')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+
                             <button
                                 type="submit"
                                 class="bg-primary px-8 py-4 rounded-xl font-bold text-dark hover:bg-dark hover:text-white transition">

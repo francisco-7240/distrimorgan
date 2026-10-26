@@ -72,6 +72,11 @@ class HomeController extends Controller
         return view('contacto');
     }
 
+    public function privacidad()
+    {
+        return view('privacidad');
+    }
+
     public function guardarContacto(Request $request)
     {
         $datos = $request->validate([
@@ -81,7 +86,9 @@ class HomeController extends Controller
             'mensaje' => ['required', 'string'],
             'origen' => ['nullable', 'in:home,contacto'],
             'archivo' => ['nullable', 'file', 'mimes:pdf,doc,docx,jpg,jpeg,png', 'max:10240'],
+            'acepta_politica' => ['accepted'],
         ], [
+            'acepta_politica.accepted' => 'Debes aceptar la política de privacidad para enviar el mensaje.',
             'archivo.uploaded' => 'No fue posible subir el archivo. Verifica que no supere los 10 MB.',
             'archivo.file' => 'No fue posible subir el archivo. Verifica que no supere los 10 MB.',
             'archivo.mimes' => 'El archivo debe ser PDF, Word (doc, docx) o imagen (jpg, png).',
@@ -89,7 +96,7 @@ class HomeController extends Controller
         ]);
 
         $archivo = $request->file('archivo');
-        unset($datos['origen'], $datos['archivo']);
+        unset($datos['origen'], $datos['archivo'], $datos['acepta_politica']);
 
         if ($archivo) {
             $rutaArchivo = $archivo->store('contactos', 'local');

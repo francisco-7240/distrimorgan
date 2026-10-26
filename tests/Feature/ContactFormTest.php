@@ -42,6 +42,7 @@ class ContactFormTest extends TestCase
             'email' => 'prueba@example.com',
             'mensaje' => 'Mensaje de prueba',
             'origen' => 'home',
+            'acepta_politica' => '1',
         ])
             ->assertRedirect(route('home'))
             ->assertSessionHas('success');
@@ -56,6 +57,7 @@ class ContactFormTest extends TestCase
             'email' => 'ajax@example.com',
             'mensaje' => 'Mensaje enviado sin recargar',
             'origen' => 'home',
+            'acepta_politica' => '1',
         ])
             ->assertOk()
             ->assertJson(['message' => 'Su mensaje ha sido enviado.']);
@@ -73,6 +75,7 @@ class ContactFormTest extends TestCase
             'email' => 'documento@example.com',
             'mensaje' => 'Mensaje con documento adjunto',
             'archivo' => $documento,
+            'acepta_politica' => '1',
         ])
             ->assertOk()
             ->assertJson(['message' => 'Su mensaje ha sido enviado.']);
@@ -93,9 +96,23 @@ class ContactFormTest extends TestCase
             'email' => 'documento@example.com',
             'mensaje' => 'Mensaje con documento adjunto',
             'archivo' => $documento,
+            'acepta_politica' => '1',
         ])
             ->assertStatus(422)
             ->assertJsonValidationErrors('archivo');
+    }
+
+    public function test_contact_form_requires_privacy_policy_acceptance(): void
+    {
+        $this->postJson(route('contacto.store'), [
+            'nombre' => 'Usuario sin aceptar',
+            'email' => 'sinaceptar@example.com',
+            'mensaje' => 'Mensaje sin aceptar la política',
+        ])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('acepta_politica');
+
+        $this->assertDatabaseMissing('contactos', ['email' => 'sinaceptar@example.com']);
     }
 
     public function test_admin_can_download_a_contact_document(): void

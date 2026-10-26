@@ -32,6 +32,8 @@ Route::get('/producto/{producto}/{slug}', [ProductoController::class, 'detail'])
 Route::get('/servicios', [HomeController::class, 'servicios'])->name('servicios');
 // Página principal pública
 Route::get('/contacto', [HomeController::class, 'contacto'])->name('contacto');
+// Política de privacidad y tratamiento de datos personales
+Route::get('/politica-de-privacidad', [HomeController::class, 'privacidad'])->name('privacidad');
 Route::post('/contacto', [HomeController::class, 'guardarContacto'])->name('contacto.store');
 
 Route::get('/dashboard', function () {

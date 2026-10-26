@@ -197,6 +197,7 @@
 
                     <p class="text-gray-400 text-center md:text-left">
                         © {{ date('Y') }} Distri Morgan. Todos los derechos reservados.
+                        <a href="{{ route('privacidad') }}" class="ml-2 text-primary hover:text-white">Política de privacidad</a>
                     </p>
 
                     <div class="flex items-center gap-6">
