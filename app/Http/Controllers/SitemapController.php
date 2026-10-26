@@ -19,7 +19,7 @@ class SitemapController extends Controller
             ['loc' => route('servicios'), 'changefreq' => 'monthly', 'priority' => '0.7'],
             ['loc' => route('nosotros'), 'changefreq' => 'monthly', 'priority' => '0.6'],
             ['loc' => route('contacto'), 'changefreq' => 'monthly', 'priority' => '0.6'],
-            ['loc' => route('privacidad'), 'changefreq' => 'yearly', 'priority' => '0.3'],
+            ['loc' => url('/politica-de-privacidad'), 'changefreq' => 'yearly', 'priority' => '0.3'],
         ];
 
         $productos = Producto::where('estado', 1)

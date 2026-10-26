@@ -103,7 +103,7 @@
                                         class="mt-0.5 h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary">
                                     <span>
                                         He leído y acepto la
-                                        <a href="{{ route('privacidad') }}" target="_blank" rel="noopener" class="font-semibold text-primary underline hover:text-dark">política de privacidad y tratamiento de datos personales</a>.
+                                        <a href="{{ url('/politica-de-privacidad') }}" target="_blank" rel="noopener" class="font-semibold text-primary underline hover:text-dark">política de privacidad y tratamiento de datos personales</a>.
                                     </span>
                                 </label>
                                 @error('acepta_politica')
